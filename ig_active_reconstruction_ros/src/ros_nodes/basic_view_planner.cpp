@@ -64,7 +64,7 @@ int main(int argc, char **argv)
   
   // for the termination critera
   unsigned int max_calls;
-  ros_tools::getParam<unsigned int, int>( max_calls, "max_calls", 20 );
+  ros_tools::getParam<unsigned int, int>( max_calls, "max_calls", 40);
   
   
   
