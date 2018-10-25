@@ -19,6 +19,7 @@
 
 #include <thread>
 #include <iostream>
+#include <fstream>      // std::ofstream
 
 namespace ig_active_reconstruction
 {
@@ -131,7 +132,10 @@ namespace ig_active_reconstruction
       total_ig += total_multitthread_ig[i];
     }
 
-    std::cout<<"\n Total IG in WeightedLinearUtility::getNbv: total_ig"<<total_ig;
+    // The answer ........... Plot this and print this!!!
+    std::ofstream ofs;
+    ofs.open ("rabbit_weighted_gain.csv", std::ofstream::out | std::ofstream::app);
+    ofs<< total_ig << ", ";
     
     // calculate utility and choose nbv
     views::View::IdType nbv;
