@@ -18,6 +18,7 @@
 #define TEMPT template<class TREE_TYPE>
 #define CSCOPE ProximityCountIg<TREE_TYPE>
 
+#include <fstream>
 
 namespace ig_active_reconstruction
 {
@@ -45,7 +46,10 @@ namespace octomap
   TEMPT
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
-    std::cout << "\n proximity_counts: ig_:" << ig_;
+    std::ofstream outfile;
+    outfile.open("proximity_count.txt", std::ios_base::app);
+
+    outfile << "\n proximity_counts: ig_:" << ig_;
     return ig_;
   }
   

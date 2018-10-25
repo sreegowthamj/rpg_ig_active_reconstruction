@@ -18,6 +18,7 @@
 #define TEMPT template<class TREE_TYPE>
 #define CSCOPE AverageEntropyIg<TREE_TYPE>
 #include <iostream>
+#include <fstream>
 
 namespace ig_active_reconstruction
 {
@@ -47,11 +48,15 @@ namespace octomap
   TEMPT
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
+    std::ofstream outfile;
+    outfile.open("avg_entropy.txt", std::ios_base::app);
+
+
     if( voxel_count_==0 )
     {
       return 0;
     }
-    std::cout << "\n average_entropy: total_ig:" << total_ig_ << ",voxel_count:" << voxel_count_;
+    outfile << "\n average_entropy: total_ig:" << total_ig_ << ",voxel_count:" << voxel_count_;
     return total_ig_/voxel_count_;
   }
   

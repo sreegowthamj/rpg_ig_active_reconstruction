@@ -18,6 +18,7 @@
 #define TEMPT template<class TREE_TYPE>
 #define CSCOPE VasquezGomezAreaFactorIg<TREE_TYPE>
 
+#include <fstream>
 
 namespace ig_active_reconstruction
 {
@@ -72,6 +73,8 @@ namespace octomap
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
     CSCOPE::GainType x;
+    std::ofstream outfile;
+    outfile.open("vasquez_gomez_area.txt", std::ios_base::app);
     // using formulation by Vasquez-Gomez et al. to calculate information
     double voxel_sum = occupied_count_ + occplane_count_ + unobserved_count_;
     
@@ -82,7 +85,7 @@ namespace octomap
     double occplane_vox_perc = occplane_count_ / voxel_sum;
     
     x = areaFactorOccupied(occupied_vox_perc) + areaFactorOccplane(occplane_vox_perc);
-    std::cout << "\n vasquez_gomez_area: ig_:" << x;
+    outfile << "\n vasquez_gomez_area: ig_:" << x;
 
     return x;
   }

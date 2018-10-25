@@ -17,6 +17,7 @@
 
 #define TEMPT template<class TREE_TYPE>
 #define CSCOPE UnobservedVoxelIg<TREE_TYPE>
+#include <fstream>
 
 
 namespace ig_active_reconstruction
@@ -46,7 +47,9 @@ namespace octomap
   TEMPT
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
-    std::cout << "\n unobserved_voxel: ig_:" << ig_;
+    std::ofstream outfile;
+    outfile.open("unobserved_voxel.txt", std::ios_base::app);
+    outfile << "\n unobserved_voxel: ig_:" << ig_;
 
     return ig_;
   }

@@ -17,6 +17,7 @@
 
 #define TEMPT template<class TREE_TYPE>
 #define CSCOPE RearSideEntropyIg<TREE_TYPE>
+#include <fstream>
 
 
 namespace ig_active_reconstruction
@@ -49,7 +50,9 @@ namespace octomap
   TEMPT
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
-    std::cout << "\n rear_side_entropy: ig_:" << ig_;
+    std::ofstream outfile;
+    outfile.open("rear_side_entropy.txt", std::ios_base::app);
+    outfile << "\n rear_side_entropy: ig_:" << ig_;
 
     return ig_;
   }

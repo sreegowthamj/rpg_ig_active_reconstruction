@@ -18,6 +18,7 @@
 #define TEMPT template<class TREE_TYPE>
 #define CSCOPE RearSideVoxelIg<TREE_TYPE>
 
+#include <fstream>
 
 namespace ig_active_reconstruction
 {
@@ -45,7 +46,9 @@ namespace octomap
   TEMPT
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
-    std::cout << "\n rear_side_voxel: ig_:" << rear_side_voxel_count_;
+    std::ofstream outfile;
+    outfile.open("rear_side_voxel.txt", std::ios_base::app);
+    outfile << "\n rear_side_voxel: ig_:" << rear_side_voxel_count_;
 
     return rear_side_voxel_count_;
   }

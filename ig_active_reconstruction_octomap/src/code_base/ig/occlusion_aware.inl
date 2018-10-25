@@ -18,6 +18,7 @@
 #define TEMPT template<class TREE_TYPE>
 #define CSCOPE OcclusionAwareIg<TREE_TYPE>
 
+#include <fstream>
 
 namespace ig_active_reconstruction
 {
@@ -46,7 +47,10 @@ namespace octomap
   TEMPT
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
-    std::cout << "\n occlusion aware: ig:" << ig_;
+    std::ofstream outfile;
+    outfile.open("occlusion_aware.txt", std::ios_base::app);
+
+    outfile << "\n occlusion aware: ig:" << ig_;
 
     return ig_;
   }
