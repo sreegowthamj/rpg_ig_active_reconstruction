@@ -130,6 +130,8 @@ namespace ig_active_reconstruction
       threads[i].join();
       total_ig += total_multitthread_ig[i];
     }
+
+    std::cout<<"\n Total IG in WeightedLinearUtility::getNbv: total_ig"<<total_ig;
     
     // calculate utility and choose nbv
     views::View::IdType nbv;
@@ -181,7 +183,7 @@ namespace ig_active_reconstruction
 	{
 	  if( information_gains[i].status == world_representation::CommunicationInterface::ResultInformation::SUCCEEDED )
 	  {
-      std::cout<<"\nReturned gain of metric "<<i<<":"<<information_gains[i].predicted_gain;
+
 	    ig_val += ig_weights_[i]*information_gains[i].predicted_gain;
 	  }
 	}
