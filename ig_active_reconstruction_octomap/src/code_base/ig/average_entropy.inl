@@ -49,7 +49,7 @@ namespace octomap
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
     std::ofstream outfile;
-    outfile.open("avg_entropy.txt", std::ios_base::app);
+    outfile.open("avg_entropy.txt", std::ofstream::out | std::ios_base::app);
 
 
     if( voxel_count_==0 )

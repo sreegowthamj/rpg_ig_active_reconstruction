@@ -48,7 +48,7 @@ namespace octomap
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
     std::ofstream outfile;
-    outfile.open("unobserved_voxel.txt", std::ios_base::app);
+    outfile.open("unobserved_voxel.txt", std::ofstream::out | std::ios_base::app);
     outfile << "\n unobserved_voxel: ig_:" << ig_;
 
     return ig_;

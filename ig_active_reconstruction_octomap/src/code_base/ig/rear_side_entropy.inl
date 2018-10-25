@@ -51,7 +51,7 @@ namespace octomap
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
     std::ofstream outfile;
-    outfile.open("rear_side_entropy.txt", std::ios_base::app);
+    outfile.open("rear_side_entropy.txt", std::ofstream::out | std::ios_base::app);
     outfile << "\n rear_side_entropy: ig_:" << ig_;
 
     return ig_;

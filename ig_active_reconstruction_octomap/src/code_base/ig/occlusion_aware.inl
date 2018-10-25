@@ -48,7 +48,7 @@ namespace octomap
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
     std::ofstream outfile;
-    outfile.open("occlusion_aware.txt", std::ios_base::app);
+    outfile.open("occlusion_aware.txt", std::ofstream::out | std::ios_base::app);
 
     outfile << "\n occlusion aware: ig:" << ig_;
 

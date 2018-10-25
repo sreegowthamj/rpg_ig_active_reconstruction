@@ -74,7 +74,7 @@ namespace octomap
   {
     CSCOPE::GainType x;
     std::ofstream outfile;
-    outfile.open("vasquez_gomez_area.txt", std::ios_base::app);
+    outfile.open("vasquez_gomez_area.txt", std::ofstream::out | std::ios_base::app);
     // using formulation by Vasquez-Gomez et al. to calculate information
     double voxel_sum = occupied_count_ + occplane_count_ + unobserved_count_;
     

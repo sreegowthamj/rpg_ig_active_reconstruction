@@ -47,7 +47,7 @@ namespace octomap
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
     std::ofstream outfile;
-    outfile.open("proximity_count.txt", std::ios_base::app);
+    outfile.open("proximity_count.txt", std::ofstream::out | std::ios_base::app);
 
     outfile << "\n proximity_counts: ig_:" << ig_;
     return ig_;

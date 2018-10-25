@@ -47,7 +47,7 @@ namespace octomap
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
     std::ofstream outfile;
-    outfile.open("rear_side_voxel.txt", std::ios_base::app);
+    outfile.open("rear_side_voxel.txt", std::ofstream::out | std::ios_base::app);
     outfile << "\n rear_side_voxel: ig_:" << rear_side_voxel_count_;
 
     return rear_side_voxel_count_;
