@@ -48,6 +48,7 @@ namespace octomap
   TEMPT
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
+    CSCOPE::GainType avg;
     std::ofstream outfile;
     outfile.open("avg_entropy.txt", std::ofstream::out | std::ios_base::app);
 
@@ -56,8 +57,12 @@ namespace octomap
     {
       return 0;
     }
-    outfile << "\n average_entropy: total_ig:" << total_ig_ << ",voxel_count:" << voxel_count_;
-    return total_ig_/voxel_count_;
+    avg =  total_ig_/voxel_count_;
+    outfile << "\n average_entropy: total_ig:" << total_ig_
+            << ",voxel_count:" << voxel_count_
+            << "avg = " << avg ;
+
+    return avg;
   }
   
   TEMPT
