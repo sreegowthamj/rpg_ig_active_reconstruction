@@ -70,6 +70,9 @@ namespace octomap
   TEMPT
   void CSCOPE::reset()
   {
+    std::ofstream outfile;
+    outfile.open("avg_entropy.txt", std::ofstream::out | std::ios_base::app);
+    outfile << "reset here\n";
     voxel_count_ = 0;
     total_ig_ = 0;
     current_ray_voxels_ = 0;

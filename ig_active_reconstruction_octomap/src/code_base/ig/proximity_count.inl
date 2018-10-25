@@ -49,7 +49,7 @@ namespace octomap
     std::ofstream outfile;
     outfile.open("proximity_count.txt", std::ofstream::out | std::ios_base::app);
 
-    outfile << "\n proximity_counts: ig_:" << ig_;
+    outfile << ig_ << ",";
     return ig_;
   }
   

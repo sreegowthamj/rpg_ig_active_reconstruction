@@ -50,7 +50,7 @@ namespace octomap
     std::ofstream outfile;
     outfile.open("occlusion_aware.txt", std::ofstream::out | std::ios_base::app);
 
-    outfile << "\n occlusion aware: ig:" << ig_;
+    outfile << ig_ << ",";
 
     return ig_;
   }
