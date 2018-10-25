@@ -23,7 +23,7 @@
 #include "ig_active_reconstruction_msgs/InformationGainCalculation.h"
 #include "ig_active_reconstruction_msgs/MapMetricCalculation.h"
 #include "ig_active_reconstruction_msgs/StringList.h"
-
+#include <fstream>
 
 namespace ig_active_reconstruction
 {
@@ -66,6 +66,10 @@ namespace world_representation
       for(ig_active_reconstruction_msgs::InformationGain& ig: call.response.expected_information)
       {
 	IgRetrievalResult result = ros_conversions::igRetrievalResultFromMsg(ig);
+  std::ofstream ofs;
+  ofs.open ("compute_ig_view_fn.txt", std::ofstream::out | std::ofstream::app);
+  ofs << "\nresult.predicted_gain =" << result.predicted_gain
+    << "      result.status = "  <<  result.status;
 	output_ig.push_back(result);
       }
       return ResultInformation::SUCCEEDED;
