@@ -63,15 +63,16 @@ namespace world_representation
     }
     else
     {
+      std::ofstream ofs;
+      ofs.open ("compute_ig_view_fn.txt", std::ofstream::out | std::ofstream::app);
       for(ig_active_reconstruction_msgs::InformationGain& ig: call.response.expected_information)
       {
 	IgRetrievalResult result = ros_conversions::igRetrievalResultFromMsg(ig);
-  std::ofstream ofs;
-  ofs.open ("compute_ig_view_fn.txt", std::ofstream::out | std::ofstream::app);
   ofs << "\nresult.predicted_gain =" << result.predicted_gain
     << "      result.status = "  <<  result.status;
 	output_ig.push_back(result);
       }
+      ofs << "\n";
       return ResultInformation::SUCCEEDED;
     }
   }
@@ -101,13 +102,21 @@ namespace world_representation
     }
     else
     {
+      std::ofstream ofs;
+      ofs.open ("computeMapMetric.txt", std::ofstream::out | std::ofstream::app);
       for(ig_active_reconstruction_msgs::InformationGain& map_metric: call.response.results)
       {
 	MapMetricRetrievalResult result;
 	result.status = ros_conversions::resultInformationFromMsg(map_metric.status);
 	result.value = map_metric.predicted_gain;
+
+  ofs << "result.value =" << result.value
+    << "      result.status = "  <<  result.status
+    << "\t";
 	output.push_back(result);
       }
+      ofs << "\n";
+
       return ResultInformation::SUCCEEDED;
     }
   }
