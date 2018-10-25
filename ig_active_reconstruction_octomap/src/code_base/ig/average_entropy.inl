@@ -17,7 +17,7 @@
 
 #define TEMPT template<class TREE_TYPE>
 #define CSCOPE AverageEntropyIg<TREE_TYPE>
-
+#include <iostream>
 
 namespace ig_active_reconstruction
 {
@@ -51,6 +51,7 @@ namespace octomap
     {
       return 0;
     }
+    std::cout << "\ntotal_ig:" << total_ig_ << ",voxel_count:" << voxel_count_;
     return total_ig_/voxel_count_;
   }
   
