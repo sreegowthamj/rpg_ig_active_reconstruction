@@ -71,6 +71,7 @@ namespace octomap
   TEMPT
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
+    CSCOPE::GainType x;
     // using formulation by Vasquez-Gomez et al. to calculate information
     double voxel_sum = occupied_count_ + occplane_count_ + unobserved_count_;
     
@@ -80,7 +81,10 @@ namespace octomap
     double occupied_vox_perc = occupied_count_ / voxel_sum;
     double occplane_vox_perc = occplane_count_ / voxel_sum;
     
-    return areaFactorOccupied(occupied_vox_perc) + areaFactorOccplane(occplane_vox_perc);
+    x = areaFactorOccupied(occupied_vox_perc) + areaFactorOccplane(occplane_vox_perc);
+    std::cout << "\n vasquez_gomez_area: ig_:" << x;
+
+    return x;
   }
   
   TEMPT

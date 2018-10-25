@@ -45,6 +45,7 @@ namespace octomap
   TEMPT
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
+    std::cout << "\n proximity_counts: ig_:" << ig_;
     return ig_;
   }
   

@@ -51,7 +51,7 @@ namespace octomap
     {
       return 0;
     }
-    std::cout << "\ntotal_ig:" << total_ig_ << ",voxel_count:" << voxel_count_;
+    std::cout << "\n average_entropy: total_ig:" << total_ig_ << ",voxel_count:" << voxel_count_;
     return total_ig_/voxel_count_;
   }
   

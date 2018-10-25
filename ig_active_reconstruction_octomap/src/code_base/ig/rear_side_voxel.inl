@@ -45,6 +45,8 @@ namespace octomap
   TEMPT
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
+    std::cout << "\n rear_side_voxel: ig_:" << rear_side_voxel_count_;
+
     return rear_side_voxel_count_;
   }
   

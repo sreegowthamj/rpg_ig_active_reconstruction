@@ -49,6 +49,8 @@ namespace octomap
   TEMPT
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
+    std::cout << "\n rear_side_entropy: ig_:" << ig_;
+
     return ig_;
   }
   

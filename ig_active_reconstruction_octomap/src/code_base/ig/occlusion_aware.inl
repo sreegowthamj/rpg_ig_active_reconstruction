@@ -46,6 +46,8 @@ namespace octomap
   TEMPT
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
+    std::cout << "\n occlusion aware: ig:" << ig_;
+
     return ig_;
   }
   

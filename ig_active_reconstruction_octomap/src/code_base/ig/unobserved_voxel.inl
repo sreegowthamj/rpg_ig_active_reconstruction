@@ -46,6 +46,8 @@ namespace octomap
   TEMPT
   typename CSCOPE::GainType CSCOPE::getInformation()
   {
+    std::cout << "\n unobserved_voxel: ig_:" << ig_;
+
     return ig_;
   }
   
