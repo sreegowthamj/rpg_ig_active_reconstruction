@@ -22,7 +22,7 @@ sudo apt-get install ros-kinetic-gazebo-ros-pkgs ros-kinetic-gazebo-ros-control 
 All packages are written to be compiled using *catkin* or *catkin_tools*, just clone this repository to your catkin workspace:
 ```
 cd catkin_ws/src
-git clone -b kinetic https://github.com/uzh-rpg/rpg_ig_active_reconstruction.git
+git clone https://github.com/uzh-rpg/rpg_ig_active_reconstruction.git
 ```
 And compile:
 ```
@@ -46,4 +46,10 @@ Launches a world representation ROS node using Octomap as a container and offeri
 * **roslaunch ig_active_reconstruction_ros	basic_view_planner.launch**  
 Launches a basic view planner node with a simple command line user interface that allows you to start, pause and stop the procedure.  **To start the demo, press 'g' and then 'Enter' in this terminal.**
 
-Play around with the parameters in the different launch files to see what effect they have.
+
+### Plotting the graph
+
+To plot the graph available in Fig. 4 of the Literature review, you will need to execute the above commands and wait till the execution gets completed. Once the execution is completed, you will need to go to ``` ~/.ros/ ``` folder and copy the ``` rabbit_weighted_gain.csv ``` file to ``` rpg_ig_active_reconstruction ``` folder. Then, for plotting the graph, you will need to run the command - 
+```
+	python plot_results.py
+```
