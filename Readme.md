@@ -1,5 +1,7 @@
 Our fork of the original repository - https://github.com/sreegowthamj/rpg_ig_active_reconstruction
 
+*Please find our modifications to the original  code in the the above repo.*
+
 #### Dependencies
 If you are using ROS, most dependencies should already be installed. Packages were tested on Ubuntu 14.04 under ROS Indigo and Ubuntu 16.04 with ROS Kinetic. 
 
