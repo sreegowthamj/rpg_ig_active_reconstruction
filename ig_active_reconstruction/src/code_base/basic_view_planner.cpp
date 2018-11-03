@@ -22,6 +22,7 @@
 #include <iostream>
 #include <boost/thread/thread.hpp>
 #include <boost/chrono/include.hpp>
+using namespace std;
 
 namespace ig_active_reconstruction
 {
@@ -164,6 +165,7 @@ namespace ig_active_reconstruction
   void BasicViewPlanner::main()
   {    
     // preparation
+    cout<<"basic view planning started"<<endl;
     goal_evaluation_module_->reset();
     
     // get viewspace................................................
@@ -171,18 +173,21 @@ namespace ig_active_reconstruction
     views::CommunicationInterface::ViewSpaceStatus viewspace_status;
     do
     {
+      cout<<"\n getting view space from views_comm_unit_"<<endl;
       status_ = Status::DEMANDING_VIEWSPACE;
       *viewspace_ = views_comm_unit_->getViewSpace();
-      
+
       if( !runProcedure_ ) // exit point
-	{
-	  status_ = Status::IDLE;
-	  runProcedure_ = false;
-	  return;
-	}
-      pausePoint();
-      
+      {
+        status_ = Status::IDLE;
+        runProcedure_ = false;
+        return;
+      }
+      pausePoint();      
     }while( viewspace_->empty() );
+
+    cout<<"\n complete view space : "<<viewspace_<<endl;
+    
     
     unsigned int reception_nr = 0;
     
@@ -190,29 +195,37 @@ namespace ig_active_reconstruction
     {
       // determine view candidate subset of viewspace .....................
       views::ViewSpace::IdSet view_candidate_ids;
+      /* Sathish : getting the static good views given in the file.
+      need to get the good views based on our IG calculation */
       viewspace_->getGoodViewSpace(view_candidate_ids, config_.discard_visited);
       
       if(view_candidate_ids.empty())
       {
-	break;
+        cout<<"no good views are available (subset of viewspace)"<<endl;
+      	break;
       }
+
+      cout<<"Got the good views (subset of viewspace)"<<endl;
+      
       
       // receive data....................................................
       robot::CommunicationInterface::ReceptionInfo data_retrieval_status;
       do
       {
-	status_ = Status::DEMANDING_NEW_DATA;
-	data_retrieval_status = robot_comm_unit_->retrieveData();
-	
-	if( !runProcedure_ ) // exit point
-	{
-	  status_ = Status::IDLE;
-	  runProcedure_ = false;
-	  return;
-	}
-	pausePoint();
-	
+        cout<<"getting data from robot_comm_unit_"<<endl;
+        status_ = Status::DEMANDING_NEW_DATA;
+        data_retrieval_status = robot_comm_unit_->retrieveData();
+
+        if( !runProcedure_ ) // exit point
+        {
+          status_ = Status::IDLE;
+          runProcedure_ = false;
+          return;
+        }
+        pausePoint();	
       }while( data_retrieval_status != robot::CommunicationInterface::ReceptionInfo::SUCCEEDED );
+
+      cout<<"Data retrieval from robot comm interface is success"<<endl;
       
       std::cout<<"\nData reception nr. "<<++reception_nr<<".";
       
@@ -220,35 +233,41 @@ namespace ig_active_reconstruction
       status_ = Status::NBV_CALCULATIONS;
       views::View::IdType nbv_id = utility_calculator_->getNbv(view_candidate_ids,viewspace_);
       views::View nbv = viewspace_->getView(nbv_id);
+
+      cout<<"nbv_id :"<<nbv_id<<endl;
+      cout<<"nbv :"<<nbv<<endl;
       
       // check termination criteria ...............................................
       if( goal_evaluation_module_->isDone() )
       {
-	std::cout<<"\n\nTermination criteria was fulfilled. Reconstruction procedure ends.\n\n";
-	break;
+	      std::cout<<"\n\nTermination criteria was fulfilled. Reconstruction procedure ends.\n\n";
+	      break;
       }
       
       // move to next best view....................................................
       bool successfully_moved = false;
       do
       {
-	status_ = Status::DEMANDING_MOVE;
-	successfully_moved = robot_comm_unit_->moveTo(nbv);
-	
-	if( !runProcedure_ ) // exit point
-	{
-	  status_ = Status::IDLE;
-	  runProcedure_ = false;
-	  return;
-	}
-	pausePoint();
+         cout<<"moving to NBV"<<endl;
+        status_ = Status::DEMANDING_MOVE;
+        successfully_moved = robot_comm_unit_->moveTo(nbv);
+        
+        if( !runProcedure_ ) // exit point
+        {
+          status_ = Status::IDLE;
+          runProcedure_ = false;
+          return;
+        }
+	      pausePoint();
 	
       }while(!successfully_moved);
+
+      cout<<"moved to NBV"<<endl;
       
       // update viewspace
       viewspace_->setVisited(nbv_id);
       if( config_.max_visits!=-1 && viewspace_->timesVisited(nbv_id) >= config_.max_visits )
-	viewspace_->setBad(nbv_id);
+	      viewspace_->setBad(nbv_id);
       
     }while( runProcedure_ );
     
