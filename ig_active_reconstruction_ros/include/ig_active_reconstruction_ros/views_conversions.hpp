@@ -17,7 +17,7 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #pragma once
 
@@ -29,20 +29,22 @@
 
 #include "ig_active_reconstruction/views_communication_interface.hpp"
 
-namespace ig_active_reconstruction {
+namespace ig_active_reconstruction
+{
 
-namespace ros_conversions {
+namespace ros_conversions
+{
 
 /*! Converts a view to a view message.
-  */
+ */
 ig_active_reconstruction_msgs::ViewMsg viewToMsg(const views::View &view);
 
 /*! Constructs a new view from a view message.
-  */
+ */
 views::View viewFromMsg(ig_active_reconstruction_msgs::ViewMsg &msg);
 
 /** Creates a view space msg with the content of the view space
-*/
+ */
 ig_active_reconstruction_msgs::ViewSpaceMsg
 viewSpaceToMsg(const views::ViewSpace &view_space);
 
@@ -52,11 +54,11 @@ viewSpaceFromMsg(ig_active_reconstruction_msgs::ViewSpaceMsg &msg);
 
 views::CommunicationInterface::ViewSpaceStatus viewSpaceStatusFromMsg(int &msg);
 int viewSpaceStatusToMsg(
-    views::CommunicationInterface::ViewSpaceStatus &status);
+        views::CommunicationInterface::ViewSpaceStatus &status);
 
 views::CommunicationInterface::ViewSpaceUpdateResult
 viewSpaceUpdateResultFromMsg(int &msg);
 int viewSpaceUpdateResultToMsg(
-    views::CommunicationInterface::ViewSpaceUpdateResult &res);
-}
-}
+        views::CommunicationInterface::ViewSpaceUpdateResult &res);
+} // namespace ros_conversions
+} // namespace ig_active_reconstruction

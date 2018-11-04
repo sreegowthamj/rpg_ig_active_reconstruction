@@ -17,15 +17,19 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
-*/
+ */
 
-namespace ig_active_reconstruction {
+namespace ig_active_reconstruction
+{
 
-namespace world_representation {
+namespace world_representation
+{
 
-namespace octomap {}
+namespace octomap
+{
 }
-}
+} // namespace world_representation
+} // namespace ig_active_reconstruction
 
 #undef CSCOPE
 #undef TEMPT

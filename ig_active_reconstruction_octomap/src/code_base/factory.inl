@@ -17,7 +17,7 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #define TEMPT template <class TYPE>
 #define CSCOPE Factory<TYPE>
@@ -26,73 +26,84 @@
 #include <sstream>
 #include <stdexcept>
 
-namespace multikit {
+namespace multikit
+{
 
 TEMPT
-unsigned int
-CSCOPE::add(std::string ig_name,
-            boost::function<boost::shared_ptr<TYPE>()> ig_creator) {
-  Entry new_entry;
-  new_entry.id = entries_.size();
-  new_entry.name = ig_name;
-  new_entry.create = ig_creator;
+unsigned int CSCOPE::add(std::string ig_name,
+                         boost::function<boost::shared_ptr<TYPE>()> ig_creator)
+{
+        Entry new_entry;
+        new_entry.id = entries_.size();
+        new_entry.name = ig_name;
+        new_entry.create = ig_creator;
 
-  entries_.push_back(new_entry);
+        entries_.push_back(new_entry);
 
-  return new_entry.id;
+        return new_entry.id;
 }
 
 TEMPT
-boost::shared_ptr<TYPE> CSCOPE::get(std::string name) {
-  boost::shared_ptr<TYPE> new_object;
-  BOOST_FOREACH (Entry &entry, entries_) {
-    if (entry.name == name)
-      new_object = entry.create();
-  }
+boost::shared_ptr<TYPE> CSCOPE::get(std::string name)
+{
+        boost::shared_ptr<TYPE> new_object;
+        BOOST_FOREACH (Entry &entry, entries_) {
+                if (entry.name == name)
+                        new_object = entry.create();
+        }
 
-  return new_object;
+        return new_object;
 }
 
 TEMPT
-boost::shared_ptr<TYPE> CSCOPE::get(unsigned int id) {
-  if (id >= entries_.size()) {
-    return boost::shared_ptr<TYPE>();
-  }
-  return entries_[id].create();
+boost::shared_ptr<TYPE> CSCOPE::get(unsigned int id)
+{
+        if (id >= entries_.size()) {
+                return boost::shared_ptr<TYPE>();
+        }
+        return entries_[id].create();
 }
 
 TEMPT
-std::string CSCOPE::nameOf(unsigned int id) {
-  if (id >= entries_.size()) {
-    std::stringstream error_desc;
-    error_desc << "Factory<TYPE>::nameOf:: Passed argument id = " << id
-               << " is invalid.";
-    throw std::invalid_argument(error_desc.str());
-  } else {
-    return entries_[id].name;
-  }
+std::string CSCOPE::nameOf(unsigned int id)
+{
+        if (id >= entries_.size()) {
+                std::stringstream error_desc;
+                error_desc << "Factory<TYPE>::nameOf:: Passed argument id = "
+                           << id << " is invalid.";
+                throw std::invalid_argument(error_desc.str());
+        } else {
+                return entries_[id].name;
+        }
 }
 
 TEMPT
-unsigned int CSCOPE::idOf(std::string name) {
-  BOOST_FOREACH (Entry &entry, entries_) {
-    if (entry.name == name) {
-      return entry.id;
-    }
-  }
-  // not found
-  std::stringstream error_desc;
-  error_desc << "Factory<TYPE>::idOf:: Passed argument name = " << name
-             << " is invalid.";
-  throw std::invalid_argument(error_desc.str());
+unsigned int CSCOPE::idOf(std::string name)
+{
+        BOOST_FOREACH (Entry &entry, entries_) {
+                if (entry.name == name) {
+                        return entry.id;
+                }
+        }
+        // not found
+        std::stringstream error_desc;
+        error_desc << "Factory<TYPE>::idOf:: Passed argument name = " << name
+                   << " is invalid.";
+        throw std::invalid_argument(error_desc.str());
 }
 
 TEMPT
-typename CSCOPE::Iterator CSCOPE::begin() { return entries_.begin(); }
+typename CSCOPE::Iterator CSCOPE::begin()
+{
+        return entries_.begin();
+}
 
 TEMPT
-typename CSCOPE::Iterator CSCOPE::end() { return entries_.end(); }
+typename CSCOPE::Iterator CSCOPE::end()
+{
+        return entries_.end();
 }
+} // namespace multikit
 
 #undef CSCOPE
 #undef TEMPT

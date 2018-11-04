@@ -18,56 +18,68 @@ along with movements. If not, see <http://www.gnu.org/licenses/>.
 #include "movements/geometry_pose.h"
 #include "movements/combined_relative_movement.h"
 
-namespace movements {
+namespace movements
+{
 
-Pose::Pose() {}
+Pose::Pose()
+{
+}
 
 Pose::Pose(Eigen::Vector3d _position, Eigen::Quaterniond _orientation)
-    : position(_position), orientation(_orientation) {}
-
-bool Pose::operator!=(const movements::Pose &_to_compare) {
-  return (position(0) != _to_compare.position(0)) ||
-         (position(1) != _to_compare.position(1)) ||
-         (position(2) != _to_compare.position(2)) ||
-         (orientation.x() != _to_compare.orientation.x()) ||
-         (orientation.y() != _to_compare.orientation.y()) ||
-         (orientation.z() != _to_compare.orientation.z()) ||
-         (orientation.w() != _to_compare.orientation.w());
+    : position(_position), orientation(_orientation)
+{
 }
 
-bool Pose::operator==(const movements::Pose &_to_compare) {
-  return !operator!=(_to_compare);
+bool Pose::operator!=(const movements::Pose &_to_compare)
+{
+        return (position(0) != _to_compare.position(0))
+               || (position(1) != _to_compare.position(1))
+               || (position(2) != _to_compare.position(2))
+               || (orientation.x() != _to_compare.orientation.x())
+               || (orientation.y() != _to_compare.orientation.y())
+               || (orientation.z() != _to_compare.orientation.z())
+               || (orientation.w() != _to_compare.orientation.w());
 }
 
-movements::Pose Pose::operator+(movements::RelativeMovement _second) {
-  return _second.applyToBasePose(*this);
+bool Pose::operator==(const movements::Pose &_to_compare)
+{
+        return !operator!=(_to_compare);
 }
 
-Pose Pose::operator+(movements::CombinedRelativeMovement _second) {
-  return _second.applyToBasePose(*this);
+movements::Pose Pose::operator+(movements::RelativeMovement _second)
+{
+        return _second.applyToBasePose(*this);
 }
 
-Pose &Pose::operator+=(movements::RelativeMovement _second) {
-  *this = _second.applyToBasePose(*this);
-  return *this;
+Pose Pose::operator+(movements::CombinedRelativeMovement _second)
+{
+        return _second.applyToBasePose(*this);
 }
 
-Pose &Pose::operator+=(movements::CombinedRelativeMovement _second) {
-  *this = _second.applyToBasePose(*this);
-  return *this;
-}
+Pose &Pose::operator+=(movements::RelativeMovement _second)
+{
+        *this = _second.applyToBasePose(*this);
+        return *this;
 }
 
-std::ostream &operator<<(std::ostream &_out, movements::Pose &_pose) {
-  _out << "Pose:\n";
-  _out << "  position: \n";
-  _out << "    x: " << _pose.position.x() << "\n";
-  _out << "    y: " << _pose.position.y() << "\n";
-  _out << "    z: " << _pose.position.z() << "\n";
-  _out << "  orientation: \n";
-  _out << "    x: " << _pose.orientation.x() << "\n";
-  _out << "    y: " << _pose.orientation.y() << "\n";
-  _out << "    z: " << _pose.orientation.z() << "\n";
-  _out << "    w: " << _pose.orientation.w() << "\n";
-  return _out;
+Pose &Pose::operator+=(movements::CombinedRelativeMovement _second)
+{
+        *this = _second.applyToBasePose(*this);
+        return *this;
+}
+} // namespace movements
+
+std::ostream &operator<<(std::ostream &_out, movements::Pose &_pose)
+{
+        _out << "Pose:\n";
+        _out << "  position: \n";
+        _out << "    x: " << _pose.position.x() << "\n";
+        _out << "    y: " << _pose.position.y() << "\n";
+        _out << "    z: " << _pose.position.z() << "\n";
+        _out << "  orientation: \n";
+        _out << "    x: " << _pose.orientation.x() << "\n";
+        _out << "    y: " << _pose.orientation.y() << "\n";
+        _out << "    z: " << _pose.orientation.z() << "\n";
+        _out << "    w: " << _pose.orientation.w() << "\n";
+        return _out;
 }

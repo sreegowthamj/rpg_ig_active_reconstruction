@@ -17,7 +17,7 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #define TEMPT template <class TREE_TYPE, class POINTCLOUD_TYPE>
 #define CSCOPE PclInput<TREE_TYPE, POINTCLOUD_TYPE>
@@ -27,14 +27,18 @@
 #include <pcl/common/transforms.h>
 #include <pcl/filters/passthrough.h>
 
-namespace ig_active_reconstruction {
+namespace ig_active_reconstruction
+{
 
-namespace world_representation {
+namespace world_representation
+{
 
-namespace octomap {
+namespace octomap
+{
 TEMPT
-void CSCOPE::setOctree(boost::shared_ptr<TREE_TYPE> octree) {
-  this->link_.octree = octree;
+void CSCOPE::setOctree(boost::shared_ptr<TREE_TYPE> octree)
+{
+        this->link_.octree = octree;
 }
 
 /*TEMPT // cpp11 version
@@ -50,15 +54,16 @@ OCCLUSION_CALC_TYPE<TREE_TYPE,POINTCLOUD_TYPE> >( args... );
 TEMPT
 template <template <typename, typename> class OCCLUSION_CALC_TYPE>
 void CSCOPE::setOcclusionCalculator(
-    typename OCCLUSION_CALC_TYPE<TREE_TYPE, POINTCLOUD_TYPE>::Options options) {
-  occlusion_calculator_ =
-      boost::make_shared<OCCLUSION_CALC_TYPE<TREE_TYPE, POINTCLOUD_TYPE>>(
-          options);
-  occlusion_calculator_->setLink(this->link_);
+        typename OCCLUSION_CALC_TYPE<TREE_TYPE, POINTCLOUD_TYPE>::Options
+                options)
+{
+        occlusion_calculator_ = boost::make_shared<
+                OCCLUSION_CALC_TYPE<TREE_TYPE, POINTCLOUD_TYPE>>(options);
+        occlusion_calculator_->setLink(this->link_);
 }
-}
-}
-}
+} // namespace octomap
+} // namespace world_representation
+} // namespace ig_active_reconstruction
 
 #undef CSCOPE
 #undef TEMPT

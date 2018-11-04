@@ -17,23 +17,28 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #pragma once
 
-namespace ig_active_reconstruction {
+namespace ig_active_reconstruction
+{
 
-namespace world_representation {
+namespace world_representation
+{
 
-namespace octomap {
+namespace octomap
+{
 
 /*! Class that calculates a whole set of tree metrics simultaneously.
  *
  * TODO: refactoring...
  */
-template <class TREE_TYPE> class OmniCalculator {};
-}
-}
-}
+template <class TREE_TYPE> class OmniCalculator
+{
+};
+} // namespace octomap
+} // namespace world_representation
+} // namespace ig_active_reconstruction
 
 #include "../src/code_base/map_metric/omni_calculator.hpp"

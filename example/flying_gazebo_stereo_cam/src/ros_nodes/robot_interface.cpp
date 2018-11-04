@@ -17,7 +17,7 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #include <ros/ros.h>
 
@@ -29,42 +29,45 @@
 /*! Implements a ROS node interface to a "flying" (staticly placed) gazebo
  * stereo camera.
  */
-int main(int argc, char **argv) {
-  ros::init(argc, argv, "robot_interface");
-  ros::NodeHandle nh;
+int main(int argc, char **argv)
+{
+        ros::init(argc, argv, "robot_interface");
+        ros::NodeHandle nh;
 
-  // Load parameters
-  //------------------------------------------------------------------
-  std::string model_name, camera_frame_name, world_frame_name, sensor_in_topic,
-      sensor_out_name;
-  ros_tools::getExpParam(model_name, "model_name");
-  ros_tools::getExpParam(camera_frame_name, "camera_frame_name");
-  ros_tools::getExpParam(world_frame_name, "world_frame_name");
-  ros_tools::getExpParam(sensor_in_topic, "sensor_in_topic");
-  ros_tools::getExpParam(sensor_out_name, "sensor_out_name");
+        // Load parameters
+        //------------------------------------------------------------------
+        std::string model_name, camera_frame_name, world_frame_name,
+                sensor_in_topic, sensor_out_name;
+        ros_tools::getExpParam(model_name, "model_name");
+        ros_tools::getExpParam(camera_frame_name, "camera_frame_name");
+        ros_tools::getExpParam(world_frame_name, "world_frame_name");
+        ros_tools::getExpParam(sensor_in_topic, "sensor_in_topic");
+        ros_tools::getExpParam(sensor_out_name, "sensor_out_name");
 
-  using namespace flying_gazebo_stereo_cam;
+        using namespace flying_gazebo_stereo_cam;
 
-  // Controller
-  //------------------------------------------------------------------
-  std::shared_ptr<Controller> controller =
-      std::make_shared<Controller>(model_name);
-  // publish tf
-  controller->startTfPublisher(camera_frame_name, world_frame_name);
+        // Controller
+        //------------------------------------------------------------------
+        std::shared_ptr<Controller> controller =
+                std::make_shared<Controller>(model_name);
+        // publish tf
+        controller->startTfPublisher(camera_frame_name, world_frame_name);
 
-  // Iar communication interface
-  //------------------------------------------------------------------
-  boost::shared_ptr<CommunicationInterface> robot_interface =
-      boost::make_shared<CommunicationInterface>(
-          nh, controller, sensor_in_topic, sensor_out_name);
+        // Iar communication interface
+        //------------------------------------------------------------------
+        boost::shared_ptr<CommunicationInterface> robot_interface =
+                boost::make_shared<CommunicationInterface>(
+                        nh, controller, sensor_in_topic, sensor_out_name);
 
-  // Expose communication interface to ROS
-  //------------------------------------------------------------------
-  ig_active_reconstruction::robot::RosServerCI comm_unit(nh, robot_interface);
+        // Expose communication interface to ROS
+        //------------------------------------------------------------------
+        ig_active_reconstruction::robot::RosServerCI comm_unit(nh,
+                                                               robot_interface);
 
-  // spin...
-  ROS_INFO_STREAM("Flying gazebo stereo camera robot interface is setup.");
-  ros::spin();
+        // spin...
+        ROS_INFO_STREAM(
+                "Flying gazebo stereo camera robot interface is setup.");
+        ros::spin();
 
-  return 0;
+        return 0;
 }

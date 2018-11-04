@@ -17,34 +17,36 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #pragma once
 
 #include "ig_active_reconstruction/goal_evaluation_module.hpp"
 
-namespace ig_active_reconstruction {
+namespace ig_active_reconstruction
+{
 
 /*! Simple termination criteria that returns true after a fixed
  * number of calls to isDone().
  */
-class MaxCallsTerminationCriteria : public GoalEvaluationModule {
-public:
-  /*! Constructor.
-   * @param max_calls Maximal number of calls.
-   */
-  MaxCallsTerminationCriteria(unsigned int max_calls);
+class MaxCallsTerminationCriteria : public GoalEvaluationModule
+{
+      public:
+        /*! Constructor.
+         * @param max_calls Maximal number of calls.
+         */
+        MaxCallsTerminationCriteria(unsigned int max_calls);
 
-  /*! Resets the goal evaluation module.
-   */
-  virtual void reset();
+        /*! Resets the goal evaluation module.
+         */
+        virtual void reset();
 
-  /*! Returns true if the goal was reached.
-   */
-  virtual bool isDone();
+        /*! Returns true if the goal was reached.
+         */
+        virtual bool isDone();
 
-private:
-  unsigned int max_calls_;
-  unsigned int call_count_;
+      private:
+        unsigned int max_calls_;
+        unsigned int call_count_;
 };
-}
+} // namespace ig_active_reconstruction

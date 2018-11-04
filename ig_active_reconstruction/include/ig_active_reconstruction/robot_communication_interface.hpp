@@ -17,7 +17,7 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #pragma once
 
@@ -25,9 +25,11 @@
 #include "ig_active_reconstruction/view.hpp"
 #include "ig_active_reconstruction/view_space.hpp"
 
-namespace ig_active_reconstruction {
+namespace ig_active_reconstruction
+{
 
-namespace robot {
+namespace robot
+{
 
 /*! Abstract interface definition for robot interface implementations: Those can
  * be communication units
@@ -36,45 +38,47 @@ namespace robot {
  * forward the commands to a "robot" (e.g. FlyingStereoCamCommUnit in the
  * flying_stereo_cam package)
  */
-class CommunicationInterface {
-public:
-  /*! Reception info
-   */
-  enum struct ReceptionInfo { SUCCEEDED = 0, FAILED = 1 };
+class CommunicationInterface
+{
+      public:
+        /*! Reception info
+         */
+        enum struct ReceptionInfo { SUCCEEDED = 0, FAILED = 1 };
 
-public:
-  virtual ~CommunicationInterface(){};
+      public:
+        virtual ~CommunicationInterface(){};
 
-  /*! returns the current view */
-  virtual views::View getCurrentView() = 0;
+        /*! returns the current view */
+        virtual views::View getCurrentView() = 0;
 
-  /*! Commands robot to retrieve new data.
-   * @return information about what happened (data received, receival failed )
-   */
-  virtual ReceptionInfo retrieveData() = 0;
+        /*! Commands robot to retrieve new data.
+         * @return information about what happened (data received, receival
+         * failed )
+         */
+        virtual ReceptionInfo retrieveData() = 0;
 
-  /*! Returns the cost to move from the current view to the indicated view
-   * @param target_view the next view
-   * @return cost to move to that view
-   */
-  virtual MovementCost movementCost(views::View &target_view) = 0;
+        /*! Returns the cost to move from the current view to the indicated view
+         * @param target_view the next view
+         * @return cost to move to that view
+         */
+        virtual MovementCost movementCost(views::View &target_view) = 0;
 
-  /*! returns the cost to move from start view to target view
-   * @param start_view the start view
-   * @param target_view the target view
-   * @param fill_additional_information if true then the different parts of the
-   * cost will be included in the additional fields as well
-   * @return cost for the movement
-   */
-  virtual MovementCost movementCost(views::View &start_view,
-                                    views::View &target_view,
-                                    bool fill_additional_information) = 0;
+        /*! returns the cost to move from start view to target view
+         * @param start_view the start view
+         * @param target_view the target view
+         * @param fill_additional_information if true then the different parts
+         * of the cost will be included in the additional fields as well
+         * @return cost for the movement
+         */
+        virtual MovementCost movementCost(views::View &start_view,
+                                          views::View &target_view,
+                                          bool fill_additional_information) = 0;
 
-  /*! Tells the robot to get the camera to a new view
-   * @param target_view where to move to
-   * @return false if the operation failed
-   */
-  virtual bool moveTo(views::View &target_view) = 0;
+        /*! Tells the robot to get the camera to a new view
+         * @param target_view where to move to
+         * @return false if the operation failed
+         */
+        virtual bool moveTo(views::View &target_view) = 0;
 };
-}
-}
+} // namespace robot
+} // namespace ig_active_reconstruction

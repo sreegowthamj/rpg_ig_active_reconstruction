@@ -17,86 +17,108 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #define TEMPT template <class TREE_TYPE, class POINTCLOUD_TYPE>
 #define CSCOPE RayOcclusionCalculator<TREE_TYPE, POINTCLOUD_TYPE>
 
 #include <octomap/octomap.h>
 
-namespace ig_active_reconstruction {
+namespace ig_active_reconstruction
+{
 
-namespace world_representation {
+namespace world_representation
+{
 
-namespace octomap {
+namespace octomap
+{
 TEMPT
 CSCOPE::RayOcclusionCalculator(Options options)
-    : occlusion_update_dist_m_(options.occlusion_update_dist_m) {}
+    : occlusion_update_dist_m_(options.occlusion_update_dist_m)
+{
+}
 
 TEMPT
 void CSCOPE::insert(const Eigen::Vector3d &origin, const POINTCLOUD_TYPE &pcl,
-                    std::vector<int> &valid_indices) {
-  if (this->link_.octree == NULL)
-    return;
+                    std::vector<int> &valid_indices)
+{
+        if (this->link_.octree == NULL)
+                return;
 
-  using ::octomap::point3d;
-  using ::octomap::KeyRay;
+        using ::octomap::KeyRay;
+        using ::octomap::point3d;
 
-  point3d sensor_origin(origin(0), origin(1), origin(2));
-  KeyRay ray;
+        point3d sensor_origin(origin(0), origin(1), origin(2));
+        KeyRay ray;
 
-  double max_nr_of_cells_in_occlusion =
-      2 * occlusion_update_dist_m_ / this->link_.octree->getResolution();
+        double max_nr_of_cells_in_occlusion =
+                2 * occlusion_update_dist_m_
+                / this->link_.octree->getResolution();
 
-  for (size_t i = 0; i < valid_indices.size(); ++i) {
-    if (i % 1000 == 0)
-      std::cout << "\ncalculating occlusion for point " << i << "/"
-                << valid_indices.size();
+        for (size_t i = 0; i < valid_indices.size(); ++i) {
+                if (i % 1000 == 0)
+                        std::cout << "\ncalculating occlusion for point " << i
+                                  << "/" << valid_indices.size();
 
-    // point3d point(it->x, it->y, it->z);
-    point3d point(pcl.points[valid_indices[i]].x,
-                  pcl.points[valid_indices[i]].y,
-                  pcl.points[valid_indices[i]].z);
-    point3d curr_ray = point - sensor_origin;
+                // point3d point(it->x, it->y, it->z);
+                point3d point(pcl.points[valid_indices[i]].x,
+                              pcl.points[valid_indices[i]].y,
+                              pcl.points[valid_indices[i]].z);
+                point3d curr_ray = point - sensor_origin;
 
-    point3d new_end = point + curr_ray.normalized() * occlusion_update_dist_m_;
-    if (this->link_.octree->computeRayKeys(point, new_end, ray)) {
-      KeyRay::iterator occ =
-          ray.begin(); // first point is the occupied one - skip it!
-      KeyRay::iterator end = ray.end();
+                point3d new_end =
+                        point
+                        + curr_ray.normalized() * occlusion_update_dist_m_;
+                if (this->link_.octree->computeRayKeys(point, new_end, ray)) {
+                        KeyRay::iterator occ =
+                                ray.begin(); // first point is the occupied one
+                                             // - skip it!
+                        KeyRay::iterator end = ray.end();
 
-      if (occ != end) {
-        ++occ;
-        for (unsigned int dist = 1; occ != end; ++dist, ++occ) {
-          typename TREE_TYPE::NodeType *voxel =
-              this->link_.octree->search(*occ);
+                        if (occ != end) {
+                                ++occ;
+                                for (unsigned int dist = 1; occ != end;
+                                     ++dist, ++occ) {
+                                        typename TREE_TYPE::NodeType *voxel =
+                                                this->link_.octree->search(
+                                                        *occ);
 
-          if (voxel != NULL) {
-            if (!voxel->hasMeasurement()) {
-              voxel->updateOccDist(dist);
-              voxel->setMaxDist(max_nr_of_cells_in_occlusion);
-            }
-          } else {
-            voxel = this->link_.octree->updateNode(*occ, false);
-            // the occupancy probability will be ignored during an actual update
-            // with the following call:
-            voxel->updateHasMeasurement(false);
-            voxel->updateOccDist(dist);
-            voxel->setMaxDist(max_nr_of_cells_in_occlusion);
-          }
+                                        if (voxel != NULL) {
+                                                if (!voxel->hasMeasurement()) {
+                                                        voxel->updateOccDist(
+                                                                dist);
+                                                        voxel->setMaxDist(
+                                                                max_nr_of_cells_in_occlusion);
+                                                }
+                                        } else {
+                                                voxel = this->link_.octree
+                                                                ->updateNode(
+                                                                        *occ,
+                                                                        false);
+                                                // the occupancy probability
+                                                // will be ignored during an
+                                                // actual update with the
+                                                // following call:
+                                                voxel->updateHasMeasurement(
+                                                        false);
+                                                voxel->updateOccDist(dist);
+                                                voxel->setMaxDist(
+                                                        max_nr_of_cells_in_occlusion);
+                                        }
+                                }
+                        }
+                }
         }
-      }
-    }
-  }
 }
 
 TEMPT
-void CSCOPE::setOctree(boost::shared_ptr<TREE_TYPE> octree) {
-  this->link_.octree = octree;
+void CSCOPE::setOctree(boost::shared_ptr<TREE_TYPE> octree)
+{
+        this->link_.octree = octree;
 }
-}
-}
-}
+} // namespace octomap
+} // namespace world_representation
+} // namespace ig_active_reconstruction
 
 #undef CSCOPE
 #undef TEMPT

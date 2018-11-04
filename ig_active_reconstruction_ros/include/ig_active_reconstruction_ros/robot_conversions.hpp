@@ -17,7 +17,7 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #pragma once
 
@@ -27,19 +27,21 @@
 
 #include "ig_active_reconstruction/robot_communication_interface.hpp"
 
-namespace ig_active_reconstruction {
+namespace ig_active_reconstruction
+{
 
-namespace ros_conversions {
+namespace ros_conversions
+{
 
 /*! Converts movement cost object to a ros cost message
  * @param cost Cost object from which a cost message shall be created.
-*/
+ */
 ig_active_reconstruction_msgs::MovementCostMsg
 movementCostToMsg(const robot::MovementCost &cost);
 
 /*!
-* loads from msg
-*/
+ * loads from msg
+ */
 robot::MovementCost
 movementCostFromMsg(ig_active_reconstruction_msgs::MovementCostMsg &_msg);
 
@@ -47,5 +49,5 @@ robot::CommunicationInterface::ReceptionInfo
 robotReceptionInfoFromMsg(int &receive_info);
 
 int robotReceptionInfoToMsg(robot::CommunicationInterface::ReceptionInfo &info);
-}
-}
+} // namespace ros_conversions
+} // namespace ig_active_reconstruction

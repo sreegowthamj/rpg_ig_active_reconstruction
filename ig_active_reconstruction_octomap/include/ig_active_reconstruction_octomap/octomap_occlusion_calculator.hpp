@@ -17,7 +17,7 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #pragma once
 
@@ -27,34 +27,38 @@
 #include <Eigen/Geometry>
 #include <pcl/common/projection_matrix.h>
 
-namespace ig_active_reconstruction {
+namespace ig_active_reconstruction
+{
 
-namespace world_representation {
+namespace world_representation
+{
 
-namespace octomap {
+namespace octomap
+{
 /*! Abstract base class: Calculates occlusion distance updates.
  */
 template <class TREE_TYPE, class POINTCLOUD_TYPE>
-class OcclusionCalculator
-    : public WorldRepresentation<TREE_TYPE>::LinkedObject {
-public:
-  virtual ~OcclusionCalculator(){};
+class OcclusionCalculator : public WorldRepresentation<TREE_TYPE>::LinkedObject
+{
+      public:
+        virtual ~OcclusionCalculator(){};
 
-  /*! Calculates occlusion distances for the given input
-   * and sets the respective values within the octree
-   * @param origin Origin of the sensor, position from which pointcloud was
-   * obtained.
-   * @param pcl The pointcloud
-   * @param valid_indices Vector with the indices of all points in the
-   * pointcloud that should be considered
-   */
-  virtual void insert(const Eigen::Vector3d &origin, const POINTCLOUD_TYPE &pcl,
-                      std::vector<int> &valid_indices) = 0;
+        /*! Calculates occlusion distances for the given input
+         * and sets the respective values within the octree
+         * @param origin Origin of the sensor, position from which pointcloud
+         * was obtained.
+         * @param pcl The pointcloud
+         * @param valid_indices Vector with the indices of all points in the
+         * pointcloud that should be considered
+         */
+        virtual void insert(const Eigen::Vector3d &origin,
+                            const POINTCLOUD_TYPE &pcl,
+                            std::vector<int> &valid_indices) = 0;
 
-  /*! Sets the octree in which occlusions will be marked.
-   */
-  virtual void setOctree(boost::shared_ptr<TREE_TYPE> octree) = 0;
+        /*! Sets the octree in which occlusions will be marked.
+         */
+        virtual void setOctree(boost::shared_ptr<TREE_TYPE> octree) = 0;
 };
-}
-}
-}
+} // namespace octomap
+} // namespace world_representation
+} // namespace ig_active_reconstruction

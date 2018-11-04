@@ -19,66 +19,77 @@ along with movements. If not, see <http://www.gnu.org/licenses/>.
 #include "movements/combined_kinematic_movement_description.h"
 #include "movements/geometry_pose.h"
 
-namespace movements {
+namespace movements
+{
 
-CombinedRelativeMovement::CombinedRelativeMovement() {}
+CombinedRelativeMovement::CombinedRelativeMovement()
+{
+}
 
 movements::Pose
-CombinedRelativeMovement::applyToBasePose(movements::Pose &_base) {
-  movements::Pose end_pose = _base;
-  for (auto &rel_movement : relative_movement_queue_) {
-    end_pose += rel_movement;
-  }
-  return end_pose;
+CombinedRelativeMovement::applyToBasePose(movements::Pose &_base)
+{
+        movements::Pose end_pose = _base;
+        for (auto &rel_movement : relative_movement_queue_) {
+                end_pose += rel_movement;
+        }
+        return end_pose;
 }
 
 CombinedRelativeMovement &CombinedRelativeMovement::
-operator=(RelativeMovement const &_to_equal) {
-  relative_movement_queue_.clear();
-  relative_movement_queue_.push_back(_to_equal);
+operator=(RelativeMovement const &_to_equal)
+{
+        relative_movement_queue_.clear();
+        relative_movement_queue_.push_back(_to_equal);
 }
 
 CombinedRelativeMovement CombinedRelativeMovement::
-operator+(CombinedRelativeMovement const &_to_add) {
-  CombinedRelativeMovement rel_movement = *this;
-  rel_movement += _to_add;
-  return rel_movement;
+operator+(CombinedRelativeMovement const &_to_add)
+{
+        CombinedRelativeMovement rel_movement = *this;
+        rel_movement += _to_add;
+        return rel_movement;
 }
 
 CombinedRelativeMovement CombinedRelativeMovement::
-operator+(RelativeMovement const &_to_add) {
-  CombinedRelativeMovement rel_movement = *this;
-  rel_movement += _to_add;
-  return rel_movement;
+operator+(RelativeMovement const &_to_add)
+{
+        CombinedRelativeMovement rel_movement = *this;
+        rel_movement += _to_add;
+        return rel_movement;
 }
 
 CombinedKinematicMovementDescription CombinedRelativeMovement::
-operator+(KinematicMovementDescription const &_to_add) {
-  CombinedKinematicMovementDescription kin_movement_chain;
-  kin_movement_chain = (*this);
-  kin_movement_chain += _to_add;
-  return kin_movement_chain;
+operator+(KinematicMovementDescription const &_to_add)
+{
+        CombinedKinematicMovementDescription kin_movement_chain;
+        kin_movement_chain = (*this);
+        kin_movement_chain += _to_add;
+        return kin_movement_chain;
 }
 
 CombinedKinematicMovementDescription CombinedRelativeMovement::
-operator+(CombinedKinematicMovementDescription const &_to_add) {
-  CombinedKinematicMovementDescription kin_movement_chain;
-  kin_movement_chain = *this;
-  kin_movement_chain += _to_add;
-  return kin_movement_chain;
+operator+(CombinedKinematicMovementDescription const &_to_add)
+{
+        CombinedKinematicMovementDescription kin_movement_chain;
+        kin_movement_chain = *this;
+        kin_movement_chain += _to_add;
+        return kin_movement_chain;
 }
 
 CombinedRelativeMovement &CombinedRelativeMovement::
-operator+=(CombinedRelativeMovement const &_to_add) {
-  for (auto &rel_movement : _to_add.relative_movement_queue_) {
-    relative_movement_queue_.push_back(rel_movement);
-  }
-  return *this;
+operator+=(CombinedRelativeMovement const &_to_add)
+{
+        for (auto &rel_movement : _to_add.relative_movement_queue_) {
+                relative_movement_queue_.push_back(rel_movement);
+        }
+        return *this;
 }
 
 CombinedRelativeMovement &CombinedRelativeMovement::
-operator+=(RelativeMovement const &_to_add) {
-  relative_movement_queue_.push_back(_to_add);
-  return *this;
+operator+=(RelativeMovement const &_to_add)
+{
+        relative_movement_queue_.push_back(_to_add);
+        return *this;
 }
-}
+} // namespace movements

@@ -17,45 +17,48 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #pragma once
 
-namespace ig_active_reconstruction {
+namespace ig_active_reconstruction
+{
 
-namespace robot {
+namespace robot
+{
 
 /*! The MovementCost class describes the cost to move the sensor between
  * different positions.
  * All its members are currently public.
  */
 struct MovementCost {
-public:
-  enum struct Exception {
-    NONE,
-    COST_UNKNOWN,
-    INFINITE_COST,
-    INVALID_STATE,
-    INVALID_TARGET_STATE,
-    INVALID_START_STATE,
-    RECEPTION_FAILED
-  };
+      public:
+        enum struct Exception {
+                NONE,
+                COST_UNKNOWN,
+                INFINITE_COST,
+                INVALID_STATE,
+                INVALID_TARGET_STATE,
+                INVALID_START_STATE,
+                RECEPTION_FAILED
+        };
 
-public:
-  MovementCost() : exception(Exception::NONE){};
+      public:
+        MovementCost() : exception(Exception::NONE){};
 
-public:
-  double cost; // !keeping it simple
-  //! possible exceptions:: INFINITE_COST: do not move to target view,
-  //! INVALID_STATE: robot is in state which somehow prevents it from
-  //! calculating a cost, but the movement might be possible
-  Exception exception;
-  std::vector<std::string> additional_field_names; //! names for additional
-                                                   //! information fields
-                                                   //! (optional)
-  std::vector<double> additional_fields_values; //! values corresponding to the
-                                                //! description in
-                                                //! additional_fiel
+      public:
+        double cost; // !keeping it simple
+        //! possible exceptions:: INFINITE_COST: do not move to target view,
+        //! INVALID_STATE: robot is in state which somehow prevents it from
+        //! calculating a cost, but the movement might be possible
+        Exception exception;
+        std::vector<std::string>
+                additional_field_names;               //! names for additional
+                                                      //! information fields
+                                                      //! (optional)
+        std::vector<double> additional_fields_values; //! values corresponding
+                                                      //! to the description in
+                                                      //! additional_fiel
 };
-}
-}
+} // namespace robot
+} // namespace ig_active_reconstruction

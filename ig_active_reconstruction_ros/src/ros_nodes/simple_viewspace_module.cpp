@@ -17,7 +17,7 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #include <ros/ros.h>
 
@@ -28,30 +28,31 @@
 /*! Implements a ROS node holding a SimpleViewSpace module, loading the
  * (possibly only initial) viewspace from file.
  */
-int main(int argc, char **argv) {
-  ros::init(argc, argv, "simple_viewspace_module");
-  ros::NodeHandle nh;
+int main(int argc, char **argv)
+{
+        ros::init(argc, argv, "simple_viewspace_module");
+        ros::NodeHandle nh;
 
-  namespace iar = ig_active_reconstruction;
+        namespace iar = ig_active_reconstruction;
 
-  // Load configuration
-  //-----------------------------------------------------------------------------------------
-  std::string viewspace_file_path;
-  ros_tools::getExpParam(viewspace_file_path, "viewspace_file_path");
+        // Load configuration
+        //-----------------------------------------------------------------------------------------
+        std::string viewspace_file_path;
+        ros_tools::getExpParam(viewspace_file_path, "viewspace_file_path");
 
-  // Instantiate viewspace module
-  //-----------------------------------------------------------------------------------------
-  boost::shared_ptr<iar::views::CommunicationInterface> viewspace_module =
-      boost::make_shared<iar::views::SimpleViewSpaceModule>(
-          viewspace_file_path);
+        // Instantiate viewspace module
+        //-----------------------------------------------------------------------------------------
+        boost::shared_ptr<iar::views::CommunicationInterface> viewspace_module =
+                boost::make_shared<iar::views::SimpleViewSpaceModule>(
+                        viewspace_file_path);
 
-  // Expose the viewspace module to ROS
-  //-----------------------------------------------------------------------------------------
-  iar::views::RosServerCI comm_unit(nh, viewspace_module);
+        // Expose the viewspace module to ROS
+        //-----------------------------------------------------------------------------------------
+        iar::views::RosServerCI comm_unit(nh, viewspace_module);
 
-  // spin...
-  ROS_INFO("simple_viewspace_module is ready");
-  ros::spin();
+        // spin...
+        ROS_INFO("simple_viewspace_module is ready");
+        ros::spin();
 
-  return 0;
+        return 0;
 }

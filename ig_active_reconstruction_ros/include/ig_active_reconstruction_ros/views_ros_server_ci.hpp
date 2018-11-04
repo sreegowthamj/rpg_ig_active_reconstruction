@@ -17,7 +17,7 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #pragma once
 
@@ -28,74 +28,77 @@
 #include "ig_active_reconstruction_msgs/ViewSpaceRequest.h"
 #include "ig_active_reconstruction_msgs/ViewSpaceUpdate.h"
 
-namespace ig_active_reconstruction {
+namespace ig_active_reconstruction
+{
 
-namespace views {
+namespace views
+{
 
 /*! ROS server implementation of a views::CommunicationInterface. Receives ROS
  * service calls and forwards them to the linked interface.
  */
-class RosServerCI : public CommunicationInterface {
-public:
-  /*! Constructor
-   * @param nh ROS node handle defines the namespace in which ROS communication
-   * will be carried out.
-   * @param linked_interface (optional) directly add the interface that is
-   * linked internally (to which requests are forwarded.
-   */
-  RosServerCI(
-      ros::NodeHandle nh,
-      boost::shared_ptr<CommunicationInterface> linked_interface = nullptr);
+class RosServerCI : public CommunicationInterface
+{
+      public:
+        /*! Constructor
+         * @param nh ROS node handle defines the namespace in which ROS
+         * communication will be carried out.
+         * @param linked_interface (optional) directly add the interface that is
+         * linked internally (to which requests are forwarded.
+         */
+        RosServerCI(ros::NodeHandle nh,
+                    boost::shared_ptr<CommunicationInterface> linked_interface =
+                            nullptr);
 
-  /*! Returns the viewspace.
-    */
-  virtual const ViewSpace &getViewSpace();
+        /*! Returns the viewspace.
+         */
+        virtual const ViewSpace &getViewSpace();
 
-  /*! Add a set of new views to the viewspace.
-   * @param new_views New views to be added to the view space.
-   */
-  virtual ViewSpaceUpdateResult addViews(std::vector<View> &new_views);
+        /*! Add a set of new views to the viewspace.
+         * @param new_views New views to be added to the view space.
+         */
+        virtual ViewSpaceUpdateResult addViews(std::vector<View> &new_views);
 
-  /*! Adds a single new view to the viewspace.
-   * @param new_view New view to add to the viewspace.
-   */
-  virtual ViewSpaceUpdateResult addView(View new_view);
+        /*! Adds a single new view to the viewspace.
+         * @param new_view New view to add to the viewspace.
+         */
+        virtual ViewSpaceUpdateResult addView(View new_view);
 
-  /*! Delete a set of views from the viewspace, using their id.
-   * @param view_ids Vector with the id's of the views
-   * @return True if all views were successfully deleted.
-   */
-  virtual ViewSpaceUpdateResult
-  deleteViews(std::vector<View::IdType> &view_ids);
+        /*! Delete a set of views from the viewspace, using their id.
+         * @param view_ids Vector with the id's of the views
+         * @return True if all views were successfully deleted.
+         */
+        virtual ViewSpaceUpdateResult
+        deleteViews(std::vector<View::IdType> &view_ids);
 
-  /*! Delete a single view from the viewspace, using its id.
-   * @param view_id Id of the view that shall be deleted.
-   * @return True if the view was found and deleted.
-   */
-  virtual ViewSpaceUpdateResult deleteView(View::IdType view_id);
+        /*! Delete a single view from the viewspace, using its id.
+         * @param view_id Id of the view that shall be deleted.
+         * @return True if the view was found and deleted.
+         */
+        virtual ViewSpaceUpdateResult deleteView(View::IdType view_id);
 
-protected:
-  bool viewspaceService(
-      ig_active_reconstruction_msgs::ViewSpaceRequest::Request &req,
-      ig_active_reconstruction_msgs::ViewSpaceRequest::Response &res);
+      protected:
+        bool viewspaceService(
+                ig_active_reconstruction_msgs::ViewSpaceRequest::Request &req,
+                ig_active_reconstruction_msgs::ViewSpaceRequest::Response &res);
 
-  bool viewsAdderService(
-      ig_active_reconstruction_msgs::ViewSpaceUpdate::Request &req,
-      ig_active_reconstruction_msgs::ViewSpaceUpdate::Response &res);
+        bool viewsAdderService(
+                ig_active_reconstruction_msgs::ViewSpaceUpdate::Request &req,
+                ig_active_reconstruction_msgs::ViewSpaceUpdate::Response &res);
 
-  bool viewsDeleterService(
-      ig_active_reconstruction_msgs::DeleteViews::Request &req,
-      ig_active_reconstruction_msgs::DeleteViews::Response &res);
+        bool viewsDeleterService(
+                ig_active_reconstruction_msgs::DeleteViews::Request &req,
+                ig_active_reconstruction_msgs::DeleteViews::Response &res);
 
-protected:
-  ros::NodeHandle nh_;
+      protected:
+        ros::NodeHandle nh_;
 
-  boost::shared_ptr<CommunicationInterface>
-      linked_interface_; //! Linked interface.
+        boost::shared_ptr<CommunicationInterface>
+                linked_interface_; //! Linked interface.
 
-  ros::ServiceServer viewspace_service_;
-  ros::ServiceServer views_adder_service_;
-  ros::ServiceServer views_deleter_service_;
+        ros::ServiceServer viewspace_service_;
+        ros::ServiceServer views_adder_service_;
+        ros::ServiceServer views_deleter_service_;
 };
-}
-}
+} // namespace views
+} // namespace ig_active_reconstruction
