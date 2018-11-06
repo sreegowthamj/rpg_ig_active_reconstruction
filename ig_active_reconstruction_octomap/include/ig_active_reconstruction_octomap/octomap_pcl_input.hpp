@@ -96,7 +96,7 @@ class PclInput : public WorldRepresentation<TREE_TYPE>::LinkedObject
                                 TREE_TYPE, POINTCLOUD_TYPE>::Options());
 
       protected:
-        boost::shared_ptr<OcclusionCalculator<TREE_TYPE, POINTCLOUD_TYPE> >
+        boost::shared_ptr<OcclusionCalculator<TREE_TYPE, POINTCLOUD_TYPE>>
                 occlusion_calculator_; //! Calculates occlusions
 };
 } // namespace octomap

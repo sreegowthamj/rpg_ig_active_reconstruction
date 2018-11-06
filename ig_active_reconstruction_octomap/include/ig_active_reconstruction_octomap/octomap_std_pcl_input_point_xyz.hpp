@@ -36,7 +36,7 @@ template <class TREE_TYPE> struct StdPclInputPointXYZ {
         typedef pcl::PointCloud<pcl::PointXYZ> PclType;
         typedef TREE_TYPE TreeType;
         typedef StdPclInput<TreeType, PclType> Type;
-        typedef boost::shared_ptr<StdPclInput<TreeType, PclType> > Ptr;
+        typedef boost::shared_ptr<StdPclInput<TreeType, PclType>> Ptr;
 };
 } // namespace octomap
 } // namespace world_representation

@@ -47,8 +47,8 @@ class IgCalculator : public CommunicationInterface,
                      public WorldRepresentation<TREE_TYPE>::LinkedObject
 {
       public:
-        typedef multikit::Factory<InformationGain<TREE_TYPE> > IgFactory;
-        typedef multikit::Factory<MapMetric<TREE_TYPE> > MmFactory;
+        typedef multikit::Factory<InformationGain<TREE_TYPE>> IgFactory;
+        typedef multikit::Factory<MapMetric<TREE_TYPE>> MmFactory;
 
       public:
         virtual ~IgCalculator(){};
@@ -119,7 +119,7 @@ class IgCalculator : public CommunicationInterface,
         /*! Helper function for binding make shared.
          */
         template <template <typename> class IG_METRIC_TYPE>
-        boost::shared_ptr<InformationGain<TREE_TYPE> >
+        boost::shared_ptr<InformationGain<TREE_TYPE>>
         makeShared(typename IG_METRIC_TYPE<TREE_TYPE>::Utils::Config utils);
 
       protected:

@@ -75,11 +75,11 @@ INPUT_OBJ_TYPE<TREE_TYPE> >( args... );
 
 TEMPT
 template <template <typename> class INPUT_OBJ_TYPE>
-boost::shared_ptr<INPUT_OBJ_TYPE<TREE_TYPE> >
+boost::shared_ptr<INPUT_OBJ_TYPE<TREE_TYPE>>
 CSCOPE::getLinkedObj(typename INPUT_OBJ_TYPE<TREE_TYPE>::Config config)
 {
-        boost::shared_ptr<INPUT_OBJ_TYPE<TREE_TYPE> > ptr =
-                boost::make_shared<INPUT_OBJ_TYPE<TREE_TYPE> >(config);
+        boost::shared_ptr<INPUT_OBJ_TYPE<TREE_TYPE>> ptr =
+                boost::make_shared<INPUT_OBJ_TYPE<TREE_TYPE>>(config);
 
         Link new_link;
         new_link.octree = octree_;

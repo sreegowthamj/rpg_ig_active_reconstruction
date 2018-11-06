@@ -142,7 +142,7 @@ template <class TREE_TYPE> class WorldRepresentation
          * argument.
          */
         template <template <typename> class INPUT_OBJ_TYPE>
-        boost::shared_ptr<INPUT_OBJ_TYPE<TREE_TYPE> >
+        boost::shared_ptr<INPUT_OBJ_TYPE<TREE_TYPE>>
         getLinkedObj(typename INPUT_OBJ_TYPE<TREE_TYPE>::Config config =
                              typename INPUT_OBJ_TYPE<TREE_TYPE>::Config());
 

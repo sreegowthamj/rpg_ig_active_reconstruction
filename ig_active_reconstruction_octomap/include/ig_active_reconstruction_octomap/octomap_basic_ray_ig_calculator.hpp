@@ -42,7 +42,7 @@ template <class TREE_TYPE>
 class BasicRayIgCalculator : public IgCalculator<TREE_TYPE>
 {
       public:
-        typedef boost::shared_ptr<BasicRayIgCalculator<TREE_TYPE> > Ptr;
+        typedef boost::shared_ptr<BasicRayIgCalculator<TREE_TYPE>> Ptr;
 
         typedef typename IgCalculator<TREE_TYPE>::ResultInformation
                 ResultInformation;
@@ -138,7 +138,7 @@ class BasicRayIgCalculator : public IgCalculator<TREE_TYPE>
          */
         void calculateIgsOnRay(
                 RayCaster::Ray &ray,
-                std::vector<boost::shared_ptr<InformationGain<TREE_TYPE> > >
+                std::vector<boost::shared_ptr<InformationGain<TREE_TYPE>>>
                         &ig_set,
                 RayCastSettings &setting);
 
