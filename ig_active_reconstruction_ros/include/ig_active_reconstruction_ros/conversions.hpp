@@ -1,12 +1,9 @@
 /* Copyright (c) 2016, Stefan Isler, islerstefan@bluewin.ch
- * (ETH Zurich / Robotics and Perception Group, University of Zurich,
- * Switzerland)
+ * (ETH Zurich / Robotics and Perception Group, University of Zurich, Switzerland)
  *
- * This file is part of ig_active_reconstruction, software for information gain
- * based, active reconstruction.
+ * This file is part of ig_active_reconstruction, software for information gain based, active reconstruction.
  *
- * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
+ * ig_active_reconstruction is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -14,8 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
+ * Please refer to the GNU Lesser General Public License for details on the license,
  * on <http://www.gnu.org/licenses/>.
 */
 
@@ -23,11 +19,11 @@
 
 #if 0
 
-#include "ig_active_reconstruction_msgs/InformationGain.h"
-#include "ig_active_reconstruction_msgs/InformationGainRetrievalCommand.h"
 #include "ig_active_reconstruction_msgs/MovementCostMsg.h"
 #include "ig_active_reconstruction_msgs/ViewMsg.h"
+#include "ig_active_reconstruction_msgs/InformationGainRetrievalCommand.h"
 #include "ig_active_reconstruction_msgs/ViewSpaceMsg.h"
+#include "ig_active_reconstruction_msgs/InformationGain.h"
 
 #include "ig_active_reconstruction/robot_movement_cost.hpp"
 #include "ig_active_reconstruction/view.hpp"
