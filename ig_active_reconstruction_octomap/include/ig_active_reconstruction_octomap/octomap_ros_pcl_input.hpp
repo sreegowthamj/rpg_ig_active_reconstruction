@@ -55,7 +55,7 @@ template <class TREE_TYPE, class POINTCLOUD_TYPE> class RosPclInput
          * incoming pointclouds will be transformed.
          */
         RosPclInput(ros::NodeHandle nh,
-                    boost::shared_ptr<PclInput<TREE_TYPE, POINTCLOUD_TYPE>>
+                    boost::shared_ptr<PclInput<TREE_TYPE, POINTCLOUD_TYPE> >
                             pcl_input,
                     std::string world_frame);
 
@@ -87,11 +87,11 @@ template <class TREE_TYPE, class POINTCLOUD_TYPE> class RosPclInput
 
       private:
         ros::NodeHandle nh_;
-        boost::shared_ptr<PclInput<TREE_TYPE, POINTCLOUD_TYPE>> pcl_input_;
+        boost::shared_ptr<PclInput<TREE_TYPE, POINTCLOUD_TYPE> > pcl_input_;
 
         std::string world_frame_name_;
 
-        std::vector<boost::function<void()>> signal_call_stack_;
+        std::vector<boost::function<void()> > signal_call_stack_;
 
         ros::Subscriber pcl_subscriber_;
         ros::ServiceServer pcl_input_service_;

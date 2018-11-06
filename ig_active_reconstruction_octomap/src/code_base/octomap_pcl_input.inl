@@ -58,7 +58,7 @@ void CSCOPE::setOcclusionCalculator(
                 options)
 {
         occlusion_calculator_ = boost::make_shared<
-                OCCLUSION_CALC_TYPE<TREE_TYPE, POINTCLOUD_TYPE>>(options);
+                OCCLUSION_CALC_TYPE<TREE_TYPE, POINTCLOUD_TYPE> >(options);
         occlusion_calculator_->setLink(this->link_);
 }
 } // namespace octomap

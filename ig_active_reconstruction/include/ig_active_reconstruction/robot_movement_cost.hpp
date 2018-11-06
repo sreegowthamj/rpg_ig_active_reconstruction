@@ -20,7 +20,8 @@
  */
 
 #pragma once
-
+#include <vector>
+#include <string>
 namespace ig_active_reconstruction
 {
 

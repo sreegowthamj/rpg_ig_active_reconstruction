@@ -87,7 +87,7 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
                 ray_caster_.getRaySet(command.path[0]);
 
         // build ig metric set
-        std::vector<boost::shared_ptr<InformationGain<TREE_TYPE>>> ig_set;
+        std::vector<boost::shared_ptr<InformationGain<TREE_TYPE > > > ig_set;
         if (!command.metric_ids.empty()) {
                 IgRetrievalResult res;
                 res.predicted_gain = 0;
@@ -140,7 +140,7 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
 
         // retrieve information gains and build output
         typename std::vector<
-                boost::shared_ptr<InformationGain<TREE_TYPE>>>::iterator ig_it =
+                boost::shared_ptr<InformationGain<TREE_TYPE> > >::iterator ig_it =
                 ig_set.begin();
         BOOST_FOREACH (IgRetrievalResult &res, output_ig) {
                 if (res.status == ResultInformation::SUCCEEDED) {
@@ -197,7 +197,7 @@ void CSCOPE::availableMapMetrics(std::vector<MetricInfo> &available_map_metrics)
 TEMPT
 void CSCOPE::calculateIgsOnRay(
         RayCaster::Ray &ray,
-        std::vector<boost::shared_ptr<InformationGain<TREE_TYPE>>> &ig_set,
+        std::vector<boost::shared_ptr<InformationGain<TREE_TYPE> > > &ig_set,
         RayCastSettings &setting)
 {
         using ::octomap::KeyRay;
