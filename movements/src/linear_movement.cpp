@@ -1,6 +1,7 @@
 /* Copyright (c) 2015, Stefan Isler, islerstefan@bluewin.ch
 *
-This file is part of movements, a library for representations and calculations of movements in space,
+This file is part of movements, a library for representations and calculations
+of movements in space,
 
 movements is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -21,82 +22,79 @@ namespace movements
 
 Linear::Linear()
 {
-  
 }
 
-Linear::Linear( double _x, double _y, double _z, double _velocity ):
-direction_(_x,_y,_z),
-velocity_(_velocity)
+Linear::Linear(double _x, double _y, double _z, double _velocity)
+    : direction_(_x, _y, _z), velocity_(_velocity)
 {
-  
 }
 
-Linear::Linear( Eigen::Vector3d _direction, double _velocity ):
-direction_(_direction),
-velocity_(_velocity)
+Linear::Linear(Eigen::Vector3d _direction, double _velocity)
+    : direction_(_direction), velocity_(_velocity)
 {
-  
 }
 
-Linear::Linear( Translation _direction, double _speed ):
-direction_( _direction.x(), _direction.y(), _direction.z() ),
-velocity_(_speed)
+Linear::Linear(Translation _direction, double _speed)
+    : direction_(_direction.x(), _direction.y(), _direction.z()),
+      velocity_(_speed)
 {
-  
 }
 
-double& Linear::x()
+double &Linear::x()
 {
-  return direction_(0);
+        return direction_(0);
 }
 
-double& Linear::y()
+double &Linear::y()
 {
-  return direction_(1);
+        return direction_(1);
 }
 
-double& Linear::z()
+double &Linear::z()
 {
-  return direction_(2);
+        return direction_(2);
 }
 
-double& Linear::velocity()
+double &Linear::velocity()
 {
-  return velocity_;
+        return velocity_;
 }
 
 std::string Linear::type()
 {
-  return "movements::Linear";
+        return "movements::Linear";
 }
 
-RelativeMovement Linear::operator()( double _time )
+RelativeMovement Linear::operator()(double _time)
 {
-  normalizeDirection(); // could be sped up...
-  double distance_covered = _time*velocity_;
-  
-  return Translation::create( distance_covered*direction_ );
+        normalizeDirection(); // could be sped up...
+        double distance_covered = _time * velocity_;
+
+        return Translation::create(distance_covered * direction_);
 }
 
-KinematicMovementDescription Linear::create( double _x, double _y, double _z, double _velocity )
+KinematicMovementDescription Linear::create(double _x, double _y, double _z,
+                                            double _velocity)
 {
-  return KinematicMovementDescription( new Linear(_x,_y,_z,_velocity) );
+        return KinematicMovementDescription(new Linear(_x, _y, _z, _velocity));
 }
 
-KinematicMovementDescription Linear::create( Eigen::Vector3d _direction, double _velocity )
+KinematicMovementDescription Linear::create(Eigen::Vector3d _direction,
+                                            double _velocity)
 {
-  return KinematicMovementDescription( new Linear(_direction,_velocity) );
+        return KinematicMovementDescription(new Linear(_direction, _velocity));
 }
 
-KinematicMovementDescription Linear::create( Translation _direction, double _speed )
+KinematicMovementDescription Linear::create(Translation _direction,
+                                            double _speed)
 {
-  return KinematicMovementDescription( new Linear(_direction,_speed) );
+        return KinematicMovementDescription(new Linear(_direction, _speed));
 }
 
 void Linear::normalizeDirection()
 {
-  direction_.normalize();
+        direction_.normalize();
 }
 
 
-}
+} // namespace movements

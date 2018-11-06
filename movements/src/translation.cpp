@@ -1,6 +1,7 @@
 /* Copyright (c) 2015, Stefan Isler, islerstefan@bluewin.ch
 *
-This file is part of movements, a library for representations and calculations of movements in space,
+This file is part of movements, a library for representations and calculations
+of movements in space,
 
 movements is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -22,59 +23,55 @@ namespace movements
 
 Translation::Translation()
 {
-  
 }
 
-Translation::Translation( double _x, double _y, double _z ):
-translation_(_x,_y,_z)
+Translation::Translation(double _x, double _y, double _z)
+    : translation_(_x, _y, _z)
 {
-  
 }
 
-Translation::Translation( Eigen::Vector3d _translation ):
-translation_(_translation)
+Translation::Translation(Eigen::Vector3d _translation)
+    : translation_(_translation)
 {
-  
 }
 
-double& Translation::x()
+double &Translation::x()
 {
-  return translation_(0);
+        return translation_(0);
 }
 
-double& Translation::y()
+double &Translation::y()
 {
-  return translation_(1);
+        return translation_(1);
 }
 
-double& Translation::z()
+double &Translation::z()
 {
-  return translation_(2);
+        return translation_(2);
 }
-
 
 
 std::string Translation::type()
 {
-  return "movements::Translation";
+        return "movements::Translation";
 }
 
-Pose Translation::applyToBasePose( Pose const& _base )
+Pose Translation::applyToBasePose(Pose const &_base)
 {
-  Pose copy = _base;
-  copy.position += translation_;
-  return copy;
+        Pose copy = _base;
+        copy.position += translation_;
+        return copy;
 }
 
-RelativeMovement Translation::create( double _x, double _y, double _z )
+RelativeMovement Translation::create(double _x, double _y, double _z)
 {
-  return RelativeMovement( new Translation(_x,_y,_z) );
+        return RelativeMovement(new Translation(_x, _y, _z));
 }
 
-RelativeMovement Translation::create( Eigen::Vector3d _translation )
+RelativeMovement Translation::create(Eigen::Vector3d _translation)
 {
-  return RelativeMovement( new Translation(_translation) );
+        return RelativeMovement(new Translation(_translation));
 }
 
 
-}
+} // namespace movements
