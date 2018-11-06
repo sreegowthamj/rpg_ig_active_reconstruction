@@ -17,27 +17,24 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
- */
+*/
 
 #pragma once
 
 #include "ig_active_reconstruction_octomap/octomap_std_pcl_input.hpp"
 
-namespace ig_active_reconstruction
-{
+namespace ig_active_reconstruction {
 
-namespace world_representation
-{
+namespace world_representation {
 
-namespace octomap
-{
+namespace octomap {
 // (cpp03 version...)
 template <class TREE_TYPE> struct StdPclInputPointXYZ {
-        typedef pcl::PointCloud<pcl::PointXYZ> PclType;
-        typedef TREE_TYPE TreeType;
-        typedef StdPclInput<TreeType, PclType> Type;
-        typedef boost::shared_ptr<StdPclInput<TreeType, PclType>> Ptr;
+  typedef pcl::PointCloud<pcl::PointXYZ> PclType;
+  typedef TREE_TYPE TreeType;
+  typedef StdPclInput<TreeType, PclType> Type;
+  typedef boost::shared_ptr<StdPclInput<TreeType, PclType>> Ptr;
 };
-} // namespace octomap
-} // namespace world_representation
-} // namespace ig_active_reconstruction
+}
+}
+}

@@ -17,7 +17,7 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
- */
+*/
 
 #include <stdexcept>
 
@@ -29,149 +29,135 @@
 #include "ig_active_reconstruction_msgs/StringList.h"
 #include <fstream>
 
-namespace ig_active_reconstruction
-{
+namespace ig_active_reconstruction {
 
-namespace world_representation
-{
+namespace world_representation {
 
-RosClientCI::RosClientCI(ros::NodeHandle nh) : nh_(nh)
-{
-        view_ig_computation_ = nh.serviceClient<
-                ig_active_reconstruction_msgs::InformationGainCalculation>(
-                "world/information_gain");
-        map_metric_computation_ = nh.serviceClient<
-                ig_active_reconstruction_msgs::MapMetricCalculation>(
-                "world/map_metric");
-        available_ig_receiver_ =
-                nh.serviceClient<ig_active_reconstruction_msgs::StringList>(
-                        "world/ig_list");
-        available_mm_receiver_ =
-                nh.serviceClient<ig_active_reconstruction_msgs::StringList>(
-                        "world/mm_list");
+RosClientCI::RosClientCI(ros::NodeHandle nh) : nh_(nh) {
+  view_ig_computation_ = nh.serviceClient<
+      ig_active_reconstruction_msgs::InformationGainCalculation>(
+      "world/information_gain");
+  map_metric_computation_ =
+      nh.serviceClient<ig_active_reconstruction_msgs::MapMetricCalculation>(
+          "world/map_metric");
+  available_ig_receiver_ =
+      nh.serviceClient<ig_active_reconstruction_msgs::StringList>(
+          "world/ig_list");
+  available_mm_receiver_ =
+      nh.serviceClient<ig_active_reconstruction_msgs::StringList>(
+          "world/mm_list");
 }
 
 RosClientCI::ResultInformation
-RosClientCI::computeViewIg(IgRetrievalCommand &command, ViewIgResult &output_ig)
-{
-        ig_active_reconstruction_msgs::InformationGainCalculation call;
-        call.request.command =
-                ros_conversions::igRetrievalCommandToMsg(command);
+RosClientCI::computeViewIg(IgRetrievalCommand &command,
+                           ViewIgResult &output_ig) {
+  ig_active_reconstruction_msgs::InformationGainCalculation call;
+  call.request.command = ros_conversions::igRetrievalCommandToMsg(command);
 
-        ROS_INFO("Demanding information gain.");
-        bool response = view_ig_computation_.call(call);
+  ROS_INFO("Demanding information gain.");
+  bool response = view_ig_computation_.call(call);
 
-        if (!response) {
-                unsigned int number_of_metrics =
-                        (!command.metric_ids.empty())
-                                ? command.metric_ids.size()
-                                : command.metric_names.size();
-                IgRetrievalResult failed;
-                failed.status = ResultInformation::FAILED;
-                failed.predicted_gain = 0;
+  if (!response) {
+    unsigned int number_of_metrics = (!command.metric_ids.empty())
+                                         ? command.metric_ids.size()
+                                         : command.metric_names.size();
+    IgRetrievalResult failed;
+    failed.status = ResultInformation::FAILED;
+    failed.predicted_gain = 0;
 
-                for (unsigned int i = 0; i < number_of_metrics; ++i) {
-                        output_ig.push_back(failed);
-                }
-                return ResultInformation::FAILED;
-        } else {
-                std::ofstream ofs;
-                ofs.open("compute_ig_view_fn.txt",
-                         std::ofstream::out | std::ofstream::app);
-                for (ig_active_reconstruction_msgs::InformationGain &ig :
-                     call.response.expected_information) {
-                        IgRetrievalResult result =
-                                ros_conversions::igRetrievalResultFromMsg(ig);
-                        ofs << "\nresult.predicted_gain ="
-                            << result.predicted_gain
-                            << "      result.status = " << result.status;
-                        output_ig.push_back(result);
-                }
-                ofs << "\n";
-                return ResultInformation::SUCCEEDED;
-        }
+    for (unsigned int i = 0; i < number_of_metrics; ++i) {
+      output_ig.push_back(failed);
+    }
+    return ResultInformation::FAILED;
+  } else {
+    std::ofstream ofs;
+    ofs.open("compute_ig_view_fn.txt", std::ofstream::out | std::ofstream::app);
+    for (ig_active_reconstruction_msgs::InformationGain &ig :
+         call.response.expected_information) {
+      IgRetrievalResult result = ros_conversions::igRetrievalResultFromMsg(ig);
+      ofs << "\nresult.predicted_gain =" << result.predicted_gain
+          << "      result.status = " << result.status;
+      output_ig.push_back(result);
+    }
+    ofs << "\n";
+    return ResultInformation::SUCCEEDED;
+  }
 }
 
 RosClientCI::ResultInformation
 RosClientCI::computeMapMetric(MapMetricRetrievalCommand &command,
-                              MapMetricRetrievalResultSet &output)
-{
-        ig_active_reconstruction_msgs::MapMetricCalculation call;
+                              MapMetricRetrievalResultSet &output) {
+  ig_active_reconstruction_msgs::MapMetricCalculation call;
 
-        for (std::string &name : command.metric_names) {
-                call.request.metric_names.push_back(name);
-        }
+  for (std::string &name : command.metric_names) {
+    call.request.metric_names.push_back(name);
+  }
 
-        ROS_INFO("Demanding map metric.");
-        bool response = map_metric_computation_.call(call);
+  ROS_INFO("Demanding map metric.");
+  bool response = map_metric_computation_.call(call);
 
-        if (!response) {
-                MapMetricRetrievalResult failed;
-                failed.status = ResultInformation::FAILED;
-                failed.value = 0;
-                for (unsigned int i = 0; i < command.metric_names.size(); ++i) {
-                        output.push_back(failed);
-                }
-                return ResultInformation::FAILED;
-        } else {
-                std::ofstream ofs;
-                ofs.open("computeMapMetric.txt",
-                         std::ofstream::out | std::ofstream::app);
-                for (ig_active_reconstruction_msgs::InformationGain
-                             &map_metric : call.response.results) {
-                        MapMetricRetrievalResult result;
-                        result.status =
-                                ros_conversions::resultInformationFromMsg(
-                                        map_metric.status);
-                        result.value = map_metric.predicted_gain;
+  if (!response) {
+    MapMetricRetrievalResult failed;
+    failed.status = ResultInformation::FAILED;
+    failed.value = 0;
+    for (unsigned int i = 0; i < command.metric_names.size(); ++i) {
+      output.push_back(failed);
+    }
+    return ResultInformation::FAILED;
+  } else {
+    std::ofstream ofs;
+    ofs.open("computeMapMetric.txt", std::ofstream::out | std::ofstream::app);
+    for (ig_active_reconstruction_msgs::InformationGain &map_metric :
+         call.response.results) {
+      MapMetricRetrievalResult result;
+      result.status =
+          ros_conversions::resultInformationFromMsg(map_metric.status);
+      result.value = map_metric.predicted_gain;
 
-                        ofs << "result.value =" << result.value
-                            << "      result.status = " << result.status
-                            << "\t";
-                        output.push_back(result);
-                }
-                ofs << "\n";
+      ofs << "result.value =" << result.value
+          << "      result.status = " << result.status << "\t";
+      output.push_back(result);
+    }
+    ofs << "\n";
 
-                return ResultInformation::SUCCEEDED;
-        }
+    return ResultInformation::SUCCEEDED;
+  }
 }
 
 void RosClientCI::availableIgMetrics(
-        std::vector<MetricInfo> &available_ig_metrics)
-{
+    std::vector<MetricInfo> &available_ig_metrics) {
 
-        ROS_INFO("Demanding available information gains.");
-        ig_active_reconstruction_msgs::StringList call;
-        bool response = available_ig_receiver_.call(call);
+  ROS_INFO("Demanding available information gains.");
+  ig_active_reconstruction_msgs::StringList call;
+  bool response = available_ig_receiver_.call(call);
 
-        if (!response)
-                return;
+  if (!response)
+    return;
 
-        for (unsigned int i = 0; i < call.response.names.size(); ++i) {
-                MetricInfo new_metric;
-                new_metric.name = call.response.names[i];
-                new_metric.id = call.response.ids[i];
-                available_ig_metrics.push_back(new_metric);
-        }
+  for (unsigned int i = 0; i < call.response.names.size(); ++i) {
+    MetricInfo new_metric;
+    new_metric.name = call.response.names[i];
+    new_metric.id = call.response.ids[i];
+    available_ig_metrics.push_back(new_metric);
+  }
 }
 
 void RosClientCI::availableMapMetrics(
-        std::vector<MetricInfo> &available_map_metrics)
-{
+    std::vector<MetricInfo> &available_map_metrics) {
 
-        ROS_INFO("Demanding available map metrics.");
-        ig_active_reconstruction_msgs::StringList call;
-        bool response = available_mm_receiver_.call(call);
+  ROS_INFO("Demanding available map metrics.");
+  ig_active_reconstruction_msgs::StringList call;
+  bool response = available_mm_receiver_.call(call);
 
-        if (!response)
-                return;
+  if (!response)
+    return;
 
-        for (unsigned int i = 0; i < call.response.names.size(); ++i) {
-                MetricInfo new_metric;
-                new_metric.name = call.response.names[i];
-                new_metric.id = call.response.ids[i];
-                available_map_metrics.push_back(new_metric);
-        }
+  for (unsigned int i = 0; i < call.response.names.size(); ++i) {
+    MetricInfo new_metric;
+    new_metric.name = call.response.names[i];
+    new_metric.id = call.response.ids[i];
+    available_map_metrics.push_back(new_metric);
+  }
 }
-} // namespace world_representation
-} // namespace ig_active_reconstruction
+}
+}

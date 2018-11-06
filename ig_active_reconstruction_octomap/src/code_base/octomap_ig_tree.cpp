@@ -17,97 +17,78 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
- */
+*/
 
 #include "ig_active_reconstruction_octomap/octomap_ig_tree.hpp"
 
-namespace ig_active_reconstruction
-{
+namespace ig_active_reconstruction {
 
-namespace world_representation
-{
+namespace world_representation {
 
-namespace octomap
-{
+namespace octomap {
 IgTree::Config::Config()
     : resolution_m(0.1), occupancy_threshold(0.5), hit_probability(0.7),
       miss_probability(0.4), clamping_threshold_min(0.12),
-      clamping_threshold_max(0.97)
-{
-}
+      clamping_threshold_max(0.97) {}
 
 IgTree::IgTree(double resolution_m)
-    : ::octomap::OccupancyOcTreeBase<IgTreeNode>(resolution_m)
-{
-        config_.resolution_m = resolution_m;
-        updateOctreeConfig();
+    : ::octomap::OccupancyOcTreeBase<IgTreeNode>(resolution_m) {
+  config_.resolution_m = resolution_m;
+  updateOctreeConfig();
 }
 
 IgTree::IgTree(Config config)
     : ::octomap::OccupancyOcTreeBase<IgTreeNode>(config.resolution_m),
-      config_(config)
-{
-        updateOctreeConfig();
+      config_(config) {
+  updateOctreeConfig();
 }
 
-IgTree *IgTree::create() const
-{
-        return new IgTree(config_);
+IgTree *IgTree::create() const { return new IgTree(config_); }
+
+const IgTree::Config &IgTree::config() const { return config_; }
+
+void IgTree::updateOctreeConfig() {
+  setOccupancyThres(config_.occupancy_threshold);
+  setProbHit(config_.hit_probability);
+  setProbMiss(config_.miss_probability);
+  setClampingThresMin(config_.clamping_threshold_min);
+  setClampingThresMax(config_.clamping_threshold_max);
 }
 
-const IgTree::Config &IgTree::config() const
-{
-        return config_;
+std::string IgTree::getTreeType() const { return "IgTree"; }
+
+void IgTree::expandNode(IgTreeNode *node) {
+  assert(!nodeHasChildren(node));
+
+  for (unsigned int k = 0; k < 8; k++) {
+    IgTreeNode *child = createNodeChild(node, k);
+    child->copyData(*node);
+  }
 }
 
-void IgTree::updateOctreeConfig()
-{
-        setOccupancyThres(config_.occupancy_threshold);
-        setProbHit(config_.hit_probability);
-        setProbMiss(config_.miss_probability);
-        setClampingThresMin(config_.clamping_threshold_min);
-        setClampingThresMax(config_.clamping_threshold_max);
+bool IgTree::pruneNode(IgTreeNode *node) {
+
+  if (!isNodeCollapsible(node))
+    return false;
+
+  // set value to children's values (all assumed equal)
+  node->copyData(*(getNodeChild(node, 0)));
+
+  if (node->hasMeasurement()) // TODO check
+  {
+    node->updateOccDist(node->getMinChildOccDist());
+    node->setMaxDist(node->getMaxChildDist());
+  }
+
+  // delete children
+  for (unsigned int i = 0; i < 8; i++) {
+    deleteNodeChild(node, i);
+  }
+  delete[] node->children;
+  node->children = NULL;
+
+  return true;
 }
-
-std::string IgTree::getTreeType() const
-{
-        return "IgTree";
 }
-
-void IgTree::expandNode(IgTreeNode *node)
-{
-        assert(!nodeHasChildren(node));
-
-        for (unsigned int k = 0; k < 8; k++) {
-                IgTreeNode *child = createNodeChild(node, k);
-                child->copyData(*node);
-        }
 }
-
-bool IgTree::pruneNode(IgTreeNode *node)
-{
-
-        if (!isNodeCollapsible(node))
-                return false;
-
-        // set value to children's values (all assumed equal)
-        node->copyData(*(getNodeChild(node, 0)));
-
-        if (node->hasMeasurement()) // TODO check
-        {
-                node->updateOccDist(node->getMinChildOccDist());
-                node->setMaxDist(node->getMaxChildDist());
-        }
-
-        // delete children
-        for (unsigned int i = 0; i < 8; i++) {
-                deleteNodeChild(node, i);
-        }
-        delete[] node->children;
-        node->children = NULL;
-
-        return true;
 }
-} // namespace octomap
-} // namespace world_representation
-} // namespace ig_active_reconstruction

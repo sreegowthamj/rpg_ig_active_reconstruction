@@ -17,118 +17,98 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
- */
+*/
 
 #define TEMPT template <class TREE_TYPE>
 #define CSCOPE AverageEntropyIg<TREE_TYPE>
 #include <fstream>
 #include <iostream>
 
-namespace ig_active_reconstruction
-{
+namespace ig_active_reconstruction {
 
-namespace world_representation
-{
+namespace world_representation {
 
-namespace octomap
-{
+namespace octomap {
 TEMPT
 CSCOPE::AverageEntropyIg(Config utils)
     : utils_(utils), voxel_count_(0), total_ig_(0), current_ray_voxels_(0),
-      current_ray_entropy_(0)
-{
+      current_ray_entropy_(0) {}
+
+TEMPT
+std::string CSCOPE::type() { return "AverageEntropyIg"; }
+
+TEMPT
+typename CSCOPE::GainType CSCOPE::getInformation() {
+  CSCOPE::GainType avg;
+  std::ofstream outfile;
+  outfile.open("avg_entropy.txt", std::ofstream::out | std::ios_base::app);
+
+  if (voxel_count_ == 0) {
+    return 0;
+  }
+  avg = total_ig_ / voxel_count_;
+  outfile << "\n average_entropy: total_ig:" << total_ig_
+          << ",voxel_count:" << voxel_count_ << "avg = " << avg;
+
+  return avg;
 }
 
 TEMPT
-std::string CSCOPE::type()
-{
-        return "AverageEntropyIg";
+void CSCOPE::makeReadyForNewRay() {
+  current_ray_voxels_ = 0;
+  current_ray_entropy_ = 0;
 }
 
 TEMPT
-typename CSCOPE::GainType CSCOPE::getInformation()
-{
-        CSCOPE::GainType avg;
-        std::ofstream outfile;
-        outfile.open("avg_entropy.txt",
-                     std::ofstream::out | std::ios_base::app);
-
-        if (voxel_count_ == 0) {
-                return 0;
-        }
-        avg = total_ig_ / voxel_count_;
-        outfile << "\n average_entropy: total_ig:" << total_ig_
-                << ",voxel_count:" << voxel_count_ << "avg = " << avg;
-
-        return avg;
+void CSCOPE::reset() {
+  std::ofstream outfile;
+  outfile.open("avg_entropy.txt", std::ofstream::out | std::ios_base::app);
+  outfile << "reset here\n";
+  voxel_count_ = 0;
+  total_ig_ = 0;
+  current_ray_voxels_ = 0;
+  current_ray_entropy_ = 0;
 }
 
 TEMPT
-void CSCOPE::makeReadyForNewRay()
-{
-        current_ray_voxels_ = 0;
-        current_ray_entropy_ = 0;
+void CSCOPE::includeRayMeasurement(typename TREE_TYPE::NodeType *node) {
+  includeMeasurement(node);
 }
 
 TEMPT
-void CSCOPE::reset()
-{
-        std::ofstream outfile;
-        outfile.open("avg_entropy.txt",
-                     std::ofstream::out | std::ios_base::app);
-        outfile << "reset here\n";
-        voxel_count_ = 0;
-        total_ig_ = 0;
-        current_ray_voxels_ = 0;
-        current_ray_entropy_ = 0;
+void CSCOPE::includeEndPointMeasurement(typename TREE_TYPE::NodeType *node) {
+  double occ = utils_.pOccupancy(node);
+  double ent = utils_.entropy(occ);
+
+  ++current_ray_voxels_;
+  current_ray_entropy_ += ent;
+
+  // only include rays that hit an occupied!
+  if (utils_.isOccupied(occ)) {
+    total_ig_ += current_ray_entropy_;
+    voxel_count_ += current_ray_voxels_;
+  }
 }
 
 TEMPT
-void CSCOPE::includeRayMeasurement(typename TREE_TYPE::NodeType *node)
-{
-        includeMeasurement(node);
+void CSCOPE::informAboutVoidRay() {
+  // didn't hit anything -> no rear side voxel...
 }
 
 TEMPT
-void CSCOPE::includeEndPointMeasurement(typename TREE_TYPE::NodeType *node)
-{
-        double occ = utils_.pOccupancy(node);
-        double ent = utils_.entropy(occ);
-
-        ++current_ray_voxels_;
-        current_ray_entropy_ += ent;
-
-        // only include rays that hit an occupied!
-        if (utils_.isOccupied(occ)) {
-                total_ig_ += current_ray_entropy_;
-                voxel_count_ += current_ray_voxels_;
-        }
-}
+uint64_t CSCOPE::voxelCount() { return voxel_count_; }
 
 TEMPT
-void CSCOPE::informAboutVoidRay()
-{
-        // didn't hit anything -> no rear side voxel...
-}
+void CSCOPE::includeMeasurement(typename TREE_TYPE::NodeType *node) {
+  double occ = utils_.pOccupancy(node);
+  double ent = utils_.entropy(occ);
 
-TEMPT
-uint64_t CSCOPE::voxelCount()
-{
-        return voxel_count_;
+  ++current_ray_voxels_;
+  current_ray_entropy_ += ent;
 }
-
-TEMPT
-void CSCOPE::includeMeasurement(typename TREE_TYPE::NodeType *node)
-{
-        double occ = utils_.pOccupancy(node);
-        double ent = utils_.entropy(occ);
-
-        ++current_ray_voxels_;
-        current_ray_entropy_ += ent;
 }
-} // namespace octomap
-} // namespace world_representation
-} // namespace ig_active_reconstruction
+}
+}
 
 #undef CSCOPE
 #undef TEMPT

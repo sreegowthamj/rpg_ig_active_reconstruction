@@ -18,57 +18,35 @@ along with movements. If not, see <http://www.gnu.org/licenses/>.
 #include "movements/translation.h"
 #include "movements/geometry_pose.h"
 
-namespace movements
-{
+namespace movements {
 
-Translation::Translation()
-{
-}
+Translation::Translation() {}
 
 Translation::Translation(double _x, double _y, double _z)
-    : translation_(_x, _y, _z)
-{
-}
+    : translation_(_x, _y, _z) {}
 
 Translation::Translation(Eigen::Vector3d _translation)
-    : translation_(_translation)
-{
+    : translation_(_translation) {}
+
+double &Translation::x() { return translation_(0); }
+
+double &Translation::y() { return translation_(1); }
+
+double &Translation::z() { return translation_(2); }
+
+std::string Translation::type() { return "movements::Translation"; }
+
+Pose Translation::applyToBasePose(Pose const &_base) {
+  Pose copy = _base;
+  copy.position += translation_;
+  return copy;
 }
 
-double &Translation::x()
-{
-        return translation_(0);
+RelativeMovement Translation::create(double _x, double _y, double _z) {
+  return RelativeMovement(new Translation(_x, _y, _z));
 }
 
-double &Translation::y()
-{
-        return translation_(1);
+RelativeMovement Translation::create(Eigen::Vector3d _translation) {
+  return RelativeMovement(new Translation(_translation));
 }
-
-double &Translation::z()
-{
-        return translation_(2);
 }
-
-std::string Translation::type()
-{
-        return "movements::Translation";
-}
-
-Pose Translation::applyToBasePose(Pose const &_base)
-{
-        Pose copy = _base;
-        copy.position += translation_;
-        return copy;
-}
-
-RelativeMovement Translation::create(double _x, double _y, double _z)
-{
-        return RelativeMovement(new Translation(_x, _y, _z));
-}
-
-RelativeMovement Translation::create(Eigen::Vector3d _translation)
-{
-        return RelativeMovement(new Translation(_translation));
-}
-} // namespace movements

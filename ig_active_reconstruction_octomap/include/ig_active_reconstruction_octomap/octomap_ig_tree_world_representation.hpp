@@ -17,23 +17,20 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
- */
+*/
 
 #pragma once
 
 #include "ig_active_reconstruction_octomap/octomap_ig_tree.hpp"
 #include "ig_active_reconstruction_octomap/octomap_world_representation.hpp"
 
-namespace ig_active_reconstruction
-{
+namespace ig_active_reconstruction {
 
-namespace world_representation
-{
+namespace world_representation {
 
-namespace octomap
-{
+namespace octomap {
 
 typedef WorldRepresentation<IgTree> IgTreeWorldRepresentation;
 }
-} // namespace world_representation
-} // namespace ig_active_reconstruction
+}
+}

@@ -18,97 +18,87 @@ along with movements. If not, see <http://www.gnu.org/licenses/>.
 #include "movements/in_out_spiral.h"
 #include <cmath>
 
-namespace movements
-{
+namespace movements {
 
 InOutSpiral::InOutSpiral(Eigen::Quaterniond _orientation, double _max_radius,
                          double _angle_speed, double _radial_speed,
                          Plane _plane)
     : orientation_(_orientation), max_radius_(_max_radius),
       angle_speed_(_angle_speed), radial_speed_(_radial_speed),
-      plane_to_use_(_plane)
-{
-        half_time_ = max_radius_ / radial_speed_;
+      plane_to_use_(_plane) {
+  half_time_ = max_radius_ / radial_speed_;
 }
 
-std::string InOutSpiral::type()
-{
-        return "movements::InOutSpiral";
-}
+std::string InOutSpiral::type() { return "movements::InOutSpiral"; }
 
-RelativeMovement InOutSpiral::operator()(double _time)
-{
-        double current_radius = getRadius(_time);
-        double current_angle = _time * angle_speed_;
+RelativeMovement InOutSpiral::operator()(double _time) {
+  double current_radius = getRadius(_time);
+  double current_angle = _time * angle_speed_;
 
-        double first_axis = current_radius * cos(current_angle);
-        double second_axis = current_radius * sin(current_angle);
-        double normal_axis = 0;
+  double first_axis = current_radius * cos(current_angle);
+  double second_axis = current_radius * sin(current_angle);
+  double normal_axis = 0;
 
-        double x, y, z;
+  double x, y, z;
 
-        switch (plane_to_use_) {
-        case XYPlane:
-                x = first_axis;
-                y = second_axis;
-                z = normal_axis;
-                break;
-        case YZPlane:
-                x = normal_axis;
-                y = first_axis;
-                z = second_axis;
-                break;
-        case ZXPlane:
-                x = second_axis;
-                y = normal_axis;
-                z = first_axis;
-                break;
-        case YXPlane:
-                x = second_axis;
-                y = first_axis;
-                z = normal_axis;
-                break;
-        case ZYPlane:
-                x = normal_axis;
-                y = second_axis;
-                z = first_axis;
-                break;
-        case XZPlane:
-                x = first_axis;
-                y = normal_axis;
-                z = second_axis;
-                break;
-        }
+  switch (plane_to_use_) {
+  case XYPlane:
+    x = first_axis;
+    y = second_axis;
+    z = normal_axis;
+    break;
+  case YZPlane:
+    x = normal_axis;
+    y = first_axis;
+    z = second_axis;
+    break;
+  case ZXPlane:
+    x = second_axis;
+    y = normal_axis;
+    z = first_axis;
+    break;
+  case YXPlane:
+    x = second_axis;
+    y = first_axis;
+    z = normal_axis;
+    break;
+  case ZYPlane:
+    x = normal_axis;
+    y = second_axis;
+    z = first_axis;
+    break;
+  case XZPlane:
+    x = first_axis;
+    y = normal_axis;
+    z = second_axis;
+    break;
+  }
 
-        Eigen::Vector3d relative_movement_spiral_coord(x, y, z);
-        Eigen::Vector3d relative_movement_parent_coord =
-                orientation_ * relative_movement_spiral_coord;
+  Eigen::Vector3d relative_movement_spiral_coord(x, y, z);
+  Eigen::Vector3d relative_movement_parent_coord =
+      orientation_ * relative_movement_spiral_coord;
 
-        return Translation::create(relative_movement_parent_coord);
+  return Translation::create(relative_movement_parent_coord);
 }
 
 KinematicMovementDescription
 InOutSpiral::create(Eigen::Quaterniond _orientation, double _max_radius,
-                    double _angle_speed, double _radial_speed, Plane _plane)
-{
-        return KinematicMovementDescription(
-                new InOutSpiral(_orientation, _max_radius, _angle_speed,
-                                _radial_speed, _plane));
+                    double _angle_speed, double _radial_speed, Plane _plane) {
+  return KinematicMovementDescription(new InOutSpiral(
+      _orientation, _max_radius, _angle_speed, _radial_speed, _plane));
 }
 
-double InOutSpiral::getRadius(double _time)
-{
-        double relative_time = _time / half_time_;
-        bool is_growing = (fmod(relative_time, 2) < 1) ? true : false;
+double InOutSpiral::getRadius(double _time) {
+  double relative_time = _time / half_time_;
+  bool is_growing = (fmod(relative_time, 2) < 1) ? true : false;
 
-        int half_iteration_nr = (int)relative_time;
+  int half_iteration_nr = (int)relative_time;
 
-        if (is_growing) {
-                return radial_speed_ * (_time - half_iteration_nr * half_time_);
-        } else {
-                return max_radius_
-                       - radial_speed_
-                                 * (_time - half_iteration_nr * half_time_);
-        }
+  if (is_growing) {
+    return radial_speed_ * (_time - half_iteration_nr * half_time_);
+  } else {
+    return max_radius_ -
+           radial_speed_ * (_time - half_iteration_nr * half_time_);
+  }
 }
-} // namespace movements
+}

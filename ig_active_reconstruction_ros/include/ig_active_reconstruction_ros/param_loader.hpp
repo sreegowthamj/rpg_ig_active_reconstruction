@@ -17,14 +17,13 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
- */
+*/
 
 #pragma once
 
 #include "ros/ros.h"
 
-namespace ros_tools
-{
+namespace ros_tools {
 /*! Template function that throws a ROS fatal error if the parameter was not
  * provided on the server.
  *
@@ -45,31 +44,27 @@ namespace ros_tools
  */
 template <class PARAM_TYPE>
 void getExpParam(PARAM_TYPE &output, std::string path,
-                 ros::NodeHandle nodeHandle = ros::NodeHandle("~"))
-{
-        if (!nodeHandle.getParam(path, output)) {
-                ROS_FATAL_STREAM(
-                        "Expected parameter '"
-                        << path
-                        << "' was not provided on parameter server. Exiting...");
-                ros::shutdown();
-        }
+                 ros::NodeHandle nodeHandle = ros::NodeHandle("~")) {
+  if (!nodeHandle.getParam(path, output)) {
+    ROS_FATAL_STREAM("Expected parameter '"
+                     << path
+                     << "' was not provided on parameter server. Exiting...");
+    ros::shutdown();
+  }
 }
 template <class PARAM_TYPE, class LOCAL_ROS_COMPLIANT_TYPE>
 void getExpParam(PARAM_TYPE &output, std::string path,
-                 ros::NodeHandle nodeHandle = ros::NodeHandle("~"))
-{
-        LOCAL_ROS_COMPLIANT_TYPE local;
-        if (!nodeHandle.getParam(path, local)) {
-                ROS_FATAL_STREAM(
-                        "Expected parameter '"
-                        << path
-                        << "' was not provided on parameter server. Exiting...");
-                ros::shutdown();
-        } else {
-                output = static_cast<PARAM_TYPE>(local);
-                // ROS_INFO_STREAM("Loaded parameter '"<<path<<"':"<<output);
-        }
+                 ros::NodeHandle nodeHandle = ros::NodeHandle("~")) {
+  LOCAL_ROS_COMPLIANT_TYPE local;
+  if (!nodeHandle.getParam(path, local)) {
+    ROS_FATAL_STREAM("Expected parameter '"
+                     << path
+                     << "' was not provided on parameter server. Exiting...");
+    ros::shutdown();
+  } else {
+    output = static_cast<PARAM_TYPE>(local);
+    // ROS_INFO_STREAM("Loaded parameter '"<<path<<"':"<<output);
+  }
 }
 
 /*! Silent template function that loads a parameter or its default value.
@@ -93,22 +88,20 @@ void getExpParam(PARAM_TYPE &output, std::string path,
 template <class PARAM_TYPE, class LOCAL_ROS_COMPLIANT_TYPE>
 void getParamSilent(PARAM_TYPE &output, std::string path,
                     PARAM_TYPE defaultValue,
-                    ros::NodeHandle nodeHandle = ros::NodeHandle("~"))
-{
-        LOCAL_ROS_COMPLIANT_TYPE local;
+                    ros::NodeHandle nodeHandle = ros::NodeHandle("~")) {
+  LOCAL_ROS_COMPLIANT_TYPE local;
 
-        if (nodeHandle.getParam(path, local)) {
-                output = static_cast<PARAM_TYPE>(local);
-        } else {
-                output = defaultValue;
-        }
+  if (nodeHandle.getParam(path, local)) {
+    output = static_cast<PARAM_TYPE>(local);
+  } else {
+    output = defaultValue;
+  }
 }
 template <class PARAM_TYPE>
 void getParamSilent(PARAM_TYPE &output, std::string path,
                     PARAM_TYPE defaultValue,
-                    ros::NodeHandle nodeHandle = ros::NodeHandle("~"))
-{
-        nodeHandle.param<PARAM_TYPE>(path, output, defaultValue);
+                    ros::NodeHandle nodeHandle = ros::NodeHandle("~")) {
+  nodeHandle.param<PARAM_TYPE>(path, output, defaultValue);
 }
 
 /*! Template function to load a parameter with included default value. If it
@@ -135,33 +128,27 @@ void getParamSilent(PARAM_TYPE &output, std::string path,
  */
 template <class PARAM_TYPE, class LOCAL_ROS_COMPLIANT_TYPE>
 void getParam(PARAM_TYPE &output, std::string path, PARAM_TYPE defaultValue,
-              ros::NodeHandle nodeHandle = ros::NodeHandle("~"))
-{
-        LOCAL_ROS_COMPLIANT_TYPE local;
-        if (nodeHandle.getParam(path, local)) {
-                output = static_cast<PARAM_TYPE>(local);
-                // ROS_INFO_STREAM("Loaded parameter '"<<path<<"':
-                // '"<<output<<"'.");
-        } else {
-                output = defaultValue;
-                ROS_WARN_STREAM("Parameter '"
-                                << path << "' not provided, using default: '"
-                                << output << "'.");
-        }
+              ros::NodeHandle nodeHandle = ros::NodeHandle("~")) {
+  LOCAL_ROS_COMPLIANT_TYPE local;
+  if (nodeHandle.getParam(path, local)) {
+    output = static_cast<PARAM_TYPE>(local);
+    // ROS_INFO_STREAM("Loaded parameter '"<<path<<"': '"<<output<<"'.");
+  } else {
+    output = defaultValue;
+    ROS_WARN_STREAM("Parameter '" << path << "' not provided, using default: '"
+                                  << output << "'.");
+  }
 }
 template <class PARAM_TYPE>
 void getParam(PARAM_TYPE &output, std::string path, PARAM_TYPE defaultValue,
-              ros::NodeHandle nodeHandle = ros::NodeHandle("~"))
-{
-        if (nodeHandle.getParam(path, output)) {
-                // ROS_INFO_STREAM("Loaded parameter '"<<path<<"':
-                // '"<<output<<"'.");
-        } else {
-                output = defaultValue;
-                ROS_WARN_STREAM("Parameter '"
-                                << path << "' not provided, using default: '"
-                                << output << "'.");
-        }
+              ros::NodeHandle nodeHandle = ros::NodeHandle("~")) {
+  if (nodeHandle.getParam(path, output)) {
+    // ROS_INFO_STREAM("Loaded parameter '"<<path<<"': '"<<output<<"'.");
+  } else {
+    output = defaultValue;
+    ROS_WARN_STREAM("Parameter '" << path << "' not provided, using default: '"
+                                  << output << "'.");
+  }
 }
 
 /*! Template function to load a parameter with included default value. If it
@@ -188,31 +175,25 @@ void getParam(PARAM_TYPE &output, std::string path, PARAM_TYPE defaultValue,
  */
 template <class PARAM_TYPE, class LOCAL_ROS_COMPLIANT_TYPE>
 void getParamIfAvailable(PARAM_TYPE &output, std::string path,
-                         ros::NodeHandle nodeHandle = ros::NodeHandle("~"))
-{
-        LOCAL_ROS_COMPLIANT_TYPE local;
-        if (nodeHandle.getParam(path, local)) {
-                output = static_cast<PARAM_TYPE>(local);
-                // ROS_INFO_STREAM("Loaded parameter '"<<path<<"':
-                // '"<<output<<"'.");
-        } else {
-                ROS_WARN_STREAM("Parameter '"
-                                << path << "' not provided, using default: '"
-                                << output << "'.");
-        }
+                         ros::NodeHandle nodeHandle = ros::NodeHandle("~")) {
+  LOCAL_ROS_COMPLIANT_TYPE local;
+  if (nodeHandle.getParam(path, local)) {
+    output = static_cast<PARAM_TYPE>(local);
+    // ROS_INFO_STREAM("Loaded parameter '"<<path<<"': '"<<output<<"'.");
+  } else {
+    ROS_WARN_STREAM("Parameter '" << path << "' not provided, using default: '"
+                                  << output << "'.");
+  }
 }
 template <class PARAM_TYPE>
 void getParamIfAvailable(PARAM_TYPE &output, std::string path,
-                         ros::NodeHandle nodeHandle = ros::NodeHandle("~"))
-{
-        if (nodeHandle.getParam(path, output)) {
-                // ROS_INFO_STREAM("Loaded parameter '"<<path<<"':
-                // '"<<output<<"'.");
-        } else {
-                ROS_WARN_STREAM("Parameter '"
-                                << path << "' not provided, using default: '"
-                                << output << "'.");
-        }
+                         ros::NodeHandle nodeHandle = ros::NodeHandle("~")) {
+  if (nodeHandle.getParam(path, output)) {
+    // ROS_INFO_STREAM("Loaded parameter '"<<path<<"': '"<<output<<"'.");
+  } else {
+    ROS_WARN_STREAM("Parameter '" << path << "' not provided, using default: '"
+                                  << output << "'.");
+  }
 }
 
 /*! Template function to load a parameter with included default value. If it
@@ -239,19 +220,17 @@ void getParamIfAvailable(PARAM_TYPE &output, std::string path,
  */
 template <class PARAM_TYPE, class LOCAL_ROS_COMPLIANT_TYPE>
 void getParamIfAvailableSilent(
-        PARAM_TYPE &output, std::string path,
-        ros::NodeHandle nodeHandle = ros::NodeHandle("~"))
-{
-        LOCAL_ROS_COMPLIANT_TYPE local;
-        if (nodeHandle.getParam(path, local)) {
-                output = static_cast<PARAM_TYPE>(local);
-        }
+    PARAM_TYPE &output, std::string path,
+    ros::NodeHandle nodeHandle = ros::NodeHandle("~")) {
+  LOCAL_ROS_COMPLIANT_TYPE local;
+  if (nodeHandle.getParam(path, local)) {
+    output = static_cast<PARAM_TYPE>(local);
+  }
 }
 template <class PARAM_TYPE>
 void getParamIfAvailableSilent(
-        PARAM_TYPE &output, std::string path,
-        ros::NodeHandle nodeHandle = ros::NodeHandle("~"))
-{
-        nodeHandle.getParam(path, output);
+    PARAM_TYPE &output, std::string path,
+    ros::NodeHandle nodeHandle = ros::NodeHandle("~")) {
+  nodeHandle.getParam(path, output);
 }
-} // namespace ros_tools
+}

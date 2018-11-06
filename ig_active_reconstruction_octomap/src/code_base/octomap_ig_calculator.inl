@@ -17,21 +17,18 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
- */
+*/
 
 #define TEMPT template <class TREE_TYPE>
 #define CSCOPE IgCalculator<TREE_TYPE>
 
 #include <boost/function.hpp>
 
-namespace ig_active_reconstruction
-{
+namespace ig_active_reconstruction {
 
-namespace world_representation
-{
+namespace world_representation {
 
-namespace octomap
-{
+namespace octomap {
 
 /*TEMPT // postponed for compilation with cpp11
 template< template<typename> class IG_METRIC_TYPE, typename ...
@@ -54,32 +51,28 @@ std::bind(boost::make_shared< IG_METRIC_TYPE<TREE_TYPE> >,args...);
 TEMPT
 template <template <typename> class IG_METRIC_TYPE>
 unsigned int CSCOPE::registerInformationGain(
-        typename IG_METRIC_TYPE<TREE_TYPE>::Utils::Config utils)
-{
-        boost::shared_ptr<InformationGain<TREE_TYPE>> prototype =
-                boost::make_shared<IG_METRIC_TYPE<TREE_TYPE>>(utils);
-        std::string name = prototype->type();
+    typename IG_METRIC_TYPE<TREE_TYPE>::Utils::Config utils) {
+  boost::shared_ptr<InformationGain<TREE_TYPE>> prototype =
+      boost::make_shared<IG_METRIC_TYPE<TREE_TYPE>>(utils);
+  std::string name = prototype->type();
 
-        boost::function<boost::shared_ptr<InformationGain<TREE_TYPE>>()>
-                creator;
-        creator = boost::bind(
-                &IgCalculator<TREE_TYPE>::makeShared<IG_METRIC_TYPE>, this,
-                utils);
+  boost::function<boost::shared_ptr<InformationGain<TREE_TYPE>>()> creator;
+  creator = boost::bind(&IgCalculator<TREE_TYPE>::makeShared<IG_METRIC_TYPE>,
+                        this, utils);
 
-        return ig_factory_.add(name, creator);
+  return ig_factory_.add(name, creator);
 }
 
 TEMPT
 template <template <typename> class IG_METRIC_TYPE>
 boost::shared_ptr<InformationGain<TREE_TYPE>>
-CSCOPE::makeShared(typename IG_METRIC_TYPE<TREE_TYPE>::Utils::Config utils)
-{
-        return boost::shared_ptr<InformationGain<TREE_TYPE>>(
-                new IG_METRIC_TYPE<TREE_TYPE>(utils));
+CSCOPE::makeShared(typename IG_METRIC_TYPE<TREE_TYPE>::Utils::Config utils) {
+  return boost::shared_ptr<InformationGain<TREE_TYPE>>(
+      new IG_METRIC_TYPE<TREE_TYPE>(utils));
 }
-} // namespace octomap
-} // namespace world_representation
-} // namespace ig_active_reconstruction
+}
+}
+}
 
 #undef CSCOPE
 #undef TEMPT

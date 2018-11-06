@@ -17,29 +17,22 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
- */
+*/
 
 #include "ig_active_reconstruction/max_calls_termination_criteria.hpp"
 
-namespace ig_active_reconstruction
-{
+namespace ig_active_reconstruction {
 
 MaxCallsTerminationCriteria::MaxCallsTerminationCriteria(unsigned int max_calls)
-    : max_calls_(max_calls), call_count_(0)
-{
-}
+    : max_calls_(max_calls), call_count_(0) {}
 
-void MaxCallsTerminationCriteria::reset()
-{
-        call_count_ = 0;
-}
+void MaxCallsTerminationCriteria::reset() { call_count_ = 0; }
 
-bool MaxCallsTerminationCriteria::isDone()
-{
-        if ((call_count_ + 1) == max_calls_)
-                return true;
+bool MaxCallsTerminationCriteria::isDone() {
+  if ((call_count_ + 1) == max_calls_)
+    return true;
 
-        ++call_count_;
-        return false;
+  ++call_count_;
+  return false;
 }
-} // namespace ig_active_reconstruction
+}

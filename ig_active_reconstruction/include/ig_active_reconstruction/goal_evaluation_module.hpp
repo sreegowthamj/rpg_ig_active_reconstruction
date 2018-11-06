@@ -17,27 +17,25 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
- */
+*/
 
 #pragma once
 
-namespace ig_active_reconstruction
-{
+namespace ig_active_reconstruction {
 
 /*! Abstract interface definition for goal evaluation modules, e.g. modules that
  * evaluate if a termination criteria has been fulfilled.
  */
-class GoalEvaluationModule
-{
-      public:
-        virtual ~GoalEvaluationModule(){};
+class GoalEvaluationModule {
+public:
+  virtual ~GoalEvaluationModule(){};
 
-        /*! Resets the goal evaluation module.
-         */
-        virtual void reset() = 0;
+  /*! Resets the goal evaluation module.
+   */
+  virtual void reset() = 0;
 
-        /*! Returns true if the goal was reached.
-         */
-        virtual bool isDone() = 0;
+  /*! Returns true if the goal was reached.
+   */
+  virtual bool isDone() = 0;
 };
-} // namespace ig_active_reconstruction
+}

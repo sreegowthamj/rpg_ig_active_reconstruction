@@ -17,106 +17,87 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
- */
+*/
 
 #define TEMPT template <class TREE_TYPE>
 #define CSCOPE RearSideVoxelIg<TREE_TYPE>
 
 #include <fstream>
 
-namespace ig_active_reconstruction
-{
+namespace ig_active_reconstruction {
 
-namespace world_representation
-{
+namespace world_representation {
 
-namespace octomap
-{
+namespace octomap {
 TEMPT
 CSCOPE::RearSideVoxelIg(Config utils)
-    : utils_(utils), rear_side_voxel_count_(0), previous_voxel_unknown_(false)
-{
+    : utils_(utils), rear_side_voxel_count_(0), previous_voxel_unknown_(false) {
+
 }
 
 TEMPT
-std::string CSCOPE::type()
-{
-        return "RearSideVoxelIg";
+std::string CSCOPE::type() { return "RearSideVoxelIg"; }
+
+TEMPT
+typename CSCOPE::GainType CSCOPE::getInformation() {
+  std::ofstream outfile;
+  outfile.open("rear_side_voxel.txt", std::ofstream::out | std::ios_base::app);
+  outfile << "\n rear_side_voxel: ig_:" << rear_side_voxel_count_;
+
+  return rear_side_voxel_count_;
 }
 
 TEMPT
-typename CSCOPE::GainType CSCOPE::getInformation()
-{
-        std::ofstream outfile;
-        outfile.open("rear_side_voxel.txt",
-                     std::ofstream::out | std::ios_base::app);
-        outfile << "\n rear_side_voxel: ig_:" << rear_side_voxel_count_;
+void CSCOPE::makeReadyForNewRay() { previous_voxel_unknown_ = false; }
 
-        return rear_side_voxel_count_;
+TEMPT
+void CSCOPE::reset() {
+  rear_side_voxel_count_ = 0;
+  previous_voxel_unknown_ = false;
 }
 
 TEMPT
-void CSCOPE::makeReadyForNewRay()
-{
-        previous_voxel_unknown_ = false;
+void CSCOPE::includeRayMeasurement(typename TREE_TYPE::NodeType *node) {
+  includeMeasurement(node);
 }
 
 TEMPT
-void CSCOPE::reset()
-{
-        rear_side_voxel_count_ = 0;
-        previous_voxel_unknown_ = false;
+void CSCOPE::includeEndPointMeasurement(typename TREE_TYPE::NodeType *node) {
+  includeMeasurement(node);
 }
 
 TEMPT
-void CSCOPE::includeRayMeasurement(typename TREE_TYPE::NodeType *node)
-{
-        includeMeasurement(node);
+void CSCOPE::informAboutVoidRay() {
+  // didn't hit anything -> no rear side voxel...
+  previous_voxel_unknown_ = false;
 }
 
 TEMPT
-void CSCOPE::includeEndPointMeasurement(typename TREE_TYPE::NodeType *node)
-{
-        includeMeasurement(node);
-}
+uint64_t CSCOPE::voxelCount() { return rear_side_voxel_count_; }
 
 TEMPT
-void CSCOPE::informAboutVoidRay()
-{
-        // didn't hit anything -> no rear side voxel...
-        previous_voxel_unknown_ = false;
+void CSCOPE::includeMeasurement(typename TREE_TYPE::NodeType *node) {
+  if (node == NULL || !node->hasMeasurement()) {
+    previous_voxel_unknown_ = true;
+    return;
+  }
+
+  double p_occ = utils_.pOccupancy(node);
+
+  if (utils_.isUnknown(p_occ)) {
+    previous_voxel_unknown_ = true;
+    return;
+  } else {
+    if (utils_.isOccupied(p_occ) && previous_voxel_unknown_) {
+      ++rear_side_voxel_count_;
+    }
+
+    previous_voxel_unknown_ = false;
+  }
 }
-
-TEMPT
-uint64_t CSCOPE::voxelCount()
-{
-        return rear_side_voxel_count_;
 }
-
-TEMPT
-void CSCOPE::includeMeasurement(typename TREE_TYPE::NodeType *node)
-{
-        if (node == NULL || !node->hasMeasurement()) {
-                previous_voxel_unknown_ = true;
-                return;
-        }
-
-        double p_occ = utils_.pOccupancy(node);
-
-        if (utils_.isUnknown(p_occ)) {
-                previous_voxel_unknown_ = true;
-                return;
-        } else {
-                if (utils_.isOccupied(p_occ) && previous_voxel_unknown_) {
-                        ++rear_side_voxel_count_;
-                }
-
-                previous_voxel_unknown_ = false;
-        }
 }
-} // namespace octomap
-} // namespace world_representation
-} // namespace ig_active_reconstruction
+}
 
 #undef CSCOPE
 #undef TEMPT

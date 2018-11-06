@@ -17,18 +17,15 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
- */
+*/
 
 #pragma once
 
-namespace ig_active_reconstruction
-{
+namespace ig_active_reconstruction {
 
-namespace world_representation
-{
+namespace world_representation {
 
-namespace octomap
-{
+namespace octomap {
 
 /*! Defines the interface for and a factory to register map metrics. A map
  * metric is a metric that
@@ -36,24 +33,22 @@ namespace octomap
  * space. One example
  * is the total entropy within the map.
  */
-template <class TREE_TYPE> class MapMetric
-{
-      public:
-        typedef double Result;
+template <class TREE_TYPE> class MapMetric {
+public:
+  typedef double Result;
 
-      public:
-        /*! Returns the name of the method.
-         */
-        virtual std::string type() = 0;
+public:
+  /*! Returns the name of the method.
+   */
+  virtual std::string type() = 0;
 
-        /*! Calculates the metric on the given octree.
-         * @param octree Pointer to the octree on which the metric will be
-         * calculated.
-         */
-        Result calculateOn(boost::shared_ptr<TREE_TYPE> octree) = 0;
+  /*! Calculates the metric on the given octree.
+   * @param octree Pointer to the octree on which the metric will be calculated.
+   */
+  Result calculateOn(boost::shared_ptr<TREE_TYPE> octree) = 0;
 };
-} // namespace octomap
-} // namespace world_representation
-} // namespace ig_active_reconstruction
+}
+}
+}
 
 #include "../src/code_base/octomap_map_metric.inl"

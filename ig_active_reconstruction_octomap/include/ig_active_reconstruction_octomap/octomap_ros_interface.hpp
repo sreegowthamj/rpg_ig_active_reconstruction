@@ -17,7 +17,7 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
- */
+*/
 
 #pragma once
 
@@ -25,14 +25,11 @@
 
 #include "ig_active_reconstruction_octomap/octomap_world_representation.hpp"
 
-namespace ig_active_reconstruction
-{
+namespace ig_active_reconstruction {
 
-namespace world_representation
-{
+namespace world_representation {
 
-namespace octomap
-{
+namespace octomap {
 
 /*! This class provides a ROS interface to an octomap::WorldRepresentation,
  * providing common
@@ -42,40 +39,39 @@ namespace octomap
  * to allow a multiple sensor and multiple sensor modality approach.
  */
 template <class TREE_TYPE>
-class RosInterface : public WorldRepresentation<TREE_TYPE>::LinkedObject
-{
-      public:
-        typedef boost::shared_ptr<RosInterface<TREE_TYPE>> Ptr;
-        typedef TREE_TYPE TreeType;
+class RosInterface : public WorldRepresentation<TREE_TYPE>::LinkedObject {
+public:
+  typedef boost::shared_ptr<RosInterface<TREE_TYPE>> Ptr;
+  typedef TREE_TYPE TreeType;
 
-        struct Config {
-                ros::NodeHandle nh;
-                std::string world_frame_name;
-        };
+  struct Config {
+    ros::NodeHandle nh;
+    std::string world_frame_name;
+  };
 
-      public:
-        RosInterface(Config config);
+public:
+  RosInterface(Config config);
 
-        /*! Publishes the voxel map as a visualization_msgs::MarkerArray.
-         */
-        void publishVoxelMap();
+  /*! Publishes the voxel map as a visualization_msgs::MarkerArray.
+   */
+  void publishVoxelMap();
 
-      protected:
-        // virtual bool octomapBinarySrv(OctomapSrv::Request  &req,
-        // OctomapSrv::GetOctomap::Response &res);
-        // virtual bool octomapFullSrv(OctomapSrv::Request  &req,
-        // OctomapSrv::GetOctomap::Response &res);
-        // bool clearBBXSrv(BBXSrv::Request& req, BBXSrv::Response& resp);
-        // bool resetSrv(std_srvs::Empty::Request& req,
-        // std_srvs::Empty::Response& resp);
+protected:
+  // virtual bool octomapBinarySrv(OctomapSrv::Request  &req,
+  // OctomapSrv::GetOctomap::Response &res);
+  // virtual bool octomapFullSrv(OctomapSrv::Request  &req,
+  // OctomapSrv::GetOctomap::Response &res);
+  // bool clearBBXSrv(BBXSrv::Request& req, BBXSrv::Response& resp);
+  // bool resetSrv(std_srvs::Empty::Request& req, std_srvs::Empty::Response&
+  // resp);
 
-      private:
-        ros::NodeHandle nh_;
-        std::string world_frame_name_;
-        ros::Publisher voxel_map_publisher_;
+private:
+  ros::NodeHandle nh_;
+  std::string world_frame_name_;
+  ros::Publisher voxel_map_publisher_;
 };
-} // namespace octomap
-} // namespace world_representation
-} // namespace ig_active_reconstruction
+}
+}
+}
 
 #include "../src/code_base/octomap_ros_interface.inl"

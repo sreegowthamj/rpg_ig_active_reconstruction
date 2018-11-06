@@ -17,7 +17,7 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
- */
+*/
 
 #include "flying_gazebo_stereo_cam/robot_communication_interface.hpp"
 
@@ -25,79 +25,70 @@
 #include <boost/thread/thread.hpp>
 #include <thread>
 
-namespace flying_gazebo_stereo_cam
-{
+namespace flying_gazebo_stereo_cam {
 
 CommunicationInterface::CommunicationInterface(
-        ros::NodeHandle nh, std::shared_ptr<Controller> controller,
-        std::string in_name, std::string out_name)
-    : cam_controller_(controller), pcl_rerouter_(nh, in_name, out_name)
-{
+    ros::NodeHandle nh, std::shared_ptr<Controller> controller,
+    std::string in_name, std::string out_name)
+    : cam_controller_(controller), pcl_rerouter_(nh, in_name, out_name) {}
+
+CommunicationInterface::View CommunicationInterface::getCurrentView() {
+  View current_view;
+
+  try {
+    current_view.pose() = cam_controller_->currentPose();
+  } catch (...) {
+    current_view.bad() = true;
+  }
+  current_view.nonViewSpace() = true;
+
+  return current_view;
 }
 
-CommunicationInterface::View CommunicationInterface::getCurrentView()
-{
-        View current_view;
-
-        try {
-                current_view.pose() = cam_controller_->currentPose();
-        } catch (...) {
-                current_view.bad() = true;
-        }
-        current_view.nonViewSpace() = true;
-
-        return current_view;
-}
-
-CommunicationInterface::ReceptionInfo CommunicationInterface::retrieveData()
-{
-        if (pcl_rerouter_.rerouteOneToSrv()) {
-                return ReceptionInfo::SUCCEEDED;
-        }
-        return ReceptionInfo::FAILED;
+CommunicationInterface::ReceptionInfo CommunicationInterface::retrieveData() {
+  if (pcl_rerouter_.rerouteOneToSrv()) {
+    return ReceptionInfo::SUCCEEDED;
+  }
+  return ReceptionInfo::FAILED;
 }
 
 CommunicationInterface::MovementCost
-CommunicationInterface::movementCost(View &target_view)
-{
-        MovementCost cost;
+CommunicationInterface::movementCost(View &target_view) {
+  MovementCost cost;
 
-        movements::Pose current;
-        auto target_pos = target_view.pose().position;
+  movements::Pose current;
+  auto target_pos = target_view.pose().position;
 
-        try {
-                current = cam_controller_->currentPose();
-                auto distance = current.position - target_pos;
-                cost.cost = distance.norm();
-        } catch (...) {
-                cost.exception = MovementCost::Exception::COST_UNKNOWN;
-        }
+  try {
+    current = cam_controller_->currentPose();
+    auto distance = current.position - target_pos;
+    cost.cost = distance.norm();
+  } catch (...) {
+    cost.exception = MovementCost::Exception::COST_UNKNOWN;
+  }
 
-        return cost;
+  return cost;
 }
 
 CommunicationInterface::MovementCost
 CommunicationInterface::movementCost(View &start_view, View &target_view,
-                                     bool fill_additional_information)
-{
-        MovementCost cost;
+                                     bool fill_additional_information) {
+  MovementCost cost;
 
-        auto distance =
-                start_view.pose().position - target_view.pose().position;
-        cost.cost = distance.norm();
+  auto distance = start_view.pose().position - target_view.pose().position;
+  cost.cost = distance.norm();
 
-        return cost;
+  return cost;
 }
 
-bool CommunicationInterface::moveTo(View &target_view)
-{
-        bool success = cam_controller_->moveTo(target_view.pose());
+bool CommunicationInterface::moveTo(View &target_view) {
+  bool success = cam_controller_->moveTo(target_view.pose());
 
-        boost::this_thread::sleep_for(boost::chrono::seconds(
-                3)); // give gazebo time to execute movement
-                     // command (TODO test: maybe just wait until
-                     // current pose has changed (if it is
-                     // different from current)?)
-        return success;
+  boost::this_thread::sleep_for(
+      boost::chrono::seconds(3)); // give gazebo time to execute movement
+                                  // command (TODO test: maybe just wait until
+                                  // current pose has changed (if it is
+                                  // different from current)?)
+  return success;
 }
-} // namespace flying_gazebo_stereo_cam
+}

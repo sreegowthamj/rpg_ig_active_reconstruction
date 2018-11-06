@@ -17,7 +17,7 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
- */
+*/
 
 #pragma once
 
@@ -27,55 +27,50 @@
 #include <memory>
 #include <vector>
 
-namespace ig_active_reconstruction
-{
+namespace ig_active_reconstruction {
 
-namespace world_representation
-{
+namespace world_representation {
 
 /*! Abstract base class defining convenient tools for raycasting.
- */
-class RayCaster
-{
-      public:
-        typedef Eigen::Vector3d RayOrigin;
-        typedef Eigen::Vector3d RayDirection;
+*/
+class RayCaster {
+public:
+  typedef Eigen::Vector3d RayOrigin;
+  typedef Eigen::Vector3d RayDirection;
 
-        /*! Defines a ray.
-         */
-        struct Ray {
-                RayOrigin origin;
-                RayDirection direction;
-        };
+  /*! Defines a ray.
+   */
+  struct Ray {
+    RayOrigin origin;
+    RayDirection direction;
+  };
 
-        typedef std::vector<Ray> RaySet;
-        typedef std::vector<RayOrigin> RayOriginSet;
-        typedef std::vector<RayDirection> RayDirectionSet;
+  typedef std::vector<Ray> RaySet;
+  typedef std::vector<RayOrigin> RayOriginSet;
+  typedef std::vector<RayDirection> RayDirectionSet;
 
-      public:
-        virtual ~RayCaster(){};
+public:
+  virtual ~RayCaster(){};
 
-        /*! Returns a set of rays cast from sensor_pose with the current
-         * configuration
-         * @param sensor_pose Position from which rays are cast.
-         * @return Pointer to a set of rays.
-         */
-        virtual boost::shared_ptr<RaySet>
-        getRaySet(movements::Pose &sensor_pose) = 0;
+  /*! Returns a set of rays cast from sensor_pose with the current configuration
+   * @param sensor_pose Position from which rays are cast.
+   * @return Pointer to a set of rays.
+   */
+  virtual boost::shared_ptr<RaySet> getRaySet(movements::Pose &sensor_pose) = 0;
 
-        /*! Returns the set of ray directions as the would be cast from the
-         * given sensor_pose with the current configuration.
-         * @param sensor_pose Position from which rays are cast.
-         * @return Pointer to a set of ray directions.
-         */
-        virtual boost::shared_ptr<RayDirectionSet>
-        getRayDirectionSet(movements::Pose &sensor_pose) = 0;
+  /*! Returns the set of ray directions as the would be cast from the given
+   * sensor_pose with the current configuration.
+   * @param sensor_pose Position from which rays are cast.
+   * @return Pointer to a set of ray directions.
+   */
+  virtual boost::shared_ptr<RayDirectionSet>
+  getRayDirectionSet(movements::Pose &sensor_pose) = 0;
 
-        /*! Returns the set of ray directions as cast for the current
-         * configuration, relative to the sensor.
-         */
-        virtual boost::shared_ptr<const RayDirectionSet>
-        getRelRayDirectionSet() const = 0;
+  /*! Returns the set of ray directions as cast for the current configuration,
+   * relative to the sensor.
+   */
+  virtual boost::shared_ptr<const RayDirectionSet>
+  getRelRayDirectionSet() const = 0;
 };
-} // namespace world_representation
-} // namespace ig_active_reconstruction
+}
+}

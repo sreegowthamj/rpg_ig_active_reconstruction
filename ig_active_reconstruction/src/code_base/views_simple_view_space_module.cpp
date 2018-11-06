@@ -17,69 +17,57 @@
  * Please refer to the GNU Lesser General Public License for details on the
  * license,
  * on <http://www.gnu.org/licenses/>.
- */
+*/
 
 #include "ig_active_reconstruction/views_simple_view_space_module.hpp"
 
-namespace ig_active_reconstruction
-{
+namespace ig_active_reconstruction {
 
-namespace views
-{
-SimpleViewSpaceModule::SimpleViewSpaceModule(std::string file_source)
-{
-        if (file_source != "") {
-                loadFromFile(file_source);
-        }
+namespace views {
+SimpleViewSpaceModule::SimpleViewSpaceModule(std::string file_source) {
+  if (file_source != "") {
+    loadFromFile(file_source);
+  }
 }
 
-void SimpleViewSpaceModule::loadFromFile(std::string path)
-{
-        viewspace_.loadFromFile(path);
+void SimpleViewSpaceModule::loadFromFile(std::string path) {
+  viewspace_.loadFromFile(path);
 }
 
-void SimpleViewSpaceModule::saveToFile(std::string filename)
-{
-        viewspace_.saveToFile(filename);
+void SimpleViewSpaceModule::saveToFile(std::string filename) {
+  viewspace_.saveToFile(filename);
 }
 
-const ViewSpace &SimpleViewSpaceModule::getViewSpace()
-{
-        return viewspace_;
+const ViewSpace &SimpleViewSpaceModule::getViewSpace() { return viewspace_; }
+
+SimpleViewSpaceModule::ViewSpaceUpdateResult
+SimpleViewSpaceModule::addViews(std::vector<View> &new_views) {
+  for (View &view : new_views) {
+    viewspace_.push_back(view);
+  }
+  return ViewSpaceUpdateResult::SUCCEEDED;
 }
 
 SimpleViewSpaceModule::ViewSpaceUpdateResult
-SimpleViewSpaceModule::addViews(std::vector<View> &new_views)
-{
-        for (View &view : new_views) {
-                viewspace_.push_back(view);
-        }
-        return ViewSpaceUpdateResult::SUCCEEDED;
+SimpleViewSpaceModule::addView(View new_view) {
+  viewspace_.push_back(new_view);
+  return ViewSpaceUpdateResult::SUCCEEDED;
 }
 
 SimpleViewSpaceModule::ViewSpaceUpdateResult
-SimpleViewSpaceModule::addView(View new_view)
-{
-        viewspace_.push_back(new_view);
-        return ViewSpaceUpdateResult::SUCCEEDED;
+SimpleViewSpaceModule::deleteViews(std::vector<View::IdType> &view_ids) {
+  if (viewspace_.deleteViews(view_ids))
+    return ViewSpaceUpdateResult::SUCCEEDED;
+  else
+    ViewSpaceUpdateResult::FAILED;
 }
 
 SimpleViewSpaceModule::ViewSpaceUpdateResult
-SimpleViewSpaceModule::deleteViews(std::vector<View::IdType> &view_ids)
-{
-        if (viewspace_.deleteViews(view_ids))
-                return ViewSpaceUpdateResult::SUCCEEDED;
-        else
-                ViewSpaceUpdateResult::FAILED;
+SimpleViewSpaceModule::deleteView(View::IdType view_id) {
+  if (viewspace_.deleteView(view_id))
+    return ViewSpaceUpdateResult::SUCCEEDED;
+  else
+    ViewSpaceUpdateResult::FAILED;
 }
-
-SimpleViewSpaceModule::ViewSpaceUpdateResult
-SimpleViewSpaceModule::deleteView(View::IdType view_id)
-{
-        if (viewspace_.deleteView(view_id))
-                return ViewSpaceUpdateResult::SUCCEEDED;
-        else
-                ViewSpaceUpdateResult::FAILED;
 }
-} // namespace views
-} // namespace ig_active_reconstruction
+}
