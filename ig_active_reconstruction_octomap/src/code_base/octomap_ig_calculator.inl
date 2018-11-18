@@ -67,6 +67,22 @@ unsigned int CSCOPE::registerInformationGain(
 }
 
 TEMPT
+template <template <typename> class MAP_METRIC_TYPE>
+unsigned int CSCOPE::registerMapMetric()
+{
+        boost::shared_ptr<MapMetric<TREE_TYPE> > prototype =
+                boost::make_shared<MAP_METRIC_TYPE<TREE_TYPE> >();
+        std::string name = prototype->type();
+
+        boost::function<boost::shared_ptr<MapMetric<TREE_TYPE> >()> creator;
+        creator = boost::bind(
+                &IgCalculator<TREE_TYPE>::makeShared_mm<MAP_METRIC_TYPE>, this);
+
+        return mm_factory_.add(name, creator);
+}
+
+
+TEMPT
 template <template <typename> class IG_METRIC_TYPE>
 boost::shared_ptr<InformationGain<TREE_TYPE> >
 CSCOPE::makeShared(typename IG_METRIC_TYPE<TREE_TYPE>::Utils::Config utils)
@@ -74,6 +90,15 @@ CSCOPE::makeShared(typename IG_METRIC_TYPE<TREE_TYPE>::Utils::Config utils)
         return boost::shared_ptr<InformationGain<TREE_TYPE> >(
                 new IG_METRIC_TYPE<TREE_TYPE>(utils));
 }
+
+TEMPT
+template <template <typename> class MAP_METRIC_TYPE>
+boost::shared_ptr<MapMetric<TREE_TYPE> > CSCOPE::makeShared_mm()
+{
+        return boost::shared_ptr<MapMetric<TREE_TYPE> >(
+                new MAP_METRIC_TYPE<TREE_TYPE>());
+}
+
 
 } // namespace octomap
 

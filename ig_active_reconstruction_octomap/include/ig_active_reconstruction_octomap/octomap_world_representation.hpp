@@ -32,6 +32,7 @@ namespace octomap
  * parameters each time. Also give the possibility to possibly add more
  * functionality in the future.
  */
+
 template <class TREE_TYPE> class WorldRepresentation
 {
       public:

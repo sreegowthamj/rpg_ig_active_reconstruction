@@ -16,7 +16,8 @@
  * the license, on <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#define TEMPT template <class TREE_TYPE>
+#define CSCOPE WorldStats<TREE_TYPE>
 
 namespace ig_active_reconstruction
 {
@@ -26,34 +27,8 @@ namespace world_representation
 
 namespace octomap
 {
-
-/*! Defines the interface for and a factory to register map metrics. A map
- * metric is a metric that is calculated on the complete map (octree), not only
- * on rays cast through the space. One example is the total entropy within the
- * map.
- */
-template <class TREE_TYPE> class MapMetric
-{
-      public:
-        typedef double Result;
-
-
-      public:
-        /*! Returns the name of the method.
-         */
-        virtual std::string type() = 0;
-
-        /*! Calculates the metric on the given octree.
-         * @param octree Pointer to the octree on which the metric will be
-         * calculated.
-         */
-        virtual Result calculateOn(boost::shared_ptr<TREE_TYPE> octree) = 0;
-};
-
-} // namespace octomap
+}
 
 } // namespace world_representation
 
 } // namespace ig_active_reconstruction
-
-#include "../src/code_base/octomap_map_metric.inl"

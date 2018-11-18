@@ -33,6 +33,7 @@
 #include "ig_active_reconstruction_octomap/ig/average_entropy.hpp"
 #include "ig_active_reconstruction_octomap/octomap_ros_pcl_input.hpp"
 #include "ig_active_reconstruction_octomap/octomap_ros_interface.hpp"
+#include "ig_active_reconstruction_octomap/map_metric/world_stats.hpp"
 
 #include "ig_active_reconstruction_ros/param_loader.hpp"
 #include "ig_active_reconstruction_ros/world_representation_ros_server_ci.hpp"
@@ -165,6 +166,7 @@ int main(int argc, char **argv)
         // Instantiate main world object
         // .............................................................................................
         WorldRepresentation world_representation(octree_config);
+        // CSE-574 : WorldRepresentation world_representation2(octree_config);
         // Create ROS interface
         RosInterface<TreeType>::Config wri_config;
         wri_config.nh = ros::NodeHandle("world");
@@ -206,6 +208,8 @@ int main(int argc, char **argv)
         ig_calculator->registerInformationGain<VasquezGomezAreaFactorIg>(
                 ig_config);
         ig_calculator->registerInformationGain<AverageEntropyIg>(ig_config);
+
+        ig_calculator->registerMapMetric<WorldStats>();
 
         // Expose the information gain calculator to ROS
         iar::world_representation::RosServerCI<boost::shared_ptr> ig_server(

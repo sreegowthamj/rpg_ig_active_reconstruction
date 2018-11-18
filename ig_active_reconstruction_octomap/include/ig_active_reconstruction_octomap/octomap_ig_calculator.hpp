@@ -111,12 +111,18 @@ class IgCalculator : public CommunicationInterface,
                 typename IG_METRIC_TYPE<TREE_TYPE>::Utils::Config utils =
                         typename IG_METRIC_TYPE<TREE_TYPE>::Utils());
 
+        template <template <typename> class MAP_METRIC_TYPE>
+        unsigned int registerMapMetric();
+
       protected:
         /*! Helper function for binding make shared.
          */
         template <template <typename> class IG_METRIC_TYPE>
         boost::shared_ptr<InformationGain<TREE_TYPE> >
         makeShared(typename IG_METRIC_TYPE<TREE_TYPE>::Utils::Config utils);
+
+        template <template <typename> class MAP_METRIC_TYPE>
+        boost::shared_ptr<MapMetric<TREE_TYPE> > makeShared_mm();
 
       protected:
         IgFactory ig_factory_; //! Information gain factory.

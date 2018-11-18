@@ -122,9 +122,9 @@ class BasicRayIgCalculator : public IgCalculator<TREE_TYPE>
                 // starts).
                 double max_ray_depth; //! Maximal ray length.
                 // double occupied_passthrough_threshold; //! If an occupied
-                // voxel's occupancy likelihood is lower than this threshold, ray
-                // casting is continued. unsigned int ray_step_size; //! Voxel
-                // resolution along ray.
+                // voxel's occupancy likelihood is lower than this threshold,
+                // ray casting is continued. unsigned int ray_step_size; //!
+                // Voxel resolution along ray.
         };
 
       protected:

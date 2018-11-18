@@ -155,6 +155,8 @@ typename CSCOPE::ResultInformation
 CSCOPE::computeMapMetric(MapMetricRetrievalCommand &command,
                          MapMetricRetrievalResultSet &output)
 {
+        ROS_INFO("%s : %s", __FILE__, __func__);
+        return ResultInformation::SUCCEEDED;
 }
 
 TEMPT
