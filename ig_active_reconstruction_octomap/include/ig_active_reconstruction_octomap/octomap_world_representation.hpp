@@ -6,17 +6,14 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
@@ -30,12 +27,12 @@ namespace world_representation
 namespace octomap
 {
 /*! Templated wrapper class around the octree object. Currently it mainly
- * provides some convenience functionality
- * to get different interface classes to work with the octree without having to
- * respecify the correct
- * template parameters each time. Also give the possibility to possibly add more
+ * provides some convenience functionality to get different interface classes to
+ * work with the octree without having to respecify the correct template
+ * parameters each time. Also give the possibility to possibly add more
  * functionality in the future.
  */
+
 template <class TREE_TYPE> class WorldRepresentation
 {
       public:
@@ -128,10 +125,8 @@ template <class TREE_TYPE> class WorldRepresentation
          * -> apparently might be a compiler bug
          */
         /*template< template<typename> class INPUT_OBJ_TYPE, class ...
-        CONSTRUCTOR_ARGS >
-        boost::shared_ptr< INPUT_OBJ_TYPE<TREE_TYPE> > getLinkedObj(
-        CONSTRUCTOR_ARGS
-        ... args );*/
+        CONSTRUCTOR_ARGS > boost::shared_ptr< INPUT_OBJ_TYPE<TREE_TYPE> >
+        getLinkedObj( CONSTRUCTOR_ARGS ... args );*/
 
         /*! Returns a shared pointer to an object on which a setLink() was
          * called, with a link object linking to the world representation. The
@@ -142,7 +137,7 @@ template <class TREE_TYPE> class WorldRepresentation
          * argument.
          */
         template <template <typename> class INPUT_OBJ_TYPE>
-        boost::shared_ptr<INPUT_OBJ_TYPE<TREE_TYPE>>
+        boost::shared_ptr<INPUT_OBJ_TYPE<TREE_TYPE> >
         getLinkedObj(typename INPUT_OBJ_TYPE<TREE_TYPE>::Config config =
                              typename INPUT_OBJ_TYPE<TREE_TYPE>::Config());
 
@@ -160,8 +155,11 @@ template <class TREE_TYPE> class WorldRepresentation
       protected:
         boost::shared_ptr<TREE_TYPE> octree_; //! Octomap tree instance.
 };
+
 } // namespace octomap
+
 } // namespace world_representation
+
 } // namespace ig_active_reconstruction
 
 #include "../src/code_base/octomap_world_representation.inl"

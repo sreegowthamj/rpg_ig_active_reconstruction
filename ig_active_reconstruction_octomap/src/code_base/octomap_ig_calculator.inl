@@ -6,17 +6,14 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #define TEMPT template <class TREE_TYPE>
@@ -35,15 +32,15 @@ namespace octomap
 
 /*TEMPT // postponed for compilation with cpp11
 template< template<typename> class IG_METRIC_TYPE, typename ...
-IG_CONSTRUCTOR_ARGS >
-unsigned int CSCOPE::registerInformationGain( IG_CONSTRUCTOR_ARGS ... args )
+IG_CONSTRUCTOR_ARGS > unsigned int CSCOPE::registerInformationGain(
+IG_CONSTRUCTOR_ARGS ... args )
 {
   // gcc has a bug when capturing variadic arguments... need to use
 workaround...
 
   boost::shared_ptr< InformationGain<TREE_TYPE> > prototype =
-boost::make_shared< IG_METRIC_TYPE<TREE_TYPE> >(args...);
-  std::string name = prototype->type();
+boost::make_shared< IG_METRIC_TYPE<TREE_TYPE> >(args...); std::string name =
+prototype->type();
 
   std::function< boost::shared_ptr< InformationGain<TREE_TYPE> >() > creator =
 std::bind(boost::make_shared< IG_METRIC_TYPE<TREE_TYPE> >,args...);
@@ -56,11 +53,11 @@ template <template <typename> class IG_METRIC_TYPE>
 unsigned int CSCOPE::registerInformationGain(
         typename IG_METRIC_TYPE<TREE_TYPE>::Utils::Config utils)
 {
-        boost::shared_ptr<InformationGain<TREE_TYPE>> prototype =
-                boost::make_shared<IG_METRIC_TYPE<TREE_TYPE>>(utils);
+        boost::shared_ptr<InformationGain<TREE_TYPE> > prototype =
+                boost::make_shared<IG_METRIC_TYPE<TREE_TYPE> >(utils);
         std::string name = prototype->type();
 
-        boost::function<boost::shared_ptr<InformationGain<TREE_TYPE>>()>
+        boost::function<boost::shared_ptr<InformationGain<TREE_TYPE> >()>
                 creator;
         creator = boost::bind(
                 &IgCalculator<TREE_TYPE>::makeShared<IG_METRIC_TYPE>, this,
@@ -70,15 +67,43 @@ unsigned int CSCOPE::registerInformationGain(
 }
 
 TEMPT
+template <template <typename> class MAP_METRIC_TYPE>
+unsigned int CSCOPE::registerMapMetric()
+{
+        boost::shared_ptr<MapMetric<TREE_TYPE> > prototype =
+                boost::make_shared<MAP_METRIC_TYPE<TREE_TYPE> >();
+        std::string name = prototype->type();
+
+        boost::function<boost::shared_ptr<MapMetric<TREE_TYPE> >()> creator;
+        creator = boost::bind(
+                &IgCalculator<TREE_TYPE>::makeShared_mm<MAP_METRIC_TYPE>, this);
+
+        return mm_factory_.add(name, creator);
+}
+
+
+TEMPT
 template <template <typename> class IG_METRIC_TYPE>
-boost::shared_ptr<InformationGain<TREE_TYPE>>
+boost::shared_ptr<InformationGain<TREE_TYPE> >
 CSCOPE::makeShared(typename IG_METRIC_TYPE<TREE_TYPE>::Utils::Config utils)
 {
-        return boost::shared_ptr<InformationGain<TREE_TYPE>>(
+        return boost::shared_ptr<InformationGain<TREE_TYPE> >(
                 new IG_METRIC_TYPE<TREE_TYPE>(utils));
 }
+
+TEMPT
+template <template <typename> class MAP_METRIC_TYPE>
+boost::shared_ptr<MapMetric<TREE_TYPE> > CSCOPE::makeShared_mm()
+{
+        return boost::shared_ptr<MapMetric<TREE_TYPE> >(
+                new MAP_METRIC_TYPE<TREE_TYPE>());
+}
+
+
 } // namespace octomap
+
 } // namespace world_representation
+
 } // namespace ig_active_reconstruction
 
 #undef CSCOPE

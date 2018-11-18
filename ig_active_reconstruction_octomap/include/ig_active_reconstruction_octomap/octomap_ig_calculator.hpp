@@ -6,17 +6,14 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
@@ -39,16 +36,15 @@ namespace octomap
 /*! Abstract base class: Provides information gain calculation for octomap-based
  * probabilistic volumetric world representation, implementing the frameworks
  * communication interface. Additionally it includes a factory where the desired
- * information gain and
- * map metric methods can be registered.
+ * information gain and map metric methods can be registered.
  */
 template <class TREE_TYPE>
 class IgCalculator : public CommunicationInterface,
                      public WorldRepresentation<TREE_TYPE>::LinkedObject
 {
       public:
-        typedef multikit::Factory<InformationGain<TREE_TYPE>> IgFactory;
-        typedef multikit::Factory<MapMetric<TREE_TYPE>> MmFactory;
+        typedef multikit::Factory<InformationGain<TREE_TYPE> > IgFactory;
+        typedef multikit::Factory<MapMetric<TREE_TYPE> > MmFactory;
 
       public:
         virtual ~IgCalculator(){};
@@ -102,8 +98,8 @@ class IgCalculator : public CommunicationInterface,
          * @return The identifier for the object type within the factory.
          */
         /*template<template<typename> class IG_METRIC_TYPE, typename ...
-        IG_CONSTRUCTOR_ARGS>
-        unsigned int registerInformationGain( IG_CONSTRUCTOR_ARGS ... args );*/
+        IG_CONSTRUCTOR_ARGS> unsigned int registerInformationGain(
+        IG_CONSTRUCTOR_ARGS ... args );*/
 
         /*! Registers an information gain with an optional Utils type
          * constructor parameter that will then be available for calculations.
@@ -115,19 +111,27 @@ class IgCalculator : public CommunicationInterface,
                 typename IG_METRIC_TYPE<TREE_TYPE>::Utils::Config utils =
                         typename IG_METRIC_TYPE<TREE_TYPE>::Utils());
 
+        template <template <typename> class MAP_METRIC_TYPE>
+        unsigned int registerMapMetric();
+
       protected:
         /*! Helper function for binding make shared.
          */
         template <template <typename> class IG_METRIC_TYPE>
-        boost::shared_ptr<InformationGain<TREE_TYPE>>
+        boost::shared_ptr<InformationGain<TREE_TYPE> >
         makeShared(typename IG_METRIC_TYPE<TREE_TYPE>::Utils::Config utils);
+
+        template <template <typename> class MAP_METRIC_TYPE>
+        boost::shared_ptr<MapMetric<TREE_TYPE> > makeShared_mm();
 
       protected:
         IgFactory ig_factory_; //! Information gain factory.
         MmFactory mm_factory_; //! Map metric factory.
 };
 } // namespace octomap
+
 } // namespace world_representation
+
 } // namespace ig_active_reconstruction
 
 #include "../src/code_base/octomap_ig_calculator.inl"

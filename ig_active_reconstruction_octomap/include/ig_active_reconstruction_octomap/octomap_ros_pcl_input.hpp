@@ -6,17 +6,14 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
@@ -24,8 +21,8 @@
 #include <ros/ros.h>
 #include <tf/transform_listener.h>
 
-#include "ig_active_reconstruction_msgs/PclInput.h"
 #include <sensor_msgs/PointCloud2.h>
+#include "ig_active_reconstruction_msgs/PclInput.h"
 
 #include "ig_active_reconstruction_octomap/octomap_pcl_input.hpp"
 
@@ -55,7 +52,7 @@ template <class TREE_TYPE, class POINTCLOUD_TYPE> class RosPclInput
          * incoming pointclouds will be transformed.
          */
         RosPclInput(ros::NodeHandle nh,
-                    boost::shared_ptr<PclInput<TREE_TYPE, POINTCLOUD_TYPE>>
+                    boost::shared_ptr<PclInput<TREE_TYPE, POINTCLOUD_TYPE> >
                             pcl_input,
                     std::string world_frame);
 
@@ -87,11 +84,11 @@ template <class TREE_TYPE, class POINTCLOUD_TYPE> class RosPclInput
 
       private:
         ros::NodeHandle nh_;
-        boost::shared_ptr<PclInput<TREE_TYPE, POINTCLOUD_TYPE>> pcl_input_;
+        boost::shared_ptr<PclInput<TREE_TYPE, POINTCLOUD_TYPE> > pcl_input_;
 
         std::string world_frame_name_;
 
-        std::vector<boost::function<void()>> signal_call_stack_;
+        std::vector<boost::function<void()> > signal_call_stack_;
 
         ros::Subscriber pcl_subscriber_;
         ros::ServiceServer pcl_input_service_;
@@ -99,7 +96,9 @@ template <class TREE_TYPE, class POINTCLOUD_TYPE> class RosPclInput
         tf::TransformListener tf_listener_;
 };
 } // namespace octomap
+
 } // namespace world_representation
+
 } // namespace ig_active_reconstruction
 
 #include "../src/code_base/octomap_ros_pcl_input.inl"

@@ -6,24 +6,21 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
 
+#include <pcl/common/projection_matrix.h>
 #include <Eigen/Core>
 #include <Eigen/Geometry>
-#include <pcl/common/projection_matrix.h>
 
 #include "ig_active_reconstruction_octomap/octomap_pcl_input.hpp"
 
@@ -36,17 +33,16 @@ namespace world_representation
 namespace octomap
 {
 /*! Input object to feed pointclouds into an octomap::WorldRepresentation. It
- * follows the standard octomap
- * way of doing so, refer to the dedicated paper. Easiest way to retrieve the
- * object is to call getInputObj<StdPclInput>(config) on the
- * WorldRepresentation object. This will directly set the correct template
- * arguments to interact with it.
+ * follows the standard octomap way of doing so, refer to the dedicated paper.
+ * Easiest way to retrieve the object is to call
+ * getInputObj<StdPclInput>(config) on the WorldRepresentation object. This will
+ * directly set the correct template arguments to interact with it.
  */
 template <class TREE_TYPE, class POINTCLOUD_TYPE>
 class StdPclInput : public PclInput<TREE_TYPE, POINTCLOUD_TYPE>
 {
       public:
-        typedef boost::shared_ptr<StdPclInput<TREE_TYPE, POINTCLOUD_TYPE>> Ptr;
+        typedef boost::shared_ptr<StdPclInput<TREE_TYPE, POINTCLOUD_TYPE> > Ptr;
         typedef TREE_TYPE TreeType;
         typedef POINTCLOUD_TYPE PclType;
 
@@ -104,8 +100,11 @@ class StdPclInput : public PclInput<TREE_TYPE, POINTCLOUD_TYPE>
       protected:
         Config config_;
 };
+
 } // namespace octomap
+
 } // namespace world_representation
+
 } // namespace ig_active_reconstruction
 
 #include "../src/code_base/octomap_std_pcl_input.inl"

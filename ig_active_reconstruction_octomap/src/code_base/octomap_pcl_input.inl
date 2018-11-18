@@ -6,17 +6,14 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #define TEMPT template <class TREE_TYPE, class POINTCLOUD_TYPE>
@@ -43,8 +40,7 @@ void CSCOPE::setOctree(boost::shared_ptr<TREE_TYPE> octree)
 
 /*TEMPT // cpp11 version
 template< template<typename,typename> class OCCLUSION_CALC_TYPE, class ... Types
->
-void CSCOPE::setOcclusionCalculator( Types ... args )
+> void CSCOPE::setOcclusionCalculator( Types ... args )
 {
   occlusion_calculator_ = boost::make_shared<
 OCCLUSION_CALC_TYPE<TREE_TYPE,POINTCLOUD_TYPE> >( args... );
@@ -58,11 +54,13 @@ void CSCOPE::setOcclusionCalculator(
                 options)
 {
         occlusion_calculator_ = boost::make_shared<
-                OCCLUSION_CALC_TYPE<TREE_TYPE, POINTCLOUD_TYPE>>(options);
+                OCCLUSION_CALC_TYPE<TREE_TYPE, POINTCLOUD_TYPE> >(options);
         occlusion_calculator_->setLink(this->link_);
 }
 } // namespace octomap
+
 } // namespace world_representation
+
 } // namespace ig_active_reconstruction
 
 #undef CSCOPE

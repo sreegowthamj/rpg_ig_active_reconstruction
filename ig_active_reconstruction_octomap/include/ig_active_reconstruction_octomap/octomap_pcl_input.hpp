@@ -6,27 +6,24 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
 
+#include <pcl/common/projection_matrix.h>
 #include <Eigen/Core>
 #include <Eigen/Geometry>
-#include <pcl/common/projection_matrix.h>
 
-#include "ig_active_reconstruction_octomap/octomap_occlusion_calculator.hpp"
 #include "ig_active_reconstruction_octomap/octomap_world_representation.hpp"
+#include "ig_active_reconstruction_octomap/octomap_occlusion_calculator.hpp"
 
 namespace ig_active_reconstruction
 {
@@ -71,10 +68,9 @@ class PclInput : public WorldRepresentation<TREE_TYPE>::LinkedObject
          * setOcclusionCalculator<WhateverOcclusionCalculator>(0.1,"test",4)
          * will internally create an object by calling
          * std::make_shared<WhateverOcclusionCalculator<TREE_TYPE,POINTCLOUD_TYPE>
-         * >(0.1,"test",4).
-         * The template arguments of the occlusion calculator can thus be
-         * omitted and are derived directly from the WorldRepresentation object
-         * on which you are using it.
+         * >(0.1,"test",4). The template arguments of the occlusion calculator
+         * can thus be omitted and are derived directly from the
+         * WorldRepresentation object on which you are using it.
          *
          * @param args Whichever arguments the occlusion calculator expects.
          * (variadic template)
@@ -96,11 +92,13 @@ class PclInput : public WorldRepresentation<TREE_TYPE>::LinkedObject
                                 TREE_TYPE, POINTCLOUD_TYPE>::Options());
 
       protected:
-        boost::shared_ptr<OcclusionCalculator<TREE_TYPE, POINTCLOUD_TYPE>>
+        boost::shared_ptr<OcclusionCalculator<TREE_TYPE, POINTCLOUD_TYPE> >
                 occlusion_calculator_; //! Calculates occlusions
 };
 } // namespace octomap
+
 } // namespace world_representation
+
 } // namespace ig_active_reconstruction
 
 #include "../src/code_base/octomap_pcl_input.inl"

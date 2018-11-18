@@ -6,17 +6,14 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
@@ -30,8 +27,7 @@ namespace world_representation
 {
 
 /*! Abstract interface definition for world representation modules plus data
- * structures used
- * for communication.
+ * structures used for communication.
  */
 class CommunicationInterface
 {
@@ -140,20 +136,19 @@ class CommunicationInterface
                 movements::PoseVector
                         path; //! Describes the path for which the information
                               //! gain shall be calculated. Note that in the
-                              //! current octomap-based implementation
-                              //! provided with the framework this is not yet
+                              //! current octomap-based implementation provided
+                              //! with the framework this is not yet
                               //! implemented: Only the first pose will be
                               //! considered and no casts into the future
                               //! attempted.
                 std::vector<std::string>
-                        metric_names; //! Vector with the names of all
-                                      //! metrics that shall be calculated.
-                                      //! Only considered if metric_ids is
-                                      //! empty.
+                        metric_names; //! Vector with the names of all metrics
+                                      //! that shall be calculated. Only
+                                      //! considered if metric_ids is empty.
                 std::vector<unsigned int>
-                        metric_ids; //! Vector with the ids of all metrics
-                                    //! that shall be calculated. Takes
-                                    //! precedence over metric_names.
+                        metric_ids; //! Vector with the ids of all metrics that
+                                    //! shall be calculated. Takes precedence
+                                    //! over metric_names.
                 IgRetrievalConfig config;
         };
 
@@ -172,8 +167,8 @@ class CommunicationInterface
          */
         struct MapMetricRetrievalCommand {
                 std::vector<std::string>
-                        metric_names; //! Vector with the names of all
-                                      //! metrics that shall be calculated.
+                        metric_names; //! Vector with the names of all metrics
+                                      //! that shall be calculated.
         };
 
         /*! Struct representing metric information.
@@ -216,5 +211,9 @@ class CommunicationInterface
         virtual void
         availableMapMetrics(std::vector<MetricInfo> &available_map_metrics) = 0;
 };
+
+
 } // namespace world_representation
+
+
 } // namespace ig_active_reconstruction

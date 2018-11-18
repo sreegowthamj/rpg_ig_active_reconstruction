@@ -6,30 +6,27 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
 
-#include <mutex>
 #include <thread>
+#include <mutex>
 
-#include "ig_active_reconstruction/goal_evaluation_module.hpp"
 #include "ig_active_reconstruction/robot_communication_interface.hpp"
-#include "ig_active_reconstruction/utility_calculator.hpp"
-#include "ig_active_reconstruction/view_space.hpp"
 #include "ig_active_reconstruction/views_communication_interface.hpp"
 #include "ig_active_reconstruction/world_representation_communication_interface.hpp"
+#include "ig_active_reconstruction/utility_calculator.hpp"
+#include "ig_active_reconstruction/goal_evaluation_module.hpp"
+#include "ig_active_reconstruction/view_space.hpp"
 
 namespace ig_active_reconstruction
 {
@@ -83,8 +80,7 @@ class BasicViewPlanner
         virtual ~BasicViewPlanner();
 
         /*! Sets the robot communication interface with which the view planner
-         * corresponds.
-         * Can't be set if running.
+         * corresponds. Can't be set if running.
          */
         virtual void
         setRobotCommUnit(boost::shared_ptr<robot::CommunicationInterface>
@@ -103,6 +99,7 @@ class BasicViewPlanner
         virtual void setWorldCommUnit(
                 boost::shared_ptr<world_representation::CommunicationInterface>
                         world_comm_unit);
+
 
         /*! Sets the utility function calculator that is to be used. It defines
          * which and how information gain metrics are used. Can't be set if
@@ -169,14 +166,9 @@ class BasicViewPlanner
                                   //! corresponds.
 
         boost::shared_ptr<UtilityCalculator>
-                utility_calculator_; //! Utility
-                                     //! calculator for
-                                     //! evaluating
-                                     //! different views.
-                                     //! It also defines
-                                     //! which
-                                     //! information
-                                     //! gains are used.
+                utility_calculator_; //! Utility calculator for evaluating
+                                     //! different views. It also defines which
+                                     //! information gains are used.
         boost::shared_ptr<GoalEvaluationModule>
                 goal_evaluation_module_; //! Goal evaluation module which
                                          //! determines if the view planner
@@ -191,4 +183,5 @@ class BasicViewPlanner
 
         boost::shared_ptr<views::ViewSpace> viewspace_; //! Current viewspace.
 };
+
 } // namespace ig_active_reconstruction

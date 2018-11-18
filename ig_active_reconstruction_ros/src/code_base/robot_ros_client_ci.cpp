@@ -6,29 +6,27 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #include <stdexcept>
 
-#include "ig_active_reconstruction_ros/robot_conversions.hpp"
 #include "ig_active_reconstruction_ros/robot_ros_client_ci.hpp"
+#include "ig_active_reconstruction_ros/robot_conversions.hpp"
 #include "ig_active_reconstruction_ros/views_conversions.hpp"
 
-#include "ig_active_reconstruction_msgs/MoveToOrder.h"
-#include "ig_active_reconstruction_msgs/MovementCostCalculation.h"
-#include "ig_active_reconstruction_msgs/RetrieveData.h"
 #include "ig_active_reconstruction_msgs/ViewRequest.h"
+#include "ig_active_reconstruction_msgs/RetrieveData.h"
+#include "ig_active_reconstruction_msgs/MovementCostCalculation.h"
+#include "ig_active_reconstruction_msgs/MoveToOrder.h"
+
 
 namespace ig_active_reconstruction
 {
@@ -89,6 +87,7 @@ MovementCost RosClientCI::movementCost(views::View &target_view)
         request.request.target_view = ros_conversions::viewToMsg(target_view);
         request.request.additional_information = true;
 
+
         ROS_INFO("Retrieving movement cost");
         bool response = cost_retriever_.call(request);
 
@@ -111,6 +110,7 @@ MovementCost RosClientCI::movementCost(views::View &start_view,
         request.request.target_view = ros_conversions::viewToMsg(target_view);
         request.request.additional_information = fill_additional_information;
 
+
         ROS_INFO("Retrieving movement cost");
         bool response = cost_retriever_.call(request);
 
@@ -128,6 +128,7 @@ bool RosClientCI::moveTo(views::View &target_view)
         ig_active_reconstruction_msgs::MoveToOrder request;
         request.request.target_view = ros_conversions::viewToMsg(target_view);
 
+
         ROS_INFO("Demanding robot to move.");
         bool response = robot_mover_.call(request);
         if (!response) {
@@ -136,5 +137,8 @@ bool RosClientCI::moveTo(views::View &target_view)
 
         return request.response.success;
 }
+
+
 } // namespace robot
+
 } // namespace ig_active_reconstruction

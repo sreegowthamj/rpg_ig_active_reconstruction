@@ -6,26 +6,23 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
 
 #include "ig_active_reconstruction_octomap/octomap_world_representation.hpp"
 
+#include <pcl/common/projection_matrix.h>
 #include <Eigen/Core>
 #include <Eigen/Geometry>
-#include <pcl/common/projection_matrix.h>
 
 namespace ig_active_reconstruction
 {
@@ -59,6 +56,9 @@ class OcclusionCalculator : public WorldRepresentation<TREE_TYPE>::LinkedObject
          */
         virtual void setOctree(boost::shared_ptr<TREE_TYPE> octree) = 0;
 };
+
 } // namespace octomap
+
 } // namespace world_representation
+
 } // namespace ig_active_reconstruction

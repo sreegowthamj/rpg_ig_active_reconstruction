@@ -6,31 +6,28 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
-#include <chrono>
 #include <iostream>
 #include <string>
 #include <thread>
+#include <chrono>
 
-#include <boost/chrono/include.hpp>
 #include <boost/thread/thread.hpp>
+#include <boost/chrono/include.hpp>
 
-#include <ig_active_reconstruction/basic_view_planner.hpp>
-#include <ig_active_reconstruction/max_calls_termination_criteria.hpp>
-#include <ig_active_reconstruction/weighted_linear_utility.hpp>
 #include <ros/ros.h>
+#include <ig_active_reconstruction/basic_view_planner.hpp>
+#include <ig_active_reconstruction/weighted_linear_utility.hpp>
+#include <ig_active_reconstruction/max_calls_termination_criteria.hpp>
 
 #include "ig_active_reconstruction_ros/param_loader.hpp"
 #include "ig_active_reconstruction_ros/robot_ros_client_ci.hpp"
@@ -72,9 +69,11 @@ int main(int argc, char **argv)
         unsigned int max_calls;
         ros_tools::getParam<unsigned int, int>(max_calls, "max_calls", 20);
 
+
         // only the view planner resides here
         // ...................................................................................................................
         iar::BasicViewPlanner view_planner(bvp_config);
+
 
         // robot, viewspace module and world representation are external
         // ...................................................................................................................
@@ -89,6 +88,7 @@ int main(int argc, char **argv)
         view_planner.setRobotCommUnit(robot_comm);
         view_planner.setViewsCommUnit(views_comm);
         view_planner.setWorldCommUnit(world_comm);
+
 
         // want to use the weighted linear utility calculator, which directly
         // interacts with world and robot comms too
@@ -108,12 +108,14 @@ int main(int argc, char **argv)
 
         view_planner.setUtility(utility_calculator);
 
+
         // using a simple max. number of calls termination critera
         // ...................................................................................................................
         boost::shared_ptr<iar::GoalEvaluationModule> termination_criteria =
                 boost::make_shared<iar::MaxCallsTerminationCriteria>(max_calls);
 
         view_planner.setGoalEvaluationModule(termination_criteria);
+
 
         // Simple command line user interface.
         // ...................................................................................................................
@@ -161,16 +163,10 @@ int main(int argc, char **argv)
         std::thread status_reading_thread(status_readout);
 
         ROS_INFO(
-                "Basic View Planner was successfully setup. As soon as other "
-                "modules are running, we're ready to go.");
+                "Basic View Planner was successfully setup. As soon as other modules are running, we're ready to go.");
 
         std::string gui_info =
-                "\n\n\nBASIC VIEW PLANNER SIMPLE "
-                "UI\n********************************\nThe following "
-                "actions are supported ('key toggle'):\n- 'g' (go) "
-                "Start or unpause view planning.\n- 'p': (pause) "
-                "Pause procedure.\n- 's' (stop) Stop procedure\n- 'q' "
-                "(quit) Stop procedure and quit program.\n\n";
+                "\n\n\nBASIC VIEW PLANNER SIMPLE UI\n********************************\nThe following actions are supported ('key toggle'):\n- 'g' (go) Start or unpause view planning.\n- 'p': (pause) Pause procedure.\n- 's' (stop) Stop procedure\n- 'q' (quit) Stop procedure and quit program.\n\n";
         char user_input;
 
         while (true) {

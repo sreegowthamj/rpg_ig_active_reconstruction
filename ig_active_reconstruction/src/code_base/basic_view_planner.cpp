@@ -6,26 +6,23 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #include "ig_active_reconstruction/basic_view_planner.hpp"
 
-#include <boost/chrono/include.hpp>
-#include <boost/smart_ptr.hpp>
-#include <boost/thread/thread.hpp>
 #include <chrono>
+#include <boost/smart_ptr.hpp>
 #include <iostream>
+#include <boost/thread/thread.hpp>
+#include <boost/chrono/include.hpp>
 using namespace std;
 
 namespace ig_active_reconstruction
@@ -185,6 +182,7 @@ void BasicViewPlanner::main()
 
         cout << "\n complete view space : " << viewspace_ << endl;
 
+
         unsigned int reception_nr = 0;
 
         do {
@@ -203,6 +201,7 @@ void BasicViewPlanner::main()
                 }
 
                 cout << "Got the good views (subset of viewspace)" << endl;
+
 
                 // receive
                 // data....................................................
@@ -244,8 +243,7 @@ void BasicViewPlanner::main()
                 // ...............................................
                 if (goal_evaluation_module_->isDone()) {
                         std::cout
-                                << "\n\nTermination criteria was fulfilled. Reconstruction "
-                                   "procedure ends.\n\n";
+                                << "\n\nTermination criteria was fulfilled. Reconstruction procedure ends.\n\n";
                         break;
                 }
 

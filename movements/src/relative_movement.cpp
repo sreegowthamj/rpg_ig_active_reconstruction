@@ -15,10 +15,10 @@ You should have received a copy of the GNU Lesser General Public License
 along with movements. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "movements/relative_movement.h"
-#include "movements/combined_kinematic_movement_description.h"
-#include "movements/combined_relative_movement.h"
 #include "movements/geometry_pose.h"
+#include "movements/relative_movement.h"
+#include "movements/combined_relative_movement.h"
+#include "movements/combined_kinematic_movement_description.h"
 
 namespace movements
 {
@@ -80,4 +80,5 @@ operator+(CombinedKinematicMovementDescription const &_to_add)
         kinematic_movement_chain += _to_add;
         return kinematic_movement_chain;
 }
+
 } // namespace movements

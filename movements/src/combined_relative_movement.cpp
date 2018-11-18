@@ -15,9 +15,9 @@ You should have received a copy of the GNU Lesser General Public License
 along with movements. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "movements/geometry_pose.h"
 #include "movements/combined_relative_movement.h"
 #include "movements/combined_kinematic_movement_description.h"
-#include "movements/geometry_pose.h"
 
 namespace movements
 {
@@ -92,4 +92,5 @@ operator+=(RelativeMovement const &_to_add)
         relative_movement_queue_.push_back(_to_add);
         return *this;
 }
+
 } // namespace movements

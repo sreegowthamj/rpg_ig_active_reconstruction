@@ -6,17 +6,14 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #define TEMPT template <class TREE_TYPE>
@@ -44,9 +41,9 @@ CSCOPE::~WorldRepresentation()
 
 /*TEMPT // cpp11 version
 template< template<typename, typename ...> class INPUT_OBJ_TYPE, class ...
-TEMPLATE_ARGS, class ... CONSTRUCTOR_ARGS >
-boost::shared_ptr< INPUT_OBJ_TYPE<TREE_TYPE,TEMPLATE_ARGS ...> >
-CSCOPE::getLinkedObj( CONSTRUCTOR_ARGS ... args )
+TEMPLATE_ARGS, class ... CONSTRUCTOR_ARGS > boost::shared_ptr<
+INPUT_OBJ_TYPE<TREE_TYPE,TEMPLATE_ARGS ...> > CSCOPE::getLinkedObj(
+CONSTRUCTOR_ARGS ... args )
 {
   boost::shared_ptr< INPUT_OBJ_TYPE<TREE_TYPE,TEMPLATE_ARGS ...> > ptr =
 boost::make_shared< INPUT_OBJ_TYPE<TREE_TYPE,TEMPLATE_ARGS ...> >( args... );
@@ -75,11 +72,11 @@ INPUT_OBJ_TYPE<TREE_TYPE> >( args... );
 
 TEMPT
 template <template <typename> class INPUT_OBJ_TYPE>
-boost::shared_ptr<INPUT_OBJ_TYPE<TREE_TYPE>>
+boost::shared_ptr<INPUT_OBJ_TYPE<TREE_TYPE> >
 CSCOPE::getLinkedObj(typename INPUT_OBJ_TYPE<TREE_TYPE>::Config config)
 {
-        boost::shared_ptr<INPUT_OBJ_TYPE<TREE_TYPE>> ptr =
-                boost::make_shared<INPUT_OBJ_TYPE<TREE_TYPE>>(config);
+        boost::shared_ptr<INPUT_OBJ_TYPE<TREE_TYPE> > ptr =
+                boost::make_shared<INPUT_OBJ_TYPE<TREE_TYPE> >(config);
 
         Link new_link;
         new_link.octree = octree_;
@@ -104,7 +101,9 @@ CSCOPE::getLinkedObj(typename INPUT_OBJ_TYPE<TREE_TYPE>::Type::Config config)
         return ptr;
 }
 } // namespace octomap
+
 } // namespace world_representation
+
 } // namespace ig_active_reconstruction
 
 #undef CSCOPE

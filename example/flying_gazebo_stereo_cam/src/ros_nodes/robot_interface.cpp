@@ -6,18 +6,16 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
+
 
 #include <ros/ros.h>
 
@@ -25,6 +23,7 @@
 #include <ig_active_reconstruction_ros/robot_ros_server_ci.hpp>
 
 #include "flying_gazebo_stereo_cam/robot_communication_interface.hpp"
+
 
 /*! Implements a ROS node interface to a "flying" (staticly placed) gazebo
  * stereo camera.
@@ -63,6 +62,7 @@ int main(int argc, char **argv)
         //------------------------------------------------------------------
         ig_active_reconstruction::robot::RosServerCI comm_unit(nh,
                                                                robot_interface);
+
 
         // spin...
         ROS_INFO_STREAM(

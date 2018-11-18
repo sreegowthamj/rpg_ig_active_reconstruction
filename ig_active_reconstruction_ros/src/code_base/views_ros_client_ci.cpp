@@ -6,27 +6,25 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #include <stdexcept>
 
-#include "ig_active_reconstruction_ros/views_conversions.hpp"
 #include "ig_active_reconstruction_ros/views_ros_client_ci.hpp"
+#include "ig_active_reconstruction_ros/views_conversions.hpp"
 
 #include "ig_active_reconstruction_msgs/DeleteViews.h"
 #include "ig_active_reconstruction_msgs/ViewSpaceRequest.h"
 #include "ig_active_reconstruction_msgs/ViewSpaceUpdate.h"
+
 
 namespace ig_active_reconstruction
 {
@@ -68,6 +66,7 @@ RosClientCI::addViews(std::vector<View> &new_views)
                 call.request.views.push_back(ros_conversions::viewToMsg(view));
         }
 
+
         ROS_INFO("Demanding to add view(s).");
         bool response = views_adder_.call(call);
 
@@ -83,6 +82,7 @@ RosClientCI::ViewSpaceUpdateResult RosClientCI::addView(View new_view)
         ig_active_reconstruction_msgs::ViewSpaceUpdate call;
 
         call.request.views.push_back(ros_conversions::viewToMsg(new_view));
+
 
         ROS_INFO("Demanding to add view.");
         bool response = views_adder_.call(call);
@@ -103,6 +103,7 @@ RosClientCI::deleteViews(std::vector<View::IdType> &view_ids)
                 call.request.ids.push_back(id);
         }
 
+
         ROS_INFO("Demanding to delete view(s).");
         bool response = views_deleter_.call(call);
         if (!response)
@@ -118,6 +119,7 @@ RosClientCI::ViewSpaceUpdateResult RosClientCI::deleteView(View::IdType view_id)
 
         call.request.ids.push_back(view_id);
 
+
         ROS_INFO("Demanding to delete view.");
         bool response = views_deleter_.call(call);
         if (!response)
@@ -126,5 +128,8 @@ RosClientCI::ViewSpaceUpdateResult RosClientCI::deleteView(View::IdType view_id)
         return ros_conversions::viewSpaceUpdateResultFromMsg(
                 call.response.update_result);
 }
+
+
 } // namespace views
+
 } // namespace ig_active_reconstruction

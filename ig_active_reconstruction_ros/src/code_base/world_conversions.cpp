@@ -6,23 +6,20 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #include "ig_active_reconstruction_ros/world_conversions.hpp"
 #include "movements/ros_movements.h"
-#include <boost/foreach.hpp>
 #include <stdexcept>
+#include <boost/foreach.hpp>
 
 namespace ig_active_reconstruction
 {
@@ -127,9 +124,7 @@ resultInformationFromMsg(int &msg)
                         ResultInformation::UNKNOWN_METRIC;
         default:
                 throw std::invalid_argument(
-                        "ig_active_reconstruction::ros_conversions::"
-                        "resultInformationFromMsg:: Invalid status "
-                        "received.");
+                        "ig_active_reconstruction::ros_conversions::resultInformationFromMsg:: Invalid status received.");
         };
 }
 
@@ -148,9 +143,7 @@ int resultInformationToMsg(
                 return 2;
         default:
                 throw std::invalid_argument(
-                        "ig_active_reconstruction::ros_conversions::"
-                        "resultInformationToMsg:: Invalid status "
-                        "received.");
+                        "ig_active_reconstruction::ros_conversions::resultInformationToMsg:: Invalid status received.");
         };
 }
 
@@ -176,4 +169,5 @@ ig_active_reconstruction_msgs::InformationGain igRetrievalResultToMsg(
         return msg;
 }
 } // namespace ros_conversions
+
 } // namespace ig_active_reconstruction

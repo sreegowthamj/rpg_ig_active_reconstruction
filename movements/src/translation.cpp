@@ -50,6 +50,7 @@ double &Translation::z()
         return translation_(2);
 }
 
+
 std::string Translation::type()
 {
         return "movements::Translation";
@@ -71,4 +72,6 @@ RelativeMovement Translation::create(Eigen::Vector3d _translation)
 {
         return RelativeMovement(new Translation(_translation));
 }
+
+
 } // namespace movements

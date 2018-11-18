@@ -17,10 +17,10 @@ along with movements. If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdexcept>
 
-#include "movements/combined_kinematic_movement_description.h"
-#include "movements/combined_relative_movement.h"
 #include "movements/geometry_pose.h"
 #include "movements/kinematic_movement_description.h"
+#include "movements/combined_kinematic_movement_description.h"
+#include "movements/combined_relative_movement.h"
 
 namespace movements
 {
@@ -62,15 +62,11 @@ KinematicMovementDescription::relativePath(double _start_time, double _end_time,
 {
         if (_step_size <= 0) {
                 throw std::invalid_argument(
-                        "KinematicMovementDescription::relativePath::"
-                        "Called with invalid argument: _step_size is "
-                        "less or equal to zero.");
+                        "KinematicMovementDescription::relativePath::Called with invalid argument: _step_size is less or equal to zero.");
         }
         if (_start_time > _end_time) {
                 throw std::invalid_argument(
-                        "KinematicMovementDescription::relativePath::"
-                        "Called with invalid arguments: _start_time is "
-                        "larger than _end_time.");
+                        "KinematicMovementDescription::relativePath::Called with invalid arguments: _start_time is larger than _end_time.");
         }
         return enwrapped_kinematic_movement_description_->relativePath(
                 _start_time, _end_time, _step_size);
@@ -83,15 +79,11 @@ KinematicMovementDescription::path(movements::Pose _base_pose,
 {
         if (_step_size <= 0) {
                 throw std::invalid_argument(
-                        "KinematicMovementDescription::path::Called "
-                        "with invalid argument: _step_size is less or "
-                        "equal to zero.");
+                        "KinematicMovementDescription::path::Called with invalid argument: _step_size is less or equal to zero.");
         }
         if (_start_time > _end_time) {
                 throw std::invalid_argument(
-                        "KinematicMovementDescription::path::Called "
-                        "with invalid arguments: _start_time is larger "
-                        "than _end_time.");
+                        "KinematicMovementDescription::path::Called with invalid arguments: _start_time is larger than _end_time.");
         }
         return enwrapped_kinematic_movement_description_->path(
                 _base_pose, _start_time, _end_time, _step_size);
@@ -120,4 +112,5 @@ KinematicMovementDescription::KinematicMovementDescriptionInstance::path(
         }
         return cartesian_path;
 }
+
 } // namespace movements

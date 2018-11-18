@@ -67,6 +67,7 @@ Pose &Pose::operator+=(movements::CombinedRelativeMovement _second)
         *this = _second.applyToBasePose(*this);
         return *this;
 }
+
 } // namespace movements
 
 std::ostream &operator<<(std::ostream &_out, movements::Pose &_pose)

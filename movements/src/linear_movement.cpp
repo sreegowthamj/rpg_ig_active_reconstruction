@@ -95,4 +95,6 @@ void Linear::normalizeDirection()
 {
         direction_.normalize();
 }
+
+
 } // namespace movements

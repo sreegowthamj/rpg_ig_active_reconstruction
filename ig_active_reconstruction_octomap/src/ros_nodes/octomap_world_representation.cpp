@@ -6,37 +6,38 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
+
 
 #include <ros/ros.h>
 
-#include "ig_active_reconstruction_octomap/ig/average_entropy.hpp"
-#include "ig_active_reconstruction_octomap/ig/occlusion_aware.hpp"
-#include "ig_active_reconstruction_octomap/ig/proximity_count.hpp"
-#include "ig_active_reconstruction_octomap/ig/rear_side_entropy.hpp"
-#include "ig_active_reconstruction_octomap/ig/rear_side_voxel.hpp"
-#include "ig_active_reconstruction_octomap/ig/unobserved_voxel.hpp"
-#include "ig_active_reconstruction_octomap/ig/vasquez_gomez_area_factor.hpp"
-#include "ig_active_reconstruction_octomap/octomap_basic_ray_ig_calculator.hpp"
+
 #include "ig_active_reconstruction_octomap/octomap_ig_tree_world_representation.hpp"
 #include "ig_active_reconstruction_octomap/octomap_ray_occlusion_calculator.hpp"
-#include "ig_active_reconstruction_octomap/octomap_ros_interface.hpp"
-#include "ig_active_reconstruction_octomap/octomap_ros_pcl_input.hpp"
 #include "ig_active_reconstruction_octomap/octomap_std_pcl_input_point_xyz.hpp"
+#include "ig_active_reconstruction_octomap/octomap_basic_ray_ig_calculator.hpp"
+#include "ig_active_reconstruction_octomap/ig/occlusion_aware.hpp"
+#include "ig_active_reconstruction_octomap/ig/unobserved_voxel.hpp"
+#include "ig_active_reconstruction_octomap/ig/rear_side_voxel.hpp"
+#include "ig_active_reconstruction_octomap/ig/rear_side_entropy.hpp"
+#include "ig_active_reconstruction_octomap/ig/proximity_count.hpp"
+#include "ig_active_reconstruction_octomap/ig/vasquez_gomez_area_factor.hpp"
+#include "ig_active_reconstruction_octomap/ig/average_entropy.hpp"
+#include "ig_active_reconstruction_octomap/octomap_ros_pcl_input.hpp"
+#include "ig_active_reconstruction_octomap/octomap_ros_interface.hpp"
+#include "ig_active_reconstruction_octomap/map_metric/world_stats.hpp"
 
 #include "ig_active_reconstruction_ros/param_loader.hpp"
 #include "ig_active_reconstruction_ros/world_representation_ros_server_ci.hpp"
+
 
 /*! Implements a ROS node holding an octomap world represenation and listening
  * on a PCL topic.
@@ -52,6 +53,7 @@ int main(int argc, char **argv)
         typedef IgTreeWorldRepresentation WorldRepresentation;
         typedef WorldRepresentation::TreeType TreeType;
         typedef StdPclInputPointXYZ<TreeType>::PclType PclType;
+
 
         // Load parameters
         // .............................................................................................
@@ -160,9 +162,11 @@ int main(int argc, char **argv)
         ros_tools::getParamIfAvailable<unsigned int, int>(
                 ig_config.voxels_in_void_ray, "ig/voxels_in_void_ray");
 
+
         // Instantiate main world object
         // .............................................................................................
         WorldRepresentation world_representation(octree_config);
+        // CSE-574 : WorldRepresentation world_representation2(octree_config);
         // Create ROS interface
         RosInterface<TreeType>::Config wri_config;
         wri_config.nh = ros::NodeHandle("world");
@@ -205,9 +209,12 @@ int main(int argc, char **argv)
                 ig_config);
         ig_calculator->registerInformationGain<AverageEntropyIg>(ig_config);
 
+        ig_calculator->registerMapMetric<WorldStats>();
+
         // Expose the information gain calculator to ROS
         iar::world_representation::RosServerCI<boost::shared_ptr> ig_server(
                 nh, ig_calculator);
+
 
         // start spinning
         // .............................................................................................

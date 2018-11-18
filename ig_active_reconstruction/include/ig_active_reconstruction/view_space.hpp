@@ -6,27 +6,24 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #ifndef IG_ACTIVE_RECONSTRUCTION_VIEW_SPACE_H_
 #define IG_ACTIVE_RECONSTRUCTION_VIEW_SPACE_H_
 
-#include "ig_active_reconstruction/view.hpp"
 #include <Eigen/StdVector>
+#include "ig_active_reconstruction/view.hpp"
 
-#include <iterator>
 #include <map> //TODO use unordered map as soon as cpp03 is not needed anymore
+#include <iterator>
 
 namespace ig_active_reconstruction
 {
@@ -56,7 +53,7 @@ class ViewSpace
 
         /*! returns all view points in the view space as a vector
          */
-        std::vector<View, Eigen::aligned_allocator<View>> getViewSpace();
+        std::vector<View, Eigen::aligned_allocator<View> > getViewSpace();
 
         /*! returns indexes of all view points in the view space as a vector
          * that are reachable, are not "bad" and (optionally) have never been
@@ -129,7 +126,7 @@ class ViewSpace
          */
         void getViewsInRange(
                 View &reference_view, double distance,
-                std::vector<View, Eigen::aligned_allocator<View>> &sub_space);
+                std::vector<View, Eigen::aligned_allocator<View> > &sub_space);
 
         /*!
          * saves the poses in the view space to file
@@ -141,9 +138,8 @@ class ViewSpace
          * Format (first number of views in the file, then each view represented
          * by its position and a quaternion for its orientation): Nr_of_views
          * pos_1.x pos_1.y pos_1.z orientation_1.x orientation_1.y
-         * orientation_1.zorientation_1.w
-         * pos_2.x pos_2.y pos_2.z orientation_2.x orientation_2.y
-         * orientation_2.z orientation_2.w
+         * orientation_1.zorientation_1.w pos_2.x pos_2.y pos_2.z
+         * orientation_2.x orientation_2.y orientation_2.z orientation_2.w
          * (...)
          *
          * @param filename Path to the file.
@@ -170,7 +166,7 @@ class ViewSpace
         void recalculateIndexMap();
 
       private:
-        std::vector<View, Eigen::aligned_allocator<View>>
+        std::vector<View, Eigen::aligned_allocator<View> >
                 view_space_; //! Actual storage, used for iterations.
         std::map<View::IdType, View> views_index_map_; //! For access by index.
 };
@@ -230,7 +226,9 @@ class ViewSpace::ConstIterator
       private:
         InternalIteratorType it_;
 };
+
 } // namespace views
+
 } // namespace ig_active_reconstruction
 
 #endif

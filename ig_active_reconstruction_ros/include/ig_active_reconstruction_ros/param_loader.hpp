@@ -6,17 +6,14 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
@@ -30,13 +27,11 @@ namespace ros_tools
  *
  * Function is overloaded for one or two template parameters: the version with
  * two provides the following functionality: If the target value is of a type
- * that
- * is not supported by ROS' getParam functions but can be (static_-)casted from
- * another type that is supported, give the local ros-compliant
- * type as second template argument. Don't forget to check in the output whether
- * the result of the typecast is as expected. If the
- * type is ros-compliant, no template argument needs to be given as it can be
- * deduced.
+ * that is not supported by ROS' getParam functions but can be (static_-)casted
+ * from another type that is supported, give the local ros-compliant type as
+ * second template argument. Don't forget to check in the output whether the
+ * result of the typecast is as expected. If the type is ros-compliant, no
+ * template argument needs to be given as it can be deduced.
  *
  * @param output (output) Where the parameter will be written
  * @param path Path that will be read from the nodehandle
@@ -76,13 +71,11 @@ void getExpParam(PARAM_TYPE &output, std::string path,
  *
  * Function is overloaded for one or two template parameters: the version with
  * two provides the following functionality: If the target value is of a type
- * that
- * is not supported by ROS' getParam functions but can be (static_-)casted from
- * another type that is supported, give the local ros-compliant
- * type as second template argument. Don't forget to check in the output whether
- * the result of the typecast is as expected. If the
- * type is ros-compliant, no template argument needs to be given as it can be
- * deduced.
+ * that is not supported by ROS' getParam functions but can be (static_-)casted
+ * from another type that is supported, give the local ros-compliant type as
+ * second template argument. Don't forget to check in the output whether the
+ * result of the typecast is as expected. If the type is ros-compliant, no
+ * template argument needs to be given as it can be deduced.
  *
  * @param output (output) Where the parameter will be written
  * @param path Path that will be read from the nodehandle
@@ -116,13 +109,11 @@ void getParamSilent(PARAM_TYPE &output, std::string path,
  *
  * Function is overloaded for one or two template parameters: the version with
  * two provides the following functionality: If the target value is of a type
- * that
- * is not supported by ROS' getParam functions but can be (static_-)casted from
- * another type that is supported, give the local ros-compliant
- * type as second template argument. Don't forget to check in the output whether
- * the result of the typecast is as expected. If the
- * type is ros-compliant, no template argument needs to be given as it can be
- * deduced.
+ * that is not supported by ROS' getParam functions but can be (static_-)casted
+ * from another type that is supported, give the local ros-compliant type as
+ * second template argument. Don't forget to check in the output whether the
+ * result of the typecast is as expected. If the type is ros-compliant, no
+ * template argument needs to be given as it can be deduced.
  *
  * ATTENTION: Can't be used if PARAM_TYPE (first template argument type) can't
  * be printed...
@@ -169,13 +160,11 @@ void getParam(PARAM_TYPE &output, std::string path, PARAM_TYPE defaultValue,
  *
  * Function is overloaded for one or two template parameters: the version with
  * two provides the following functionality: If the target value is of a type
- * that
- * is not supported by ROS' getParam functions but can be (static_-)casted from
- * another type that is supported, give the local ros-compliant
- * type as second template argument. Don't forget to check in the output whether
- * the result of the typecast is as expected. If the
- * type is ros-compliant, no template argument needs to be given as it can be
- * deduced.
+ * that is not supported by ROS' getParam functions but can be (static_-)casted
+ * from another type that is supported, give the local ros-compliant type as
+ * second template argument. Don't forget to check in the output whether the
+ * result of the typecast is as expected. If the type is ros-compliant, no
+ * template argument needs to be given as it can be deduced.
  *
  * ATTENTION: Can't be used if PARAM_TYPE (first template argument type) can't
  * be printed...
@@ -220,13 +209,11 @@ void getParamIfAvailable(PARAM_TYPE &output, std::string path,
  *
  * Function is overloaded for one or two template parameters: the version with
  * two provides the following functionality: If the target value is of a type
- * that
- * is not supported by ROS' getParam functions but can be (static_-)casted from
- * another type that is supported, give the local ros-compliant
- * type as second template argument. Don't forget to check in the output whether
- * the result of the typecast is as expected. If the
- * type is ros-compliant, no template argument needs to be given as it can be
- * deduced.
+ * that is not supported by ROS' getParam functions but can be (static_-)casted
+ * from another type that is supported, give the local ros-compliant type as
+ * second template argument. Don't forget to check in the output whether the
+ * result of the typecast is as expected. If the type is ros-compliant, no
+ * template argument needs to be given as it can be deduced.
  *
  * ATTENTION: Can't be used if PARAM_TYPE (first template argument type) can't
  * be printed...

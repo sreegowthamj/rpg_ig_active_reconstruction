@@ -6,17 +6,14 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #define TEMPT template <class TREE_TYPE, class POINTCLOUD_TYPE>
@@ -25,8 +22,8 @@
 #include <limits>
 
 #include <pcl/common/transforms.h>
-#include <pcl/filters/filter_indices.h>
 #include <pcl/filters/passthrough.h>
+#include <pcl/filters/filter_indices.h>
 
 namespace ig_active_reconstruction
 {
@@ -94,6 +91,7 @@ void CSCOPE::push(
 
         std::cout << "Inserting " << pc_cpy->points.size() << " valid points.";
 
+
         // insert points into octree through raycasting
         Eigen::Vector3d sensor_position = sensor_to_world.translation();
 
@@ -104,6 +102,7 @@ void CSCOPE::push(
 
         point3d sensor_origin(sensor_position(0), sensor_position(1),
                               sensor_position(2));
+
 
         // build sets of free and occupied voxels
         KeySet free_cells, occupied_cells;
@@ -224,8 +223,12 @@ void CSCOPE::push(
 
         std::cout << "\nFinsihed calculations";
 }
+
+
 } // namespace octomap
+
 } // namespace world_representation
+
 } // namespace ig_active_reconstruction
 
 #undef CSCOPE

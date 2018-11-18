@@ -111,4 +111,5 @@ double InOutSpiral::getRadius(double _time)
                                  * (_time - half_iteration_nr * half_time_);
         }
 }
+
 } // namespace movements

@@ -6,17 +6,14 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
@@ -32,11 +29,10 @@ namespace world_representation
 namespace octomap
 {
 /*! Templated class that implements the "proximity count information gain" as
- * presented in the
- * ICRA paper "An Information Gain Formulation for Active Volumetric 3D
- * Reconstruction".
- * This is a volumetric information definition that is the higher the closer an
- * unobserved voxel lies to already observed surfaces.
+ * presented in the ICRA paper "An Information Gain Formulation for Active
+ * Volumetric 3D Reconstruction". This is a volumetric information definition
+ * that is the higher the closer an unobserved voxel lies to already observed
+ * surfaces.
  */
 template <class TREE_TYPE>
 class ProximityCountIg : public InformationGain<TREE_TYPE>
@@ -83,8 +79,7 @@ class ProximityCountIg : public InformationGain<TREE_TYPE>
         includeEndPointMeasurement(typename TREE_TYPE::NodeType *node);
 
         /*! Informs the metric that a complete ray was cast through empty space
-         * without
-         * retrieving any measurements.
+         * without retrieving any measurements.
          */
         virtual void informAboutVoidRay();
 
@@ -98,6 +93,7 @@ class ProximityCountIg : public InformationGain<TREE_TYPE>
          */
         virtual void includeMeasurement(typename TREE_TYPE::NodeType *node);
 
+
       private:
         Utils utils_;          //! Providing configuration and often used tools.
         GainType ig_;          //! Current information gain result.
@@ -105,7 +101,9 @@ class ProximityCountIg : public InformationGain<TREE_TYPE>
                                //! calculation.
 };
 } // namespace octomap
+
 } // namespace world_representation
+
 } // namespace ig_active_reconstruction
 
 #include "../src/code_base/ig/proximity_count.inl"

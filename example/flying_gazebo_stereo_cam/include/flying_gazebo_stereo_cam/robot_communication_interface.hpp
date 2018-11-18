@@ -6,25 +6,22 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
 
+#include <ros/ros.h>
+#include "ig_active_reconstruction/robot_communication_interface.hpp"
 #include "flying_gazebo_stereo_cam/controller.hpp"
 #include "flying_gazebo_stereo_cam/pcl_rerouter.hpp"
-#include "ig_active_reconstruction/robot_communication_interface.hpp"
-#include <ros/ros.h>
 
 namespace flying_gazebo_stereo_cam
 {
@@ -86,12 +83,12 @@ class CommunicationInterface
       private:
         std::shared_ptr<Controller> cam_controller_; //! For movements etc.
         ros_tools::PclRerouter
-                pcl_rerouter_; //! Since the gazebo stereo camera
-                               //! outputs a continuous stream of data
-                               //! but we are only interested in on
-                               //! dataset at a particular time, data
-                               //! retrieval consists in rerouting one
-                               //! data packet to the correct output
-                               //! where it is processed further.
+                pcl_rerouter_; //! Since the gazebo stereo camera outputs a
+                               //! continuous stream of data but we are only
+                               //! interested in on dataset at a particular
+                               //! time, data retrieval consists in rerouting
+                               //! one data packet to the correct output where
+                               //! it is processed further.
 };
+
 } // namespace flying_gazebo_stereo_cam

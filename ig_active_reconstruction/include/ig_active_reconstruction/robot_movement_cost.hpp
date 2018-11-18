@@ -6,17 +6,14 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
@@ -28,8 +25,7 @@ namespace robot
 {
 
 /*! The MovementCost class describes the cost to move the sensor between
- * different positions.
- * All its members are currently public.
+ * different positions. All its members are currently public.
  */
 struct MovementCost {
       public:
@@ -46,6 +42,7 @@ struct MovementCost {
       public:
         MovementCost() : exception(Exception::NONE){};
 
+
       public:
         double cost; // !keeping it simple
         //! possible exceptions:: INFINITE_COST: do not move to target view,
@@ -53,12 +50,13 @@ struct MovementCost {
         //! calculating a cost, but the movement might be possible
         Exception exception;
         std::vector<std::string>
-                additional_field_names;               //! names for additional
-                                                      //! information fields
-                                                      //! (optional)
-        std::vector<double> additional_fields_values; //! values corresponding
-                                                      //! to the description in
-                                                      //! additional_fiel
+                additional_field_names; //! names for additional information
+                                        //! fields (optional)
+        std::vector<double>
+                additional_fields_values; //! values corresponding to the
+                                          //! description in additional_fiel
 };
+
 } // namespace robot
+
 } // namespace ig_active_reconstruction

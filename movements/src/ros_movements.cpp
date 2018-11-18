@@ -21,6 +21,7 @@ along with movements. If not, see <http://www.gnu.org/licenses/>.
 namespace movements
 {
 
+
 geometry_msgs::Pose toROS(movements::Pose _pose)
 {
         geometry_msgs::Pose pose;
@@ -36,6 +37,7 @@ geometry_msgs::Pose toROS(movements::Pose _pose)
 
         return pose;
 }
+
 
 movements::Pose fromROS(geometry_msgs::Pose _pose)
 {
@@ -70,4 +72,5 @@ movements::PoseVector fromROS(std::vector<geometry_msgs::Pose> _to_convert)
         }
         return out;
 }
+
 } // namespace movements

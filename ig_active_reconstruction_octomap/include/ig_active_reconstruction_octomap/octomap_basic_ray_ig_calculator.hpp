@@ -6,23 +6,21 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
 
-#include "ig_active_reconstruction/world_representation_pinhole_cam_raycaster.hpp"
+
 #include "ig_active_reconstruction_octomap/octomap_ig_calculator.hpp"
+#include "ig_active_reconstruction/world_representation_pinhole_cam_raycaster.hpp"
 
 namespace ig_active_reconstruction
 {
@@ -35,14 +33,13 @@ namespace octomap
 /*! Abstract base class: Provides information gain calculation for octomap-based
  * probabilistic volumetric world representation, implementing the frameworks
  * communication interface. Additionally it includes a factory where the desired
- * information gain and
- * map metric methods can be registered.
+ * information gain and map metric methods can be registered.
  */
 template <class TREE_TYPE>
 class BasicRayIgCalculator : public IgCalculator<TREE_TYPE>
 {
       public:
-        typedef boost::shared_ptr<BasicRayIgCalculator<TREE_TYPE>> Ptr;
+        typedef boost::shared_ptr<BasicRayIgCalculator<TREE_TYPE> > Ptr;
 
         typedef typename IgCalculator<TREE_TYPE>::ResultInformation
                 ResultInformation;
@@ -138,7 +135,7 @@ class BasicRayIgCalculator : public IgCalculator<TREE_TYPE>
          */
         void calculateIgsOnRay(
                 RayCaster::Ray &ray,
-                std::vector<boost::shared_ptr<InformationGain<TREE_TYPE>>>
+                std::vector<boost::shared_ptr<InformationGain<TREE_TYPE> > >
                         &ig_set,
                 RayCastSettings &setting);
 
@@ -147,7 +144,9 @@ class BasicRayIgCalculator : public IgCalculator<TREE_TYPE>
         PinholeCamRayCaster ray_caster_; //! Ray caster module.
 };
 } // namespace octomap
+
 } // namespace world_representation
+
 } // namespace ig_active_reconstruction
 
 #include "../src/code_base/octomap_basic_ray_ig_calculator.inl"

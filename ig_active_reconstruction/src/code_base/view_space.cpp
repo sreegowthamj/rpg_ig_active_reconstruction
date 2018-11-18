@@ -6,17 +6,14 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #include "ig_active_reconstruction/view_space.hpp"
@@ -33,7 +30,7 @@ ViewSpace::ViewSpace()
 {
 }
 
-std::vector<View, Eigen::aligned_allocator<View>> ViewSpace::getViewSpace()
+std::vector<View, Eigen::aligned_allocator<View> > ViewSpace::getViewSpace()
 {
         return view_space_;
 }
@@ -148,6 +145,7 @@ void ViewSpace::setReachable(View::IdType index)
         }
 }
 
+
 void ViewSpace::push_back(View new_vp)
 {
         // view_space_.push_back(new_vp);
@@ -160,9 +158,7 @@ View ViewSpace::getAClosestNeighbour(View &_view)
 {
         if (views_index_map_.empty())
                 throw std::runtime_error(
-                        "ViewSpace::getAClosestNeighbour::Cannot find a "
-                        "closest neighbour since the view space is "
-                        "empty.");
+                        "ViewSpace::getAClosestNeighbour::Cannot find a closest neighbour since the view space is empty.");
 
         Eigen::Vector3d probe = _view.pose().position;
         View closest = (views_index_map_.begin())->second; // view_space_[0];
@@ -188,7 +184,7 @@ unsigned int ViewSpace::size()
 
 void ViewSpace::getViewsInRange(
         View &_reference_view, double _distance,
-        std::vector<View, Eigen::aligned_allocator<View>> &_sub_space)
+        std::vector<View, Eigen::aligned_allocator<View> > &_sub_space)
 {
         for (auto &pair : views_index_map_) {
                 View &view = pair.second;
@@ -311,6 +307,7 @@ bool ViewSpace::Iterator::operator!=(const Iterator &it) const
         return it_ != it.it_;
 }
 
+
 View &ViewSpace::Iterator::operator*() const
 {
         return it_->second;
@@ -320,6 +317,7 @@ View *ViewSpace::Iterator::operator->() const
 {
         return &it_->second;
 }
+
 
 ViewSpace::Iterator &ViewSpace::Iterator::operator++()
 {
@@ -333,6 +331,7 @@ ViewSpace::Iterator ViewSpace::Iterator::operator++(int)
         ++it_;
         return copy;
 }
+
 
 ViewSpace::Iterator &ViewSpace::Iterator::operator--()
 {
@@ -365,6 +364,7 @@ bool ViewSpace::ConstIterator::operator!=(const ConstIterator &it) const
         return it_ != it.it_;
 }
 
+
 const View &ViewSpace::ConstIterator::operator*() const
 {
         return it_->second;
@@ -374,6 +374,7 @@ const View *ViewSpace::ConstIterator::operator->() const
 {
         return &it_->second;
 }
+
 
 ViewSpace::ConstIterator &ViewSpace::ConstIterator::operator++()
 {
@@ -388,6 +389,7 @@ ViewSpace::ConstIterator ViewSpace::ConstIterator::operator++(int)
         return copy;
 }
 
+
 ViewSpace::ConstIterator &ViewSpace::ConstIterator::operator--()
 {
         --it_;
@@ -400,5 +402,7 @@ ViewSpace::ConstIterator ViewSpace::ConstIterator::operator--(int)
         --it_;
         return copy;
 }
+
 } // namespace views
+
 } // namespace ig_active_reconstruction

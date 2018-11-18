@@ -6,24 +6,21 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #include "ig_active_reconstruction/weighted_linear_utility.hpp"
 
-#include <fstream> // std::ofstream
-#include <iostream>
 #include <thread>
+#include <iostream>
+#include <fstream> // std::ofstream
 using namespace std;
 
 namespace ig_active_reconstruction
@@ -83,6 +80,7 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         // cout<<"ig_retrieval_config_ :"<<ig_retrieval_config_<<endl;
         // cout<<"information_gains_ :"<<information_gains_<<endl;
 
+
         // receive costs and igs
         for (views::View::IdType &view_id : id_set) {
                 views::View view = viewspace->getView(view_id);
@@ -101,6 +99,7 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
                 // cost
                 if (robot_comm_unit_ != nullptr && cost_weight_ != 0) {
                         cost = robot_comm_unit_->movementCost(view);
+
 
                         if (cost.exception
                             != robot::MovementCost::Exception::NONE)
@@ -125,8 +124,7 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
                 )
                     {
                       //std::cout<<"\nReturned gain of metric
-                "<<i<<":"<<information_gains[i].predicted_gain;
-                      ig_val +=
+                "<<i<<":"<<information_gains[i].predicted_gain; ig_val +=
                 ig_weights_[i]*information_gains[i].predicted_gain;
                     }
                   }
@@ -249,4 +247,6 @@ void WeightedLinearUtility::getIg(
         } else
                 return;
 }
+
+
 } // namespace ig_active_reconstruction

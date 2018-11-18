@@ -6,17 +6,14 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #include "ig_active_reconstruction/world_representation_pinhole_cam_raycaster.hpp"
@@ -44,6 +41,7 @@ operator!=(ResolutionSettings &comp) const
                || max_x_perc != comp.max_x_perc
                || max_y_perc != comp.max_y_perc;
 }
+
 
 PinholeCamRayCaster::Config::Config()
     : resolution(), max_ray_depth_m(1.0), img_width_px(0), img_height_px(0),
@@ -134,6 +132,7 @@ void PinholeCamRayCaster::computeRelRayDirections()
         double min_y = config_.resolution.min_y_perc * config_.img_height_px;
         double max_y = config_.resolution.max_y_perc * config_.img_height_px;
 
+
         double x_step = 1.0 / config_.resolution.ray_resolution_x;
         double y_step = 1.0 / config_.resolution.ray_resolution_y;
 
@@ -144,5 +143,7 @@ void PinholeCamRayCaster::computeRelRayDirections()
                 }
         }
 }
+
 } // namespace world_representation
+
 } // namespace ig_active_reconstruction

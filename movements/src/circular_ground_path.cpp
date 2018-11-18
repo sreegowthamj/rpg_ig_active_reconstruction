@@ -43,6 +43,7 @@ CircularGroundPath::CircularGroundPath(movements::Pose _start_point,
 {
 }
 
+
 KinematicMovementDescription
 CircularGroundPath::create(Eigen::Vector3d _start_point,
                            Eigen::Vector3d _target_point, double _angular_speed,
@@ -51,6 +52,7 @@ CircularGroundPath::create(Eigen::Vector3d _start_point,
         return KinematicMovementDescription(new CircularGroundPath(
                 _start_point, _target_point, _angular_speed, _direction));
 }
+
 
 KinematicMovementDescription
 CircularGroundPath::create(movements::Pose _start_point,
@@ -68,9 +70,7 @@ double CircularGroundPath::totalAngle(movements::Pose &_center)
             || _center.position.x() == end_point_.x()
                        && _center.position.y() == end_point_.y()) {
                 throw std::invalid_argument(
-                        "CircularGroundPath::totalAngle:: Invalid argument: The path center "
-                        "provided has the same projection as either the start- or the endpoint "
-                        "of the circular ground path, which is not allowed.");
+                        "CircularGroundPath::totalAngle:: Invalid argument: The path center provided has the same projection as either the start- or the endpoint of the circular ground path, which is not allowed.");
         }
 
         Eigen::Vector2d center(_center.position.x(), _center.position.y());
@@ -121,6 +121,7 @@ RelativeMovement CircularGroundPath::operator()(double _time)
                 start_point_, end_point_, angular_speed_, direction_, _time));
 }
 
+
 CircularGroundPath::RelativePositionCalculator::RelativePositionCalculator(
         Eigen::Vector2d _start_point, Eigen::Vector2d _target_point,
         double _angular_speed, MovementDirection _direction, double _time)
@@ -137,10 +138,7 @@ movements::Pose CircularGroundPath::RelativePositionCalculator::applyToBasePose(
             || _path_center.position.x() == end_point_.x()
                        && _path_center.position.y() == end_point_.y()) {
                 throw std::invalid_argument(
-                        "CircularGroundPath::RelativePositionCalculator::applyToBasePose:: "
-                        "Invalid argument: The path center provided has the same projection as "
-                        "either the start- or the endpoint of the circular ground path, which "
-                        "is not allowed.");
+                        "CircularGroundPath::RelativePositionCalculator::applyToBasePose:: Invalid argument: The path center provided has the same projection as either the start- or the endpoint of the circular ground path, which is not allowed.");
         }
 
         Eigen::Vector2d center(_path_center.position.x(),
@@ -240,4 +238,5 @@ CircularGroundPath::RelativePositionCalculator::localCoordinates(
         local.y() = global_coordinates.y() - _center.y();
         return local;
 }
+
 } // namespace movements

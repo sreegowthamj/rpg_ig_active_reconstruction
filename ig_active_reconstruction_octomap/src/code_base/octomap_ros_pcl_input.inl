@@ -6,24 +6,21 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #define TEMPT template <class TREE_TYPE, class POINTCLOUD_TYPE>
 #define CSCOPE RosPclInput<TREE_TYPE, POINTCLOUD_TYPE>
 
-#include <pcl/conversions.h>
 #include <pcl/point_types.h>
+#include <pcl/conversions.h>
 #include <pcl_conversions/pcl_conversions.h>
 #include <pcl_ros/transforms.h>
 
@@ -38,7 +35,7 @@ namespace octomap
 TEMPT
 CSCOPE::RosPclInput(
         ros::NodeHandle nh,
-        boost::shared_ptr<PclInput<TREE_TYPE, POINTCLOUD_TYPE>> pcl_input,
+        boost::shared_ptr<PclInput<TREE_TYPE, POINTCLOUD_TYPE> > pcl_input,
         std::string world_frame)
     : nh_(nh), pcl_input_(pcl_input), world_frame_name_(world_frame),
       tf_listener_(ros::Duration(180))
@@ -101,8 +98,7 @@ void CSCOPE::insertCloud(POINTCLOUD_TYPE &pointcloud)
                                              ros::Time(0), sensor_to_world_tf);
         } catch (tf::TransformException &ex) {
                 ROS_ERROR_STREAM(
-                        "RosPclInput<TREE_TYPE,POINTCLOUD_TYPE>::Transform error "
-                        "of sensor data: "
+                        "RosPclInput<TREE_TYPE,POINTCLOUD_TYPE>::Transform error of sensor data: "
                         << ex.what() << ", quitting callback.");
                 return;
         }
@@ -115,10 +111,14 @@ void CSCOPE::insertCloud(POINTCLOUD_TYPE &pointcloud)
 
         pcl_input_->push(sensor_to_world_transform, pointcloud);
 
+
         issueInputDoneSignals();
 }
+
 } // namespace octomap
+
 } // namespace world_representation
+
 } // namespace ig_active_reconstruction
 
 #undef CSCOPE

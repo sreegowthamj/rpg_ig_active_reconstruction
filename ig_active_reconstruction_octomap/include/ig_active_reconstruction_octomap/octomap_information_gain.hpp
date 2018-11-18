@@ -6,17 +6,14 @@
  * based, active reconstruction.
  *
  * ig_active_reconstruction is free software: you can redistribute it and/or
- * modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * ig_active_reconstruction is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- * Please refer to the GNU Lesser General Public License for details on the
- * license,
- * on <http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. ig_active_reconstruction is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details. Please refer to the GNU Lesser General Public License for details on
+ * the license, on <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
@@ -30,26 +27,22 @@ namespace world_representation
 namespace octomap
 {
 /*! Defines the interface for information gain calculators as well as providing
- * a factory.
- * Additionally it features a Utils class which provides functionality like
- * occupancy and entropy calculation.
+ * a factory. Additionally it features a Utils class which provides
+ * functionality like occupancy and entropy calculation.
  *
  * Information gain classes are called while casting rays from a sensor position
- * through the octomap.
- * Before a new ray is cast, makeReadyForNewRay() is called, then
- * includeRayMeasurement(...) is called
- * on every voxel the ray traversed but the last one, for which
- * includeEndPointMeasurement(...) is called.
- * If a ray was cast through empty (unknown, uninitialized) space solely,
- * informAboutVoidRay() is called.
- * The calculated information gain is retrieved after the last ray was cast
- * through getInformation().
+ * through the octomap. Before a new ray is cast, makeReadyForNewRay() is
+ * called, then includeRayMeasurement(...) is called on every voxel the ray
+ * traversed but the last one, for which includeEndPointMeasurement(...) is
+ * called. If a ray was cast through empty (unknown, uninitialized) space
+ * solely, informAboutVoidRay() is called. The calculated information gain is
+ * retrieved after the last ray was cast through getInformation().
  */
 template <class TREE_TYPE> class InformationGain
 {
       public:
         typedef double GainType;
-        typedef boost::shared_ptr<InformationGain<TREE_TYPE>> Ptr;
+        typedef boost::shared_ptr<InformationGain<TREE_TYPE> > Ptr;
 
         /*! Helper class for common calculation in information gain metrics.
          */
@@ -160,8 +153,7 @@ template <class TREE_TYPE> class InformationGain
         includeEndPointMeasurement(typename TREE_TYPE::NodeType *node) = 0;
 
         /*! Informs the metric that a complete ray was cast through empty space
-         * without
-         * retrieving any measurements.
+         * without retrieving any measurements.
          */
         virtual void informAboutVoidRay() = 0;
 
@@ -169,8 +161,11 @@ template <class TREE_TYPE> class InformationGain
          */
         virtual uint64_t voxelCount() = 0;
 };
+
 } // namespace octomap
+
 } // namespace world_representation
+
 } // namespace ig_active_reconstruction
 
 #include "../src/code_base/octomap_information_gain.inl"
