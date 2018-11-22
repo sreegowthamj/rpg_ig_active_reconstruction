@@ -30,6 +30,8 @@ namespace world_representation
 
 namespace octomap
 {
+using namespace std;
+
 TEMPT
 CSCOPE::Config::Config() : ray_caster_config()
 {
@@ -96,6 +98,7 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
                                 res.status = ResultInformation::UNKNOWN_METRIC;
                         } else {
                                 res.status = ResultInformation::SUCCEEDED;
+                                std::cout<<"ig_metric :"<<ig_metric<<endl;
                                 ig_set.push_back(ig_metric);
                         }
                         output_ig.push_back(res);
@@ -107,10 +110,12 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
                 BOOST_FOREACH (std::string &name, command.metric_names) {
                         typename IgFactory::TypePtr ig_metric =
                                 this->ig_factory_.get(name);
+                        //cout<<"ig_metric : "<<ig_metric<<endl;
                         if (ig_metric == NULL) {
                                 res.status = ResultInformation::UNKNOWN_METRIC;
                         } else {
                                 res.status = ResultInformation::SUCCEEDED;
+                                std::cout<<"ig_metric :"<<ig_metric<<endl;
                                 ig_set.push_back(ig_metric);
                         }
                         output_ig.push_back(res);
@@ -141,8 +146,10 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
         BOOST_FOREACH (IgRetrievalResult &res, output_ig) {
                 if (res.status == ResultInformation::SUCCEEDED) {
                         res.predicted_gain = (*ig_it)->getInformation();
+                        std::cout<<"type : "<<(*ig_it)->type()<<endl;
                         std::cout << "\nPredicted gain is: "
                                   << res.predicted_gain;
+                        
                         ++ig_it;
                 }
         }
@@ -156,6 +163,8 @@ CSCOPE::computeMapMetric(MapMetricRetrievalCommand &command,
                          MapMetricRetrievalResultSet &output)
 {
         ROS_INFO("%s : %s", __FILE__, __func__);
+        cout<<" computeMapMetric called"<<endl;
+        //WorldStats::calculateOn(this->link_.octree);
         return ResultInformation::SUCCEEDED;
 }
 
@@ -171,6 +180,7 @@ void CSCOPE::availableIgMetrics(std::vector<MetricInfo> &available_ig_metrics)
                 MetricInfo ig_metric;
                 ig_metric.name = entry.name;
                 ig_metric.id = entry.id;
+                
 
                 available_ig_metrics.push_back(ig_metric);
         }
@@ -187,7 +197,7 @@ void CSCOPE::availableMapMetrics(std::vector<MetricInfo> &available_map_metrics)
                 MetricInfo mm_metric;
                 mm_metric.name = entry.name;
                 mm_metric.id = entry.id;
-
+                //cout<<" availableIgMetrics : "<<ig_metric.name<<endl;
                 available_map_metrics.push_back(mm_metric);
         }
 }
