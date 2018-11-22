@@ -125,13 +125,14 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
 
         for (unsigned int i = 0; i < ray_set->size(); ++i) {
                 RayCaster::Ray &ray = (*ray_set)[i];
-                std::cout<<"\norigin:\n"<<ray.origin<<"\ndirection:\n"<<ray.direction<<"\n";
+                // std::cout<<"\norigin:\n"<<ray.origin<<"\ndirection:\n"<<ray.direction<<"\n";
                 BOOST_FOREACH (typename InformationGain<TREE_TYPE>::Ptr &ig,
                                ig_set) {
                         ig->makeReadyForNewRay();
                 }
-                if(i%100==0)
-                  std::cout<<"\nCalculating ray "<<i<<"/"<<ray_set->size();
+                if (i % 100 == 0)
+                        std::cout << "\nCalculating ray " << i << "/"
+                                  << ray_set->size();
                 calculateIgsOnRay(ray, ig_set, ray_cast_settings);
         }
 
@@ -201,7 +202,7 @@ void CSCOPE::calculateIgsOnRay(
         using ::octomap::KeyRay;
         using ::octomap::OcTreeKey;
         using ::octomap::point3d;
-        std::cout<<"\norigin:\n"<<ray.origin<<"\ndirection:\n"<<ray.direction<<"\n";
+        // std::cout<<"\norigin:\n"<<ray.origin<<"\ndirection:\n"<<ray.direction<<"\n";
         point3d origin(ray.origin(0), ray.origin(1), ray.origin(2));
         point3d direction(ray.direction(0), ray.direction(1), ray.direction(2));
         point3d end_point; // calculate endpoint (if any)
@@ -225,8 +226,10 @@ void CSCOPE::calculateIgsOnRay(
 
         if (found_endpoint) {
                 KeyRay ray;
-                /*Traces a ray from origin to end (excluding), returning an OcTreeKey of all nodes traversed by the beam.
-                The keys count the number of cells (voxels) from the origin as discrete address of a voxel.  */
+                /*Traces a ray from origin to end (excluding), returning an
+                OcTreeKey of all nodes traversed by the beam.
+                The keys count the number of cells (voxels) from the origin as
+                discrete address of a voxel.  */
                 this->link_.octree->computeRayKeys(origin, end_point, ray);
                 for (KeyRay::iterator it = ray.begin(); it != ray.end(); ++it) {
                         point3d coord = this->link_.octree->keyToCoord(*it);

@@ -31,6 +31,7 @@
 #include "ig_active_reconstruction_octomap/ig/proximity_count.hpp"
 #include "ig_active_reconstruction_octomap/ig/vasquez_gomez_area_factor.hpp"
 #include "ig_active_reconstruction_octomap/ig/average_entropy.hpp"
+#include "ig_active_reconstruction_octomap/ig/area_perimeter_ratio.hpp"
 #include "ig_active_reconstruction_octomap/octomap_ros_pcl_input.hpp"
 #include "ig_active_reconstruction_octomap/octomap_ros_interface.hpp"
 #include "ig_active_reconstruction_octomap/map_metric/world_stats.hpp"

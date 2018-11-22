@@ -33,10 +33,10 @@ namespace world_representation
 
 namespace octomap
 {
-/*! Abstract base class: Provides information gain calculation for octomap-based
- * probabilistic volumetric world representation, implementing the frameworks
- * communication interface. Additionally it includes a factory where the desired
- * information gain and map metric methods can be registered.
+/*!  Abstract base class: Provides information gain calculation for
+ * octomap-based probabilistic volumetric world representation, implementing the
+ * frameworks communication interface. Additionally it includes a factory where
+ * the desired information gain and map metric methods can be registered.
  */
 template <class TREE_TYPE>
 class IgCalculator : public CommunicationInterface,
