@@ -23,8 +23,11 @@
 #include <fstream> // std::ofstream
 using namespace std;
 
+
 namespace ig_active_reconstruction
 {
+
+std::vector<world_representation::CommunicationInterface::ViewIgResult> IgMetricsPerIt(100);
 
 WeightedLinearUtility::WeightedLinearUtility(double cost_weight)
     : world_comm_unit_(nullptr), robot_comm_unit_(nullptr),
@@ -185,11 +188,22 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
                         ig_vector[i] / total_ig - cost_factor * cost_vector[i];
                 std::cout << "\n utility of view " << id_set[i] << ": "
                           << utility;
+                std::cout<<"view :"<<id_set[i]<<endl;
+                std::cout<<"total Ig for this view  :"<<ig_vector[i]<<endl;
                 if (utility > best_util) {
                         best_util = utility;
                         nbv = id_set[i];
                 }
         }
+        std::ofstream nbvMetrics;
+        nbvMetrics.open("nbvmetrics.txt", std::ofstream::out | std::ofstream::app);
+        
+        for (unsigned int i=0; i < IgMetricsPerIt[nbv].size(); i++)
+        {
+                nbvMetrics << IgMetricsPerIt[nbv][i].predicted_gain << ", ";
+        }
+        nbvMetrics << "\n";
+
         std::cout << "\n Choosing view " << nbv << ".";
         return nbv;
 }
@@ -222,6 +236,8 @@ void WeightedLinearUtility::getIg(
                         world_comm_unit_->computeViewIg(command,
                                                         information_gains);
 
+                        IgMetricsPerIt[i] = information_gains;                                                      
+
                         for (unsigned int i = 0; i < information_gains.size();
                              ++i) {
                                 if (information_gains[i].status
@@ -234,6 +250,7 @@ void WeightedLinearUtility::getIg(
                                              << information_gains[i]
                                                         .predicted_gain
                                              << endl;
+                                        cout<<"ig metric weight :"<<ig_weights_[i]<<endl;
 
                                         ig_val += ig_weights_[i]
                                                   * information_gains[i]
@@ -242,6 +259,9 @@ void WeightedLinearUtility::getIg(
                         }
                         total_ig += ig_val;
                         ig_vector[i] = ig_val;
+                        cout << "view :" << view << endl;
+                        cout << "total ig for this view  :" << ig_vector[i] << endl;
+                        cout << "communilate IG for all views :" << total_ig << endl;
                 }
                 return;
         } else
