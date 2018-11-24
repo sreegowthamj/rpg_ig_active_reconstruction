@@ -98,7 +98,7 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
                                 res.status = ResultInformation::UNKNOWN_METRIC;
                         } else {
                                 res.status = ResultInformation::SUCCEEDED;
-                                std::cout<<"ig_metric :"<<ig_metric<<endl;
+                                std::cout << "ig_metric :" << ig_metric << endl;
                                 ig_set.push_back(ig_metric);
                         }
                         output_ig.push_back(res);
@@ -110,12 +110,12 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
                 BOOST_FOREACH (std::string &name, command.metric_names) {
                         typename IgFactory::TypePtr ig_metric =
                                 this->ig_factory_.get(name);
-                        //cout<<"ig_metric : "<<ig_metric<<endl;
+                        // cout<<"ig_metric : "<<ig_metric<<endl;
                         if (ig_metric == NULL) {
                                 res.status = ResultInformation::UNKNOWN_METRIC;
                         } else {
                                 res.status = ResultInformation::SUCCEEDED;
-                                std::cout<<"ig_metric :"<<ig_metric<<endl;
+                                std::cout << "ig_metric :" << ig_metric << endl;
                                 ig_set.push_back(ig_metric);
                         }
                         output_ig.push_back(res);
@@ -147,10 +147,10 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
         BOOST_FOREACH (IgRetrievalResult &res, output_ig) {
                 if (res.status == ResultInformation::SUCCEEDED) {
                         res.predicted_gain = (*ig_it)->getInformation();
-                        std::cout<<"type : "<<(*ig_it)->type()<<endl;
+                        std::cout << "type : " << (*ig_it)->type() << endl;
                         std::cout << "\nPredicted gain is: "
                                   << res.predicted_gain;
-                        
+
                         ++ig_it;
                 }
         }
@@ -163,9 +163,43 @@ typename CSCOPE::ResultInformation
 CSCOPE::computeMapMetric(MapMetricRetrievalCommand &command,
                          MapMetricRetrievalResultSet &output)
 {
+        MapMetricRetrievalResult res;
+        std::vector<boost::shared_ptr<MapMetric<TREE_TYPE> > > mm_set;
         ROS_INFO("%s : %s", __FILE__, __func__);
-        cout<<" computeMapMetric called"<<endl;
-        //WorldStats::calculateOn(this->link_.octree);
+        cout << " computeMapMetric called" << endl;
+        // WorldStats::calculateOn(this->link_.octree);
+        if (!command.metric_names.empty()) {
+                MapMetricRetrievalResult res;
+                res.value = 0.0;
+
+                BOOST_FOREACH (std::string &id, command.metric_names) {
+                        typename MmFactory::TypePtr mm_metric =
+                                this->mm_factory_.get(id);
+                        if (mm_metric == NULL) {
+                                res.status = ResultInformation::UNKNOWN_METRIC;
+                        } else {
+                                res.status = ResultInformation::SUCCEEDED;
+                                std::cout << "mm_metric :" << mm_metric << endl;
+                                mm_set.push_back(mm_metric);
+                        }
+                        output.push_back(res);
+                }
+        }
+
+        // retrieve information gains and build output
+        typename std::vector<
+                boost::shared_ptr<MapMetric<TREE_TYPE> > >::iterator mm_it =
+                mm_set.begin();
+        BOOST_FOREACH (MapMetricRetrievalResult &res, output) {
+                if (res.status == ResultInformation::SUCCEEDED) {
+                        res.value = (*mm_it)->calculateOn(this->link_.octree);
+                        std::cout << "type : " << (*mm_it)->type() << endl;
+                        std::cout << "\nPredicted gain is: " << res.value;
+
+                        ++mm_it;
+                }
+        }
+
         return ResultInformation::SUCCEEDED;
 }
 
@@ -181,7 +215,7 @@ void CSCOPE::availableIgMetrics(std::vector<MetricInfo> &available_ig_metrics)
                 MetricInfo ig_metric;
                 ig_metric.name = entry.name;
                 ig_metric.id = entry.id;
-                
+
 
                 available_ig_metrics.push_back(ig_metric);
         }
@@ -198,7 +232,7 @@ void CSCOPE::availableMapMetrics(std::vector<MetricInfo> &available_map_metrics)
                 MetricInfo mm_metric;
                 mm_metric.name = entry.name;
                 mm_metric.id = entry.id;
-                //cout<<" availableIgMetrics : "<<ig_metric.name<<endl;
+                // cout<<" availableIgMetrics : "<<ig_metric.name<<endl;
                 available_map_metrics.push_back(mm_metric);
         }
 }
@@ -224,22 +258,23 @@ void CSCOPE::calculateIgsOnRay(
                 this->link_.octree->castRay(origin, direction, end_point, true,
                                             max_range); // ignore unknown cells
 
-        if (!found_endpoint) // this is necessary for occlusion based metrics
-                             // but not for the others. Excluding it leads to a
-                             // great speed up.
+        if (!found_endpoint) // this is necessary for occlusion based
+                             // metrics but not for the others.
+                             // Excluding it leads to a great speed up.
         {
-                end_point = origin
-                            + direction * max_range; // use max range instead of
-                                                     // stopping at the unknown
+                end_point =
+                        origin + direction * max_range; // use max range
+                                                        // instead of stopping
+                                                        // at the unknown
                 found_endpoint = true;
         }
 
         if (found_endpoint) {
                 KeyRay ray;
-                /*Traces a ray from origin to end (excluding), returning an
-                OcTreeKey of all nodes traversed by the beam.
-                The keys count the number of cells (voxels) from the origin as
-                discrete address of a voxel.  */
+                /*Traces a ray from origin to end (excluding), returning
+                an OcTreeKey of all nodes traversed by the beam. The
+                keys count the number of cells (voxels) from the origin
+                as discrete address of a voxel.  */
                 this->link_.octree->computeRayKeys(origin, end_point, ray);
                 for (KeyRay::iterator it = ray.begin(); it != ray.end(); ++it) {
                         point3d coord = this->link_.octree->keyToCoord(*it);

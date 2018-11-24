@@ -116,6 +116,8 @@ class WeightedLinearUtility : public UtilityCalculator
 
         std::vector<std::string>
                 information_gains_; //! Name of the information gains to use.
+        std::vector<std::string>
+                map_metrics_; //! Name of the information gains to use.
         std::vector<double> ig_weights_; //! Weight of the information gains.
         double cost_weight_;
 };

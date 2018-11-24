@@ -1,4 +1,4 @@
-/* Copyright (c) 2016, Stefan Isler, islerstefan@bluewin.ch
+﻿/* Copyright (c) 2016, Stefan Isler, islerstefan@bluewin.ch
  * (ETH Zurich / Robotics and Perception Group, University of Zurich,
  * Switzerland)
  *
@@ -27,7 +27,8 @@ using namespace std;
 namespace ig_active_reconstruction
 {
 
-std::vector<world_representation::CommunicationInterface::ViewIgResult> IgMetricsPerIt(100);
+std::vector<world_representation::CommunicationInterface::ViewIgResult>
+        IgMetricsPerIt(100);
 
 WeightedLinearUtility::WeightedLinearUtility(double cost_weight)
     : world_comm_unit_(nullptr), robot_comm_unit_(nullptr),
@@ -72,9 +73,23 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         // structure to store received values
         std::vector<double> cost_vector;
         std::vector<double> ig_vector;
+        // std::vector<std::string> mm_vectors;
+
+        // Required Map Metrics
+        /* TODO: make this part of */
+        map_metrics_.push_back("world_stats");
 
         double total_cost = 0;
         double total_ig = 0;
+
+        world_representation::CommunicationInterface::MapMetricRetrievalCommand
+                mm_command;
+        mm_command.metric_names = map_metrics_;
+        world_representation::CommunicationInterface::
+                MapMetricRetrievalResultSet mm_result;
+        world_comm_unit_->computeMapMetric(mm_command, mm_result);
+        std::cout << "*****mm_result.at(0).value" << mm_result.at(0).value
+                  << "\n";
 
         world_representation::CommunicationInterface::IgRetrievalCommand
                 command;
@@ -188,18 +203,19 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
                         ig_vector[i] / total_ig - cost_factor * cost_vector[i];
                 std::cout << "\n utility of view " << id_set[i] << ": "
                           << utility;
-                std::cout<<"view :"<<id_set[i]<<endl;
-                std::cout<<"total Ig for this view  :"<<ig_vector[i]<<endl;
+                std::cout << "view :" << id_set[i] << endl;
+                std::cout << "total Ig for this view  :" << ig_vector[i]
+                          << endl;
                 if (utility > best_util) {
                         best_util = utility;
                         nbv = id_set[i];
                 }
         }
         std::ofstream nbvMetrics;
-        nbvMetrics.open("nbvmetrics.txt", std::ofstream::out | std::ofstream::app);
-        
-        for (unsigned int i=0; i < IgMetricsPerIt[nbv].size(); i++)
-        {
+        nbvMetrics.open("nbvmetrics.txt",
+                        std::ofstream::out | std::ofstream::app);
+
+        for (unsigned int i = 0; i < IgMetricsPerIt[nbv].size(); i++) {
                 nbvMetrics << IgMetricsPerIt[nbv][i].predicted_gain << ", ";
         }
         nbvMetrics << "\n";
@@ -236,7 +252,7 @@ void WeightedLinearUtility::getIg(
                         world_comm_unit_->computeViewIg(command,
                                                         information_gains);
 
-                        IgMetricsPerIt[i] = information_gains;                                                      
+                        IgMetricsPerIt[i] = information_gains;
 
                         for (unsigned int i = 0; i < information_gains.size();
                              ++i) {
@@ -250,7 +266,8 @@ void WeightedLinearUtility::getIg(
                                              << information_gains[i]
                                                         .predicted_gain
                                              << endl;
-                                        cout<<"ig metric weight :"<<ig_weights_[i]<<endl;
+                                        cout << "ig metric weight :"
+                                             << ig_weights_[i] << endl;
 
                                         ig_val += ig_weights_[i]
                                                   * information_gains[i]
@@ -260,8 +277,10 @@ void WeightedLinearUtility::getIg(
                         total_ig += ig_val;
                         ig_vector[i] = ig_val;
                         cout << "view :" << view << endl;
-                        cout << "total ig for this view  :" << ig_vector[i] << endl;
-                        cout << "communilate IG for all views :" << total_ig << endl;
+                        cout << "total ig for this view  :" << ig_vector[i]
+                             << endl;
+                        cout << "communilate IG for all views :" << total_ig
+                             << endl;
                 }
                 return;
         } else

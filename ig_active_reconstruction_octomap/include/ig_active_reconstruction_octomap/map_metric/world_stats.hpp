@@ -24,6 +24,8 @@
 #include <boost/shared_ptr.hpp>
 #include <ros/ros.h>
 
+#include "ig_active_reconstruction_octomap/octomap_information_gain.hpp"
+
 namespace ig_active_reconstruction
 {
 
@@ -42,6 +44,12 @@ using namespace std;
 template <class TREE_TYPE> class WorldStats : public MapMetric<TREE_TYPE>
 {
       public:
+        WorldStats()
+            : unknown_voxel_count(0), occupied_voxel_count(0),
+              free_voxel_count(0)
+        {
+                std::cout << "World_stats constructor \n";
+        }
         virtual std::string type()
         {
                 ROS_INFO(
@@ -52,23 +60,55 @@ template <class TREE_TYPE> class WorldStats : public MapMetric<TREE_TYPE>
         virtual typename MapMetric<TREE_TYPE>::Result
         calculateOn(boost::shared_ptr<TREE_TYPE> octree)
         {
+                // MapMetric<TREE_TYPE>::Result x;
+                typename ig_active_reconstruction::world_representation::
+                        octomap::InformationGain<TREE_TYPE>::Utils::Config
+                                config_;
+                typename ig_active_reconstruction::world_representation::
+                        octomap::InformationGain<TREE_TYPE>::Utils utils_(
+                                config_);
+
+
                 for (typename TREE_TYPE::iterator it = octree->begin_leafs(),
                                                   end = octree->end_leafs();
                      it != end; ++it) {
-                        // manipulate node, e.g.:
-                        std::cout << "Node center: " << it.getCoordinate()
-                                  << std::endl;
-                        std::cout << "Node size: " << it.getSize() << std::endl;
-                        std::cout << "Node value: " << it->getValue()
-                                  << std::endl;
+
+                        if (octree->isNodeOccupied(*it)) {
+                                occupied_voxel_count++;
+                        } else {
+                                free_voxel_count++;
+                        }
+
+
+                        // std::cout << "Node center: " <<
+                        // it.getCoordinate()
+                        //          << std::endl;
+                        // std::cout << "Node size: " << it.getSize() <<
+                        // std::endl; std::cout << "Node value: " <<
+                        // it->getValue()
+                        //          << std::endl;
+
+                        /*TODO: Update this with real value */
                 }
+
+                std::ofstream outfile;
+                outfile.open("map_metric_log.txt",
+                             std::ofstream::out | std::ios_base::app);
+
+                outfile << "free voxel count = " << free_voxel_count
+                        << " occupied_voxel_count = " << occupied_voxel_count
+                        << "\n";
+                return 0.0;
         }
-};
 
+      private:
+        int unknown_voxel_count;
+        int occupied_voxel_count;
+        int free_voxel_count;
+
+}; // namespace octomap
 } // namespace octomap
-
 } // namespace world_representation
-
 } // namespace ig_active_reconstruction
 
 //#include "../../../src/code_base/map_metric/world_stats.inl"
