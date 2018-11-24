@@ -85,27 +85,29 @@ void IgTree::expandNode(IgTreeNode *node)
 
 bool IgTree::pruneNode(IgTreeNode *node)
 {
+        /*Avoid pruning of nodes to keep resolution same*/
+        return false;
 
-        if (!isNodeCollapsible(node))
-                return false;
+        //        if (!isNodeCollapsible(node))
+        //                return false;
 
-        // set value to children's values (all assumed equal)
-        node->copyData(*(getNodeChild(node, 0)));
+        //        // set value to children's values (all assumed equal)
+        //        node->copyData(*(getNodeChild(node, 0)));
 
-        if (node->hasMeasurement()) // TODO check
-        {
-                node->updateOccDist(node->getMinChildOccDist());
-                node->setMaxDist(node->getMaxChildDist());
-        }
+        //        if (node->hasMeasurement()) // TODO check
+        //        {
+        //                node->updateOccDist(node->getMinChildOccDist());
+        //                node->setMaxDist(node->getMaxChildDist());
+        //        }
 
-        // delete children
-        for (unsigned int i = 0; i < 8; i++) {
-                deleteNodeChild(node, i);
-        }
-        delete[] node->children;
-        node->children = NULL;
+        //        // delete children
+        //        for (unsigned int i = 0; i < 8; i++) {
+        //                deleteNodeChild(node, i);
+        //        }
+        //        delete[] node->children;
+        //        node->children = NULL;
 
-        return true;
+        //        return true;
 }
 
 } // namespace octomap
