@@ -89,8 +89,8 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         world_representation::CommunicationInterface::
                 MapMetricRetrievalResultSet mm_result;
         world_comm_unit_->computeMapMetric(mm_command, mm_result);
-        std::cout << "*****mm_result.at(0).value" << mm_result.at(0).value
-                  << "\n";
+        //std::cout << "*****mm_result.at(0).value" << mm_result.at(0).value
+                  //<< "\n";
 
         world_representation::CommunicationInterface::IgRetrievalCommand
                 command;
@@ -103,10 +103,10 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         // receive costs and igs
         for (views::View::IdType &view_id : id_set) {
                 views::View view = viewspace->getView(view_id);
-                cout << "\n ###################################################"
-                     << endl;
-                cout << "view_id : " << view_id << endl;
-                cout << "view : " << view << endl;
+                //cout << "\n ###################################################"
+                     //<< endl;
+                //cout << "view_id : " << view_id << endl;
+                //cout << "view : " << view << endl;
 
                 robot::MovementCost cost;
                 world_representation::CommunicationInterface::ViewIgResult
@@ -126,7 +126,7 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
                                           // calculation
                         else
                                 cost_val = cost.cost;
-                        cout << "cost_val : " << cost_val << endl;
+                        //cout << "cost_val : " << cost_val << endl;
                 }
 
                 // information gain - non multithreaded version
@@ -156,7 +156,7 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
                 cost_vector.push_back(cost_val);
         }
 
-        cout << "total_cost : " << total_cost << endl;
+        //cout << "total_cost : " << total_cost << endl;
 
         // multithreaded information gain retrieval
         unsigned int number_of_threads = 8;
@@ -173,11 +173,11 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         for (size_t i = 0; i < number_of_threads; ++i) {
                 threads[i].join();
                 total_ig += total_multitthread_ig[i];
-                cout << "ig :" << i << "gain :" << total_multitthread_ig[i]
-                     << endl;
+                //cout << "ig :" << i << "gain :" << total_multitthread_ig[i]
+                    // << endl;
         }
 
-        cout << "total_ig : " << total_ig << endl;
+        //cout << "total_ig : " << total_ig << endl;
 
         // The answer ........... Plot this and print this!!!
         std::ofstream ofs;
@@ -202,11 +202,11 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         for (unsigned int i = 0; i < id_set.size(); ++i) {
                 double utility =
                         ig_vector[i] / total_ig - cost_factor * cost_vector[i];
-                std::cout << "\n utility of view " << id_set[i] << ": "
+                /*std::cout << "\n utility of view " << id_set[i] << ": "
                           << utility;
                 std::cout << "view :" << id_set[i] << endl;
                 std::cout << "total Ig for this view  :" << ig_vector[i]
-                          << endl;
+                          << endl;*/
                 if (utility > best_util) {
                         best_util = utility;
                         nbv = id_set[i];
@@ -234,14 +234,14 @@ void WeightedLinearUtility::getIg(
         unsigned int batch_size)
 {
 
-        cout << "\n ------------------------------------------------" << endl;
+        //cout << "\n ------------------------------------------------" << endl;
 
         // information gain
         if (world_comm_unit_ != nullptr) {
                 for (size_t i = base_index; i < id_set.size();
                      i += batch_size) {
                         views::View view = viewspace->getView(id_set[i]);
-                        cout << "calculating ig for view :" << view << endl;
+                        //cout << "calculating ig for view :" << view << endl;
 
                         world_representation::CommunicationInterface::
                                 ViewIgResult information_gains;
@@ -262,13 +262,13 @@ void WeightedLinearUtility::getIg(
                                                CommunicationInterface::
                                                        ResultInformation::
                                                                SUCCEEDED) {
-                                        cout << "information_gains[" << i
+                                        /*cout << "information_gains[" << i
                                              << "] :"
                                              << information_gains[i]
                                                         .predicted_gain
                                              << endl;
                                         cout << "ig metric weight :"
-                                             << ig_weights_[i] << endl;
+                                             << ig_weights_[i] << endl;*/
 
                                         ig_val += ig_weights_[i]
                                                   * information_gains[i]
@@ -277,11 +277,11 @@ void WeightedLinearUtility::getIg(
                         }
                         total_ig += ig_val;
                         ig_vector[i] = ig_val;
-                        cout << "view :" << view << endl;
+                        /*cout << "view :" << view << endl;
                         cout << "total ig for this view  :" << ig_vector[i]
                              << endl;
                         cout << "communilate IG for all views :" << total_ig
-                             << endl;
+                             << endl;*/
                 }
                 return;
         } else

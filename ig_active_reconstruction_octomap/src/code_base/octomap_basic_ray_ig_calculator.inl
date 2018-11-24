@@ -98,7 +98,7 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
                                 res.status = ResultInformation::UNKNOWN_METRIC;
                         } else {
                                 res.status = ResultInformation::SUCCEEDED;
-                                std::cout << "ig_metric :" << ig_metric << endl;
+                                //std::cout << "ig_metric :" << ig_metric << endl;
                                 ig_set.push_back(ig_metric);
                         }
                         output_ig.push_back(res);
@@ -115,7 +115,7 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
                                 res.status = ResultInformation::UNKNOWN_METRIC;
                         } else {
                                 res.status = ResultInformation::SUCCEEDED;
-                                std::cout << "ig_metric :" << ig_metric << endl;
+                                //std::cout << "ig_metric :" << ig_metric << endl;
                                 ig_set.push_back(ig_metric);
                         }
                         output_ig.push_back(res);
@@ -136,8 +136,8 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
                         ig->makeReadyForNewRay();
                 }
                 if (i % 100 == 0)
-                        std::cout << "\nCalculating ray " << i << "/"
-                                  << ray_set->size();
+                        //std::cout << "\nCalculating ray " << i << "/"
+                                  //<< ray_set->size();
                 calculateIgsOnRay(ray, ig_set, ray_cast_settings);
         }
 
@@ -147,9 +147,9 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
         BOOST_FOREACH (IgRetrievalResult &res, output_ig) {
                 if (res.status == ResultInformation::SUCCEEDED) {
                         res.predicted_gain = (*ig_it)->getInformation();
-                        std::cout << "type : " << (*ig_it)->type() << endl;
-                        std::cout << "\nPredicted gain is: "
-                                  << res.predicted_gain;
+                        //std::cout << "type : " << (*ig_it)->type() << endl;
+                        //std::cout << "\nPredicted gain is: "
+                                  //<< res.predicted_gain;
 
                         ++ig_it;
                 }
@@ -166,7 +166,7 @@ CSCOPE::computeMapMetric(MapMetricRetrievalCommand &command,
         MapMetricRetrievalResult res;
         std::vector<boost::shared_ptr<MapMetric<TREE_TYPE> > > mm_set;
         ROS_INFO("%s : %s", __FILE__, __func__);
-        cout << " computeMapMetric called" << endl;
+        //cout << " computeMapMetric called" << endl;
         // WorldStats::calculateOn(this->link_.octree);
         if (!command.metric_names.empty()) {
                 MapMetricRetrievalResult res;
@@ -179,7 +179,7 @@ CSCOPE::computeMapMetric(MapMetricRetrievalCommand &command,
                                 res.status = ResultInformation::UNKNOWN_METRIC;
                         } else {
                                 res.status = ResultInformation::SUCCEEDED;
-                                std::cout << "mm_metric :" << mm_metric << endl;
+                                //std::cout << "mm_metric :" << mm_metric << endl;
                                 mm_set.push_back(mm_metric);
                         }
                         output.push_back(res);
@@ -193,8 +193,8 @@ CSCOPE::computeMapMetric(MapMetricRetrievalCommand &command,
         BOOST_FOREACH (MapMetricRetrievalResult &res, output) {
                 if (res.status == ResultInformation::SUCCEEDED) {
                         res.value = (*mm_it)->calculateOn(this->link_.octree);
-                        std::cout << "type : " << (*mm_it)->type() << endl;
-                        std::cout << "\nPredicted gain is: " << res.value;
+                        //std::cout << "type : " << (*mm_it)->type() << endl;
+                        //std::cout << "\nPredicted gain is: " << res.value;
 
                         ++mm_it;
                 }

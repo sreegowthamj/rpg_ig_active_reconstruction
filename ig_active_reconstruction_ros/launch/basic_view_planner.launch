@@ -7,7 +7,7 @@
     <param name="cost_weight" value="10" />
     <param name="max_calls" value="20" />
     <!-- rosparam param="ig_names">[OcclusionAwareIg, UnobservedVoxelIg, RearSideVoxelIg, RearSideEntropyIg, ProximityCountIg, VasquezGomezAreaFactorIg, AverageEntropyIg]</rosparam -->
-    <rosparam param="ig_names">[AverageEntropyIg]</rosparam>
+    <rosparam param="ig_names">[VasquezGomezAreaFactorIg]</rosparam>
       <!--<rosparam param="ig_weights">[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0]</rosparam>-->
       <rosparam param="ig_weights">[1.0]</rosparam>
     

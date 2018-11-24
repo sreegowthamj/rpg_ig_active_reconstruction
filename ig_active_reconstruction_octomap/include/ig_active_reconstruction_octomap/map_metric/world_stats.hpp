@@ -46,7 +46,7 @@ template <class TREE_TYPE> class WorldStats : public MapMetric<TREE_TYPE>
       public:
         WorldStats()
             : unknown_voxel_count(0), occupied_voxel_count(0),
-              free_voxel_count(0)
+              free_voxel_count(0),occupied_voxel_volume(0), free_voxel_volume(0)
         {
                 std::cout << "World_stats constructor \n";
         }
@@ -73,10 +73,18 @@ template <class TREE_TYPE> class WorldStats : public MapMetric<TREE_TYPE>
                                                   end = octree->end_leafs();
                      it != end; ++it) {
 
+                        /*double x = it.getX();
+                        double y = it.getY();
+                        double z = it.getZ();
+                        double current_voxel_size = octree.getMetricSize(x, y, z);*/
+                        double current_voxel_size = it.getSize();
+
                         if (octree->isNodeOccupied(*it)) {
-                                occupied_voxel_count++;
+                                occupied_voxel_count++;                                
+                                occupied_voxel_volume = occupied_voxel_volume + pow(current_voxel_size, 3);                              
                         } else {
-                                free_voxel_count++;
+                                free_voxel_count++;                                
+                                free_voxel_volume = free_voxel_volume + pow(current_voxel_size, 3);
                         }
 
 
@@ -99,10 +107,18 @@ template <class TREE_TYPE> class WorldStats : public MapMetric<TREE_TYPE>
                         << " occupied_voxel_count = " << occupied_voxel_count
                         << "\n";
 
+                std::ofstream outfile1;
+                outfile1.open("voxel_volume_log.txt",
+                             std::ofstream::out | std::ios_base::app);
+                outfile1 << "free voxel volume = " << free_voxel_volume 
+                         << " occupied voxel volume = "<<occupied_voxel_volume
+                         << "\n";
+
 
                 free_voxel_count = 0;
                 occupied_voxel_count = 0;
-
+                occupied_voxel_volume = 0;
+                free_voxel_volume = 0;
                 return 0.0;
         }
 
@@ -110,6 +126,8 @@ template <class TREE_TYPE> class WorldStats : public MapMetric<TREE_TYPE>
         int unknown_voxel_count;
         int occupied_voxel_count;
         int free_voxel_count;
+        double occupied_voxel_volume;
+        double free_voxel_volume;
 
 }; // namespace octomap
 } // namespace octomap
