@@ -98,6 +98,11 @@ template <class TREE_TYPE> class WorldStats : public MapMetric<TREE_TYPE>
                 outfile << "free voxel count = " << free_voxel_count
                         << " occupied_voxel_count = " << occupied_voxel_count
                         << "\n";
+
+
+                free_voxel_count = 0;
+                occupied_voxel_count = 0;
+
                 return 0.0;
         }
 

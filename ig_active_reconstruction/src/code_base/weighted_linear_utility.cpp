@@ -77,6 +77,7 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
 
         // Required Map Metrics
         /* TODO: make this part of */
+        map_metrics_.clear();
         map_metrics_.push_back("world_stats");
 
         double total_cost = 0;
