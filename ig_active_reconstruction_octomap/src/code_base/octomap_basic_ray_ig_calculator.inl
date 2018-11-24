@@ -147,9 +147,9 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
         BOOST_FOREACH (IgRetrievalResult &res, output_ig) {
                 if (res.status == ResultInformation::SUCCEEDED) {
                         res.predicted_gain = (*ig_it)->getInformation();
-                        //std::cout << "type : " << (*ig_it)->type() << endl;
-                        //std::cout << "\nPredicted gain is: "
-                                  //<< res.predicted_gain;
+                        std::cout << "type : " << (*ig_it)->type() << endl;
+                        std::cout << "\nPredicted gain is: "
+                                  << res.predicted_gain;
 
                         ++ig_it;
                 }

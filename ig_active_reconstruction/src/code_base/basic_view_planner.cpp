@@ -160,14 +160,14 @@ bool BasicViewPlanner::isReady()
 void BasicViewPlanner::main()
 {
         // preparation
-        cout << "basic view planning started" << endl;
+        //cout << "basic view planning started" << endl;
         goal_evaluation_module_->reset();
 
         // get viewspace................................................
         viewspace_ = boost::make_shared<views::ViewSpace>();
         views::CommunicationInterface::ViewSpaceStatus viewspace_status;
         do {
-                cout << "\n getting view space from views_comm_unit_" << endl;
+                //cout << "\n getting view space from views_comm_unit_" << endl;
                 status_ = Status::DEMANDING_VIEWSPACE;
                 *viewspace_ = views_comm_unit_->getViewSpace();
 
@@ -180,7 +180,7 @@ void BasicViewPlanner::main()
                 pausePoint();
         } while (viewspace_->empty());
 
-        cout << "\n complete view space : " << viewspace_ << endl;
+        //cout << "\n complete view space : " << viewspace_ << endl;
 
 
         unsigned int reception_nr = 0;
@@ -195,12 +195,12 @@ void BasicViewPlanner::main()
                                              config_.discard_visited);
 
                 if (view_candidate_ids.empty()) {
-                        cout << "no good views are available (subset of viewspace)"
-                             << endl;
+                        //cout << "no good views are available (subset of viewspace)"
+                             //<< endl;
                         break;
                 }
 
-                cout << "Got the good views (subset of viewspace)" << endl;
+                //cout << "Got the good views (subset of viewspace)" << endl;
 
 
                 // receive
@@ -237,7 +237,7 @@ void BasicViewPlanner::main()
                 views::View nbv = viewspace_->getView(nbv_id);
 
                 cout << "nbv_id :" << nbv_id << endl;
-                cout << "nbv :" << nbv << endl;
+                //cout << "nbv :" << nbv << endl;
 
                 // check termination criteria
                 // ...............................................
@@ -265,7 +265,7 @@ void BasicViewPlanner::main()
 
                 } while (!successfully_moved);
 
-                cout << "moved to NBV" << endl;
+                //cout << "moved to NBV" << endl;
 
                 // update viewspace
                 viewspace_->setVisited(nbv_id);
