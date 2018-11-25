@@ -54,7 +54,7 @@ typename CSCOPE::ResultInformation
 CSCOPE::computeViewIg(IgRetrievalCommand &command,
                       ViewIgRetrievalResult &output_ig)
 {
-        output_ig.clear();
+        output_ig.clear();        
 
         // Can't calculate ig for no given view.
         if (command.path.empty()) {
@@ -105,9 +105,10 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
                 }
         } else {
                 IgRetrievalResult res;
-                res.predicted_gain = 0;
+                res.predicted_gain = 0; 
 
                 BOOST_FOREACH (std::string &name, command.metric_names) {
+
                         typename IgFactory::TypePtr ig_metric =
                                 this->ig_factory_.get(name);
                         // cout<<"ig_metric : "<<ig_metric<<endl;
@@ -115,7 +116,7 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
                                 res.status = ResultInformation::UNKNOWN_METRIC;
                         } else {
                                 res.status = ResultInformation::SUCCEEDED;
-                                //std::cout << "ig_metric :" << ig_metric << endl;
+                                //std::cout << "ig_metric :" << ig_metric << endl;                                
                                 ig_set.push_back(ig_metric);
                         }
                         output_ig.push_back(res);
@@ -148,8 +149,7 @@ CSCOPE::computeViewIg(IgRetrievalCommand &command,
                 if (res.status == ResultInformation::SUCCEEDED) {
                         res.predicted_gain = (*ig_it)->getInformation();
                         std::cout << "type : " << (*ig_it)->type() << endl;
-                        std::cout << "\nPredicted gain is: "
-                                  << res.predicted_gain;
+                        std::cout << "\nPredicted gain is: "<< res.predicted_gain;
 
                         ++ig_it;
                 }

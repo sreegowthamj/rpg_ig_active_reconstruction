@@ -161,7 +161,7 @@ void BasicViewPlanner::main()
 {
         // preparation
         //cout << "basic view planning started" << endl;
-        goal_evaluation_module_->reset();
+        goal_evaluation_module_->reset();        
 
         // get viewspace................................................
         viewspace_ = boost::make_shared<views::ViewSpace>();
@@ -231,9 +231,10 @@ void BasicViewPlanner::main()
 
                 // getting cost and ig is wrapped in the utility
                 // calculator..................
+                
                 status_ = Status::NBV_CALCULATIONS;
                 views::View::IdType nbv_id = utility_calculator_->getNbv(
-                        view_candidate_ids, viewspace_);
+                        view_candidate_ids, viewspace_, goal_evaluation_module_->getCurrCallCount());
                 views::View nbv = viewspace_->getView(nbv_id);
 
                 cout << "nbv_id :" << nbv_id << endl;

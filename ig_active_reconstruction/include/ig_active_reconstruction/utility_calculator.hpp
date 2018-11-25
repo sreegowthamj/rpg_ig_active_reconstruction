@@ -37,7 +37,7 @@ class UtilityCalculator
          */
         virtual views::View::IdType
         getNbv(views::ViewSpace::IdSet &id_set,
-               boost::shared_ptr<views::ViewSpace> viewspace) = 0;
+               boost::shared_ptr<views::ViewSpace> viewspace, unsigned int itr_count) = 0;
 };
 
 } // namespace ig_active_reconstruction

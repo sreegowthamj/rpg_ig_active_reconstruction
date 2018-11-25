@@ -42,6 +42,8 @@ class MaxCallsTerminationCriteria : public GoalEvaluationModule
          */
         virtual bool isDone();
 
+        virtual unsigned int getCurrCallCount();
+
       private:
         unsigned int max_calls_;
         unsigned int call_count_;

@@ -36,6 +36,9 @@ class GoalEvaluationModule
         /*! Returns true if the goal was reached.
          */
         virtual bool isDone() = 0;
+
+        virtual unsigned int getCurrCallCount() = 0;
+
 };
 
 } // namespace ig_active_reconstruction

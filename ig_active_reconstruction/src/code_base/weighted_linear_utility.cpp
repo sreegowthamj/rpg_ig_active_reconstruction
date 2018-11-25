@@ -68,12 +68,15 @@ void WeightedLinearUtility::setRobotCommUnit(
 
 views::View::IdType
 WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
-                              boost::shared_ptr<views::ViewSpace> viewspace)
+                              boost::shared_ptr<views::ViewSpace> viewspace,
+                              unsigned int itr_count)
 {
         // structure to store received values
         std::vector<double> cost_vector;
         std::vector<double> ig_vector;
         // std::vector<std::string> mm_vectors;
+        std::string metric_name;
+        double max = 0;
 
         // Required Map Metrics
         /* TODO: make this part of */
@@ -91,6 +94,47 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         world_comm_unit_->computeMapMetric(mm_command, mm_result);
         //std::cout << "*****mm_result.at(0).value" << mm_result.at(0).value
                   //<< "\n";
+
+/**********************************************************************************************************************/
+        //double RearSideVoxelFit = 1 - (a * exp(-b * x) + c);
+        double RearSideVoxelFit = 1 - (0.577 * exp(-0.106 * (itr_count + 1)) + 0.248);
+        metric_name.assign("RearSideVoxelIg");
+        max = RearSideVoxelFit;
+
+        double VGFit = 1 - (0.575 * exp(-0.054 * (itr_count + 1)) + 0.206);
+        if (VGFit > max)
+        {
+                max = VGFit;
+                metric_name.assign("VasquezGomezAreaFactorIg");
+        }
+
+        //double UnobservedVoxelFit = 1 - (0.565 * exp(-0.062 * itr_count) + 0.229);
+        double OcclisionAwareFit = 1 - (0.565 * exp(-0.062 * (itr_count + 1)) + 0.229);        
+        if (OcclisionAwareFit > max)
+        {
+                max = OcclisionAwareFit;
+                metric_name.assign("OcclusionAwareIg");
+        }
+        
+        double ProximityFit = 1 - (0.789 * exp(-0.032 * (itr_count + 1)) - 0.016);
+        if (ProximityFit > max)
+        {
+                max = ProximityFit;
+                metric_name.assign("ProximityCountIg");
+        }
+
+        double RearSideEntropyFit = 1 - (1.057 * exp(-0.048 * (itr_count + 1)) - 0.252);
+        if (RearSideEntropyFit > max)
+        {
+                max = RearSideEntropyFit;
+                metric_name.assign("RearSideEntropyIg");
+        }
+
+        std::cout<<" itr_count : "<<itr_count <<"   metric_name : "<<metric_name<<std::endl;
+
+        information_gains_.clear();
+        information_gains_.push_back(metric_name);
+/*****************************************************************************************************************/                  
 
         world_representation::CommunicationInterface::IgRetrievalCommand
                 command;

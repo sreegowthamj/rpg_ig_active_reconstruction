@@ -41,4 +41,9 @@ bool MaxCallsTerminationCriteria::isDone()
         return false;
 }
 
+unsigned int MaxCallsTerminationCriteria::getCurrCallCount()
+{
+        return call_count_;
+}
+
 } // namespace ig_active_reconstruction

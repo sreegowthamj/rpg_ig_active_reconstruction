@@ -77,7 +77,7 @@ class WeightedLinearUtility : public UtilityCalculator
          */
         virtual views::View::IdType
         getNbv(views::ViewSpace::IdSet &id_set,
-               boost::shared_ptr<views::ViewSpace> viewspace);
+               boost::shared_ptr<views::ViewSpace> viewspace, unsigned int itr_count);
 
       protected:
         /*! Helper function for multithreaded ig retrieval.
