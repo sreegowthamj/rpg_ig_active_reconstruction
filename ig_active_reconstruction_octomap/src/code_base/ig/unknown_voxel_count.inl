@@ -17,7 +17,7 @@
  */
 
 #define TEMPT template <class TREE_TYPE>
-#define CSCOPE RearSideVoxelIg<TREE_TYPE>
+#define CSCOPE UnknownVoxelCount<TREE_TYPE>
 
 #include <fstream>
 
@@ -30,7 +30,7 @@ namespace world_representation
 namespace octomap
 {
 TEMPT
-CSCOPE::RearSideVoxelIg(Config utils)
+CSCOPE::UnknownVoxelCount(Config utils)
     : utils_(utils), rear_side_voxel_count_(0), previous_voxel_unknown_(false),
       unknown_voxel_count(0), occupied_voxel_count(0), free_voxel_count(0),
       known_voxel_count(0)

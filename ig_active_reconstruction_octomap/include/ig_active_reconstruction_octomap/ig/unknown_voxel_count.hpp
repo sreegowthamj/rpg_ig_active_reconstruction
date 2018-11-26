@@ -34,7 +34,7 @@ namespace octomap
  * rear side of a previously observed surface.
  */
 template <class TREE_TYPE>
-class RearSideVoxelIg : public InformationGain<TREE_TYPE>
+class UnknownVoxelCount : public InformationGain<TREE_TYPE>
 {
       public:
         typedef typename InformationGain<TREE_TYPE>::Utils Utils;
@@ -44,7 +44,7 @@ class RearSideVoxelIg : public InformationGain<TREE_TYPE>
       public:
         /*! Constructor
          */
-        RearSideVoxelIg(Config config = Config());
+        UnknownVoxelCount(Config config = Config());
 
         /*! Returns the name of the method.
          */
@@ -96,9 +96,9 @@ class RearSideVoxelIg : public InformationGain<TREE_TYPE>
       private:
         Utils utils_; //! Providing configuration and often used tools.
         GainType rear_side_voxel_count_; //! Current information gain result.
-        bool previous_voxel_unknown_;        
-        unsigned int unknown_voxel_count, occupied_voxel_count, free_voxel_count, known_voxel_count;
-         
+        bool previous_voxel_unknown_;
+        unsigned int unknown_voxel_count, occupied_voxel_count,
+                free_voxel_count, known_voxel_count;
 };
 } // namespace octomap
 
@@ -106,4 +106,4 @@ class RearSideVoxelIg : public InformationGain<TREE_TYPE>
 
 } // namespace ig_active_reconstruction
 
-#include "../src/code_base/ig/rear_side_voxel.inl"
+#include "../src/code_base/ig/unknown_voxel_count.inl"
