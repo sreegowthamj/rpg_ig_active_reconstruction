@@ -5,9 +5,9 @@
     <param name="discard_visited" value="true" />
     <param name="max_visits" value="-1" />
     <param name="cost_weight" value="10" />
-    <param name="max_calls" value="20" />
+    <param name="max_calls" value="40" />
     <!--<rosparam param="ig_names">[OcclusionAwareIg, UnobservedVoxelIg, RearSideVoxelIg, RearSideEntropyIg, ProximityCountIg, VasquezGomezAreaFactorIg, AverageEntropyIg]</rosparam>-->
-    <rosparam param="ig_names">[RearSideVoxelIg]</rosparam>
+    <rosparam param="ig_names">[VasquezGomezAreaFactorIg]</rosparam>
     <!--<rosparam param="ig_weights">[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]</rosparam>-->
     <rosparam param="ig_weights">[1.0]</rosparam>
     
