@@ -133,6 +133,7 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         std::cout<<" itr_count : "<<itr_count <<"   metric_name : "<<metric_name<<std::endl;
 
         information_gains_.clear();
+        metric_name.assign("RearSideEntropyIg");
         information_gains_.push_back(metric_name);
 /*****************************************************************************************************************/                  
 
@@ -306,13 +307,13 @@ void WeightedLinearUtility::getIg(
                                                CommunicationInterface::
                                                        ResultInformation::
                                                                SUCCEEDED) {
-                                        /*cout << "information_gains[" << i
+                                        cout << "information_gains[" << i
                                              << "] :"
                                              << information_gains[i]
                                                         .predicted_gain
                                              << endl;
                                         cout << "ig metric weight :"
-                                             << ig_weights_[i] << endl;*/
+                                             << ig_weights_[i] << endl;
 
                                         ig_val += ig_weights_[i]
                                                   * information_gains[i]
