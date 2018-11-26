@@ -31,25 +31,33 @@ namespace octomap
 {
 TEMPT
 CSCOPE::RearSideVoxelIg(Config utils)
-    : utils_(utils), rear_side_voxel_count_(0), previous_voxel_unknown_(false)
+    : utils_(utils), rear_side_voxel_count_(0), previous_voxel_unknown_(false),
+      unknown_voxel_count(0), occupied_voxel_count(0), free_voxel_count(0),
+      known_voxel_count(0)
 {
 }
 
 TEMPT
 std::string CSCOPE::type()
 {
-        return "RearSideVoxelIg";
+        return "UnknownVoxelCountIg";
 }
 
 TEMPT
 typename CSCOPE::GainType CSCOPE::getInformation()
 {
+        double ret = (unknown_voxel_count
+                      - 1000 * (occupied_voxel_count + free_voxel_count));
         std::ofstream outfile;
         outfile.open("rear_side_voxel.txt",
                      std::ofstream::out | std::ios_base::app);
-        outfile << "\n rear_side_voxel: ig_:" << rear_side_voxel_count_;
+        outfile << "\n occupied_voxel_count = " << occupied_voxel_count
+                << " free_voxel_count = " << free_voxel_count
+                << " unknown_voxel_count = " << unknown_voxel_count
+                << " known_voxel_count = " << known_voxel_count
+                << " net count = " << ret;
 
-        return rear_side_voxel_count_;
+        return -ret;
 }
 
 TEMPT
@@ -63,6 +71,10 @@ void CSCOPE::reset()
 {
         rear_side_voxel_count_ = 0;
         previous_voxel_unknown_ = false;
+        unknown_voxel_count = 0;
+        occupied_voxel_count = 0;
+        free_voxel_count = 0;
+        known_voxel_count = 0;
 }
 
 TEMPT
@@ -95,6 +107,7 @@ void CSCOPE::includeMeasurement(typename TREE_TYPE::NodeType *node)
 {
         if (node == NULL || !node->hasMeasurement()) {
                 previous_voxel_unknown_ = true;
+                unknown_voxel_count++;
                 return;
         }
 
@@ -102,10 +115,17 @@ void CSCOPE::includeMeasurement(typename TREE_TYPE::NodeType *node)
 
         if (utils_.isUnknown(p_occ)) {
                 previous_voxel_unknown_ = true;
-                return;
+                unknown_voxel_count++;
+                // return;
         } else {
-                if (utils_.isOccupied(p_occ) && previous_voxel_unknown_) {
-                        ++rear_side_voxel_count_;
+                known_voxel_count++;
+                if (utils_.isOccupied(p_occ)) {
+                        //++rear_side_voxel_count_;
+                        occupied_voxel_count++;
+                }
+
+                if (utils_.isFree(p_occ)) {
+                        free_voxel_count++;
                 }
 
                 previous_voxel_unknown_ = false;
