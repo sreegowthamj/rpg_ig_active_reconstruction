@@ -105,7 +105,7 @@
           <geometry>
             <mesh>
               <uri>model://bunny/meshes/textured_bunny_ml.dae</uri>
-              <scale>0.235095 0.235095 0.235095</scale>
+              <scale>0.135095 0.135095 0.135095</scale>
             </mesh>
           </geometry>
         </visual>
