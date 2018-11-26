@@ -132,9 +132,9 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
 
         std::cout<<" itr_count : "<<itr_count <<"   metric_name : "<<metric_name<<std::endl;
 
-        information_gains_.clear();
-        metric_name.assign("RearSideEntropyIg");
-        information_gains_.push_back(metric_name);
+        //information_gains_.clear();
+        //metric_name.assign("RearSideEntropyIg");
+        //information_gains_.push_back(metric_name);
 /*****************************************************************************************************************/                  
 
         world_representation::CommunicationInterface::IgRetrievalCommand
