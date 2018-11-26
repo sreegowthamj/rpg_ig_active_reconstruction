@@ -307,12 +307,16 @@ void WeightedLinearUtility::getIg(
                                                CommunicationInterface::
                                                        ResultInformation::
                                                                SUCCEEDED) {
-                                        cout << "information_gains[" << i
+					std::ofstream outfile;
+					outfile.open("Predicted_ig.txt", 
+						std::ofstream::out | std::ios_base::app);
+
+                                        outfile << "information_gains[" << i
                                              << "] :"
                                              << information_gains[i]
                                                         .predicted_gain
                                              << endl;
-                                        cout << "ig metric weight :"
+                                        outfile  << "ig metric weight :"
                                              << ig_weights_[i] << endl;
 
                                         ig_val += ig_weights_[i]
