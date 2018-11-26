@@ -279,7 +279,8 @@ void CSCOPE::calculateIgsOnRay(
                 for (KeyRay::iterator it = ray.begin(); it != ray.end(); ++it) {
                         point3d coord = this->link_.octree->keyToCoord(*it);
                         typename TREE_TYPE::NodeType *traversedVoxel =
-                                this->link_.octree->search(*it);
+                                this->link_.octree->search(*it);                       
+                        
                         BOOST_FOREACH (
                                 typename InformationGain<TREE_TYPE>::Ptr &ig,
                                 ig_set) {

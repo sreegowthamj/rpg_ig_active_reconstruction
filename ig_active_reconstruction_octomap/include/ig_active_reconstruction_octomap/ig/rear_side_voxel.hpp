@@ -96,7 +96,9 @@ class RearSideVoxelIg : public InformationGain<TREE_TYPE>
       private:
         Utils utils_; //! Providing configuration and often used tools.
         GainType rear_side_voxel_count_; //! Current information gain result.
-        bool previous_voxel_unknown_;
+        bool previous_voxel_unknown_;        
+        unsigned int unknown_voxel_count, occupied_voxel_count, free_voxel_count, known_voxel_count;
+         
 };
 } // namespace octomap
 

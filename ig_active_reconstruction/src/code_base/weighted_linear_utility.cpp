@@ -94,7 +94,7 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         world_comm_unit_->computeMapMetric(mm_command, mm_result);
         //std::cout << "*****mm_result.at(0).value" << mm_result.at(0).value
                   //<< "\n";
-
+#if 0
 /**********************************************************************************************************************/
         //double RearSideVoxelFit = 1 - (a * exp(-b * x) + c);
         double RearSideVoxelFit = 1 - (0.577 * exp(-0.106 * (itr_count + 1)) + 0.248);
@@ -136,7 +136,7 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         //metric_name.assign("RearSideEntropyIg");
         //information_gains_.push_back(metric_name);
 /*****************************************************************************************************************/                  
-
+#endif
         world_representation::CommunicationInterface::IgRetrievalCommand
                 command;
         command.config = ig_retrieval_config_;
