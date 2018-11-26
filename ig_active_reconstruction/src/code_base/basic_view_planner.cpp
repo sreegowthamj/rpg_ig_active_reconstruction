@@ -23,6 +23,7 @@
 #include <iostream>
 #include <boost/thread/thread.hpp>
 #include <boost/chrono/include.hpp>
+#include <fstream>
 using namespace std;
 
 namespace ig_active_reconstruction
@@ -238,6 +239,11 @@ void BasicViewPlanner::main()
                 views::View nbv = viewspace_->getView(nbv_id);
 
                 cout << "nbv_id :" << nbv_id << endl;
+                std::ofstream nbvoutfile;
+                nbvoutfile.open("nbv_id.txt",
+                              std::ofstream::out | std::ios_base::app);
+                nbvoutfile << nbv_id << "\n ";
+
                 //cout << "nbv :" << nbv << endl;
 
                 // check termination criteria

@@ -82,14 +82,19 @@ template <class TREE_TYPE> class WorldStats : public MapMetric<TREE_TYPE>
                 }
 
                 std::ofstream outfile;
-                outfile.open("occupied_voxel_volume.csv",
+                outfile.open("occupied_voxel_area.csv",
                              std::ofstream::out | std::ios_base::app);
                 outfile << occupied_voxel_area << ", ";
 
                 std::ofstream outfile1;
-                outfile1.open("free_voxel_volume.csv",
+                outfile1.open("free_voxel_area.csv",
                               std::ofstream::out | std::ios_base::app);
                 outfile1 << free_voxel_area << ", ";
+
+                std::ofstream outfile2;
+                outfile2.open("known_area.csv",
+                              std::ofstream::out | std::ios_base::app);
+                outfile2 << (free_voxel_area + occupied_voxel_area) << ", ";
 
                 free_voxel_count = 0;
                 occupied_voxel_count = 0;
