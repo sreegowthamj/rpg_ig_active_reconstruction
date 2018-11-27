@@ -77,7 +77,8 @@ class WeightedLinearUtility : public UtilityCalculator
          */
         virtual views::View::IdType
         getNbv(views::ViewSpace::IdSet &id_set,
-               boost::shared_ptr<views::ViewSpace> viewspace, unsigned int itr_count);
+               boost::shared_ptr<views::ViewSpace> viewspace,
+               unsigned int itr_count);
 
       protected:
         /*! Helper function for multithreaded ig retrieval.
@@ -120,6 +121,7 @@ class WeightedLinearUtility : public UtilityCalculator
                 map_metrics_; //! Name of the information gains to use.
         std::vector<double> ig_weights_; //! Weight of the information gains.
         double cost_weight_;
+        unsigned int iter_count_;
 };
 
 } // namespace ig_active_reconstruction

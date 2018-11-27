@@ -35,7 +35,8 @@ CommunicationInterface::IgRetrievalConfig::IgRetrievalConfig()
         ray_window.max_y_perc = 1.0;
 }
 
-CommunicationInterface::IgRetrievalCommand::IgRetrievalCommand() : config()
+CommunicationInterface::IgRetrievalCommand::IgRetrievalCommand()
+    : config(), iteration_count(0)
 {
 }
 
