@@ -11,8 +11,8 @@ def func(x, a, b, c):
 xdata = np.arange(1,41)
 #ydata = pd.read_csv('./map_metric_data/AverageEntropyIg/occupied_voxel_volume.csv', sep=',',header=None)
 
-y_metric1 = np.genfromtxt('./map_metric_data/40iters/metric1/occupied_voxel_area.csv', delimiter=',')
-y_metric1 = y_metric1[~np.isnan(y_metric1)]
+#y_metric1 = np.genfromtxt('./map_metric_data/40iters/metric1/occupied_voxel_area.csv', delimiter=',')
+#y_metric1 = y_metric1[~np.isnan(y_metric1)]
 
 y_RearSideEntropyIg = np.genfromtxt('./map_metric_data/40iters/RearSideEntropyIg/occupied_voxel_area.csv', delimiter=',')
 y_RearSideEntropyIg = y_RearSideEntropyIg[~np.isnan(y_RearSideEntropyIg)]
@@ -42,7 +42,11 @@ y_UnobservedVoxelIg = y_UnobservedVoxelIg[~np.isnan(y_UnobservedVoxelIg)]
 y_VasquezGomezAreaFactorIg = np.genfromtxt('./map_metric_data/40iters/VasquezGomezAreaFactorIg/occupied_voxel_area.csv', delimiter=',')
 y_VasquezGomezAreaFactorIg = y_VasquezGomezAreaFactorIg[~np.isnan(y_VasquezGomezAreaFactorIg)]
 
-plt.plot(xdata, y_metric1, label='UnknownVoxelCount')
+
+y_UnknownVoxelCountIg = np.genfromtxt('./map_metric_data/40iters/UnknownVoxelCountIg/occupied_voxel_area.csv', delimiter=',')
+y_UnknownVoxelCountIg = y_UnknownVoxelCountIg[~np.isnan(y_UnknownVoxelCountIg)]
+
+#plt.plot(xdata, y_metric1, label='UnknownVoxelCount')
 plt.plot(xdata, y_RearSideEntropyIg, label='RearSideEntropy')
 plt.plot(xdata, y_AverageEntropyIg, label='AverageEntropyIg')
 plt.plot(xdata, y_OcclusionAwareIg, label='OcclusionAwareIg')
@@ -50,6 +54,7 @@ plt.plot(xdata, y_ProximityCountIg, label='ProximityCountIg')
 plt.plot(xdata, y_RearSideVoxelIg, label='RearSideVoxelIg')
 plt.plot(xdata, y_UnobservedVoxelIg, label='UnobservedVoxelIg')
 plt.plot(xdata, y_VasquezGomezAreaFactorIg, label='VasquezGomezAreaFactorIg')
+plt.plot(xdata, y_UnknownVoxelCountIg, '-r', label='UnknownVoxelCount')
 
 plt.xticks(np.arange(1, 40, step=2))
 plt.xlabel('Iteration')
