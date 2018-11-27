@@ -160,6 +160,19 @@ template <class TREE_TYPE> class InformationGain
         /*! Returns the number of traversed voxels
          */
         virtual uint64_t voxelCount() = 0;
+
+        virtual unsigned int get_iter_count()
+        {
+                return iter_count_;
+        }
+
+        virtual void set_iter_count(unsigned int count)
+        {
+                iter_count_ = count;
+        }
+
+      private:
+        unsigned int iter_count_;
 };
 
 } // namespace octomap
