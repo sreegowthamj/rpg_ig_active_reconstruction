@@ -49,7 +49,6 @@ void CSCOPE::publishVoxelMap()
         // each array stores all cubes of a different size, one for each depth
         // level:
         occupiedNodesVis.markers.resize(this->link_.octree->getTreeDepth() + 1);
-
         std_msgs::ColorRGBA color;
         color.r = 0;
         color.g = 0;

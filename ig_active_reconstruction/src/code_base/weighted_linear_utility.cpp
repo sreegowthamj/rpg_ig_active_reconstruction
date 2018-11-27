@@ -32,7 +32,7 @@ std::vector<world_representation::CommunicationInterface::ViewIgResult>
 
 WeightedLinearUtility::WeightedLinearUtility(double cost_weight)
     : world_comm_unit_(nullptr), robot_comm_unit_(nullptr),
-      cost_weight_(cost_weight)
+      cost_weight_(cost_weight), iter_count_(0)
 {
 }
 
@@ -78,6 +78,8 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         std::string metric_name;
         double max = 0;
 
+        std::cout << "Current Iteration Count = " << iter_count_ << "\n";
+
         // Required Map Metrics
         /* TODO: make this part of */
         map_metrics_.clear();
@@ -93,9 +95,9 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         world_representation::CommunicationInterface::
                 MapMetricRetrievalResultSet mm_result;
         world_comm_unit_->computeMapMetric(mm_command, mm_result);
-        //std::cout << "*****mm_result.at(0).value" << mm_result.at(0).value
-                  //<< "\n";
-
+        // std::cout << "*****mm_result.at(0).value" << mm_result.at(0).value
+        //<< "\n";
+#if 0
 /**********************************************************************************************************************/
         //double RearSideVoxelFit = 1 - (a * exp(-b * x) + c);
         double RearSideVoxelFit = 1 - (0.577 * exp(-0.106 * (itr_count + 1)) + 0.248);
@@ -136,12 +138,13 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         //information_gains_.clear();
         //metric_name.assign("RearSideEntropyIg");
         //information_gains_.push_back(metric_name);
-/*****************************************************************************************************************/                  
-
+/*****************************************************************************************************************/
+#endif
         world_representation::CommunicationInterface::IgRetrievalCommand
                 command;
         command.config = ig_retrieval_config_;
         command.metric_names = information_gains_;
+        command.iteration_count = iter_count_;
         // cout<<"ig_retrieval_config_ :"<<ig_retrieval_config_<<endl;
         // cout<<"information_gains_ :"<<information_gains_<<endl;
 
@@ -149,10 +152,11 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         // receive costs and igs
         for (views::View::IdType &view_id : id_set) {
                 views::View view = viewspace->getView(view_id);
-                //cout << "\n ###################################################"
-                     //<< endl;
-                //cout << "view_id : " << view_id << endl;
-                //cout << "view : " << view << endl;
+                // cout << "\n
+                // ###################################################"
+                //<< endl;
+                // cout << "view_id : " << view_id << endl;
+                // cout << "view : " << view << endl;
 
                 robot::MovementCost cost;
                 world_representation::CommunicationInterface::ViewIgResult
@@ -172,7 +176,7 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
                                           // calculation
                         else
                                 cost_val = cost.cost;
-                        //cout << "cost_val : " << cost_val << endl;
+                        // cout << "cost_val : " << cost_val << endl;
                 }
 
                 // information gain - non multithreaded version
@@ -202,7 +206,7 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
                 cost_vector.push_back(cost_val);
         }
 
-        //cout << "total_cost : " << total_cost << endl;
+        // cout << "total_cost : " << total_cost << endl;
 
         // multithreaded information gain retrieval
         unsigned int number_of_threads = 8;
@@ -219,11 +223,11 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         for (size_t i = 0; i < number_of_threads; ++i) {
                 threads[i].join();
                 total_ig += total_multitthread_ig[i];
-                //cout << "ig :" << i << "gain :" << total_multitthread_ig[i]
-                    // << endl;
+                // cout << "ig :" << i << "gain :" << total_multitthread_ig[i]
+                // << endl;
         }
 
-        //cout << "total_ig : " << total_ig << endl;
+        // cout << "total_ig : " << total_ig << endl;
 
         // The answer ........... Plot this and print this!!!
         std::ofstream ofs;
@@ -265,6 +269,8 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         for (unsigned int i = 0; i < IgMetricsPerIt[nbv].size(); i++) {
                 nbvMetrics << IgMetricsPerIt[nbv][i].predicted_gain << ", ";
         }
+
+        iter_count_++;
         nbvMetrics << "\n";
 
         std::cout << "\n Choosing view " << nbv << ".";
@@ -280,14 +286,15 @@ void WeightedLinearUtility::getIg(
         unsigned int batch_size)
 {
 
-        //cout << "\n ------------------------------------------------" << endl;
+        // cout << "\n ------------------------------------------------" <<
+        // endl;
 
         // information gain
         if (world_comm_unit_ != nullptr) {
                 for (size_t i = base_index; i < id_set.size();
                      i += batch_size) {
                         views::View view = viewspace->getView(id_set[i]);
-                        //cout << "calculating ig for view :" << view << endl;
+                        // cout << "calculating ig for view :" << view << endl;
 
                         world_representation::CommunicationInterface::
                                 ViewIgResult information_gains;
@@ -308,13 +315,19 @@ void WeightedLinearUtility::getIg(
                                                CommunicationInterface::
                                                        ResultInformation::
                                                                SUCCEEDED) {
-                                        cout << "information_gains[" << i
-                                             << "] :"
-                                             << information_gains[i]
-                                                        .predicted_gain
-                                             << endl;
-                                        cout << "ig metric weight :"
-                                             << ig_weights_[i] << endl;
+                                        std::ofstream outfile;
+                                        outfile.open(
+                                                "Predicted_ig.txt",
+                                                std::ofstream::out
+                                                        | std::ios_base::app);
+
+                                        outfile << "information_gains[" << i
+                                                << "] :"
+                                                << information_gains[i]
+                                                           .predicted_gain
+                                                << endl;
+                                        outfile << "ig metric weight :"
+                                                << ig_weights_[i] << endl;
 
                                         ig_val += ig_weights_[i]
                                                   * information_gains[i]

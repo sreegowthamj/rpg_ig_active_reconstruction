@@ -81,6 +81,8 @@ igRetrievalCommandFromMsg(
 
         command.config = igRetrievalConfigFromMsg(command_msg.config);
 
+        command.iteration_count = command_msg.iteration_count;
+
         return command;
 }
 
@@ -105,6 +107,8 @@ igRetrievalCommandToMsg(
         }
 
         command_msg.config = igRetrievalConfigToMsg(command.config);
+
+        command_msg.iteration_count = command.iteration_count;
 
         return command_msg;
 }

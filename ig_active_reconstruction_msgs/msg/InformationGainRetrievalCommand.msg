@@ -9,3 +9,6 @@ uint32[] metric_ids
 
 # Configuration of information gain
 ig_active_reconstruction_msgs/InformationGainRetrievalConfig config
+
+# Iteration Count - Needed by IG metrics to dynamically determine weights for some coefficients
+uint32 iteration_count

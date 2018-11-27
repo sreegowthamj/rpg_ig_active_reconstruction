@@ -150,6 +150,8 @@ class CommunicationInterface
                                     //! shall be calculated. Takes precedence
                                     //! over metric_names.
                 IgRetrievalConfig config;
+
+                unsigned int iteration_count;
         };
 
         /*! Result of a metric calculation call.

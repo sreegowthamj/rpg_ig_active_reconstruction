@@ -32,6 +32,7 @@
 #include "ig_active_reconstruction_octomap/ig/vasquez_gomez_area_factor.hpp"
 #include "ig_active_reconstruction_octomap/ig/average_entropy.hpp"
 #include "ig_active_reconstruction_octomap/ig/area_perimeter_ratio.hpp"
+#include "ig_active_reconstruction_octomap/ig/unknown_voxel_count.hpp"
 #include "ig_active_reconstruction_octomap/octomap_ros_pcl_input.hpp"
 #include "ig_active_reconstruction_octomap/octomap_ros_interface.hpp"
 #include "ig_active_reconstruction_octomap/map_metric/world_stats.hpp"
@@ -210,6 +211,7 @@ int main(int argc, char **argv)
         ig_calculator->registerInformationGain<VasquezGomezAreaFactorIg>(
                 ig_config);
         ig_calculator->registerInformationGain<AverageEntropyIg>(ig_config);
+        ig_calculator->registerInformationGain<UnknownVoxelCount>(ig_config);
 
         ig_calculator->registerMapMetric<WorldStats>();
         ig_calculator->registerMapMetric<WorldEntropy>();

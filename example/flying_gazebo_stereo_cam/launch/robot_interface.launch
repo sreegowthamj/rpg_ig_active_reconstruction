@@ -5,7 +5,7 @@
   <param name="/use_sim_time" value="true" />
   <include file="$(find gazebo_ros)/launch/empty_world.launch">	    
     <arg name="world_name" value="$(find flying_gazebo_stereo_cam)/model/world.sdf"/>
-    <arg name="gui" value="false"/>
+    <arg name="gui" value="true"/>	  
   </include>
   
   <!-- send flying_stereo_cam urdf to param server -->
