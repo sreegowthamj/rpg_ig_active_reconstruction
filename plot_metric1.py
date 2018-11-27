@@ -54,7 +54,7 @@ plt.plot(xdata, y_ProximityCountIg, label='ProximityCountIg')
 plt.plot(xdata, y_RearSideVoxelIg, label='RearSideVoxelIg')
 plt.plot(xdata, y_UnobservedVoxelIg, label='UnobservedVoxelIg')
 plt.plot(xdata, y_VasquezGomezAreaFactorIg, label='VasquezGomezAreaFactorIg')
-plt.plot(xdata, y_UnknownVoxelCountIg, '-y', label='UnknownVoxelCount')
+plt.plot(xdata, y_UnknownVoxelCountIg, '-r', label='UnknownVoxelCount')
 
 plt.xticks(np.arange(1, 40, step=2))
 plt.xlabel('Iteration')
