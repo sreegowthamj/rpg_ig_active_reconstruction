@@ -82,6 +82,7 @@ WeightedLinearUtility::getNbv(views::ViewSpace::IdSet &id_set,
         /* TODO: make this part of */
         map_metrics_.clear();
         map_metrics_.push_back("world_stats");
+        map_metrics_.push_back("world_entropy");
 
         double total_cost = 0;
         double total_ig = 0;

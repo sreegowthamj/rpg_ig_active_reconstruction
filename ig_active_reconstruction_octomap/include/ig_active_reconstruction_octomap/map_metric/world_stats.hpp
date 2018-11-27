@@ -117,3 +117,4 @@ template <class TREE_TYPE> class WorldStats : public MapMetric<TREE_TYPE>
 } // namespace ig_active_reconstruction
 
 //#include "../../../src/code_base/map_metric/world_stats.inl"
+
