@@ -31,6 +31,7 @@
 #include "ig_active_reconstruction_octomap/ig/proximity_count.hpp"
 #include "ig_active_reconstruction_octomap/ig/vasquez_gomez_area_factor.hpp"
 #include "ig_active_reconstruction_octomap/ig/average_entropy.hpp"
+#include "ig_active_reconstruction_octomap/ig/dynamic_exploration_exploitation.hpp"
 #include "ig_active_reconstruction_octomap/ig/area_perimeter_ratio.hpp"
 #include "ig_active_reconstruction_octomap/ig/unknown_voxel_count.hpp"
 #include "ig_active_reconstruction_octomap/octomap_ros_pcl_input.hpp"
@@ -203,6 +204,8 @@ int main(int argc, char **argv)
                                 ig_calc_config);
 
         // set information gains that shall be used
+        ig_calculator->registerInformationGain<DynamicExplorationExploitation>(
+                ig_config);
         ig_calculator->registerInformationGain<OcclusionAwareIg>(ig_config);
         ig_calculator->registerInformationGain<UnobservedVoxelIg>(ig_config);
         ig_calculator->registerInformationGain<RearSideVoxelIg>(ig_config);
