@@ -9,7 +9,7 @@
     <!--<rosparam param="ig_names">[OcclusionAwareIg, UnobservedVoxelIg, RearSideVoxelIg, RearSideEntropyIg,
     ProximityCountIg, VasquezGomezAreaFactorIg, AverageEntropyIg, UnknownVoxelCountIg,
     DynamicExploreExploitIg]</rosparam>-->
-    <rosparam param="ig_names">[DynamicExploreExploitIg]</rosparam>
+    <rosparam param="ig_names">[UnknownVoxelCountIg]</rosparam>
     <!--<rosparam param="ig_weights">[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]</rosparam>-->
     <rosparam param="ig_weights">[1.0]</rosparam>
     
