@@ -10,5 +10,5 @@
     
   </node>
    
-  <!-- node pkg="rviz" type="rviz" name="rviz" clear_params="true" output="screen" args="-d $(find flying_gazebo_stereo_cam)/config/bunny.rviz"/ -->
+  <node pkg="rviz" type="rviz" name="rviz" clear_params="true" output="screen" args="-d $(find flying_gazebo_stereo_cam)/config/bunny.rviz"/>
 </launch>
