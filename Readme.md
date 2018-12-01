@@ -49,7 +49,22 @@ Launches a basic view planner node with a simple command line user interface tha
 
 ### Plotting the graph
 
-To plot the graph available in Fig. 4 of the Literature review, you will need to execute the above commands and wait till the execution gets completed. Once the execution is completed, you will need to go to ``` ~/.ros/ ``` folder and copy the ``` rabbit_weighted_gain.csv ``` file to ``` rpg_ig_active_reconstruction ``` folder. Then, for plotting the graph, you will need to run the command - 
+Plotting the Surface Area Graph for Stanford Bunny - 
 ```
-	python plot_results.py
+	python plot_bunny.py
+```
+
+Plotting the Surface Area Graph for Armadillo - 
+```
+	python plot_armadillo.py
+```
+
+Plotting the Entropy Graph for Stanford Bunny - 
+```
+	python plot_entropy_bunny.py
+```
+
+Plotting the Entropy Graph for Armadillo- 
+```
+	python plot_entropy_armadillo.py
 ```
