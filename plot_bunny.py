@@ -46,8 +46,8 @@ y_VasquezGomezAreaFactorIg = y_VasquezGomezAreaFactorIg[~np.isnan(y_VasquezGomez
 y_UnknownVoxelCountIg = np.genfromtxt('./map_metric_data/40iters_bunny/UnknownVoxelCountIg/occupied_voxel_area.csv', delimiter=',')
 y_UnknownVoxelCountIg = y_UnknownVoxelCountIg[~np.isnan(y_UnknownVoxelCountIg)]
 
-#y_DynamicExploreExploitIg = np.genfromtxt('./map_metric_data/40iters_bunny/DynamicExploreExploitIg/occupied_voxel_area.csv', delimiter=',')
-#y_DynamicExploreExploitIg = y_DynamicExploreExploitIg[~np.isnan(y_DynamicExploreExploitIg)]
+y_DynamicExploreExploitIg = np.genfromtxt('./map_metric_data/40iters_bunny/DynamicExploreExploitIg/occupied_voxel_area.csv', delimiter=',')
+y_DynamicExploreExploitIg = y_DynamicExploreExploitIg[~np.isnan(y_DynamicExploreExploitIg)]
 
 #plt.plot(xdata, y_metric1, label='UnknownVoxelCount')
 plt.plot(xdata, y_RearSideEntropyIg, label='RearSideEntropy')
@@ -58,7 +58,7 @@ plt.plot(xdata, y_RearSideVoxelIg, label='RearSideVoxelIg')
 plt.plot(xdata, y_UnobservedVoxelIg, label='UnobservedVoxelIg')
 plt.plot(xdata, y_VasquezGomezAreaFactorIg, label='VasquezGomezAreaFactorIg')
 plt.plot(xdata, y_UnknownVoxelCountIg, '-r', label='UnknownVoxelCount')
-#plt.plot(xdata, y_DynamicExploreExploitIg,'+y', label='DynamicExploreExploitIg')
+plt.plot(xdata, y_DynamicExploreExploitIg,'+y', label='DynamicExploreExploitIg')
 
 plt.xticks(np.arange(1, 40, step=2))
 plt.xlabel('Iteration')
