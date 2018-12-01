@@ -28,7 +28,7 @@ using namespace std;
 template <class TREE_TYPE> class WorldEntropy : public MapMetric<TREE_TYPE>
 {
       public:
-        WorldEntropy() : entropy(0)
+        WorldEntropy() : entropy(0), total_vol(0)
         {
                 std::cout << "World_Entropy constructor \n";
         }
@@ -49,29 +49,35 @@ template <class TREE_TYPE> class WorldEntropy : public MapMetric<TREE_TYPE>
                      it != end; ++it) {
 
                     double occ = it->getOccupancy();
+                    double size = it.getSize();
                     double p_free = 1 - occ;
                     double ent;
+                    double vol = (size * size * size);
                     if (occ == 0 || p_free == 0) {
                         ent = 0;
                     }
                     else{
                         ent = -occ * log(occ) - p_free * log(p_free);
+                        ent = ent * vol;
                     }
                     entropy = entropy + ent;
+                    total_vol = total_vol + vol;
                 }
 
                 std::ofstream outfile;
                 outfile.open("entropy.csv",
                              std::ofstream::out | std::ios_base::app);
-                outfile << entropy << ", ";
+                outfile << (entropy/total_vol) << ", ";
 
                 entropy = 0;
+                total_vol = 0;
                 /*TODO: Update this with real value */
                 return 0.0;
         }
 
       private:
         double entropy;
+        double total_vol;
 
 }; // namespace octomap
 } // namespace octomap
